@@ -252,59 +252,79 @@
     "items": [
       {
         "name": "Tastory",
-        "logo": ""
+        "logo": "/logos/tastory.png",
+        "ratio": 1.78
       },
       {
         "name": "Wilminktheater Enschede",
-        "logo": ""
+        "logo": "/logos/wilminktheater.svg",
+        "ratio": 2.76,
+        "raw": true
       },
       {
         "name": "Simpel Zodiak",
-        "logo": ""
+        "logo": "/logos/simpel-zodiak.png",
+        "ratio": 2.92
       },
       {
         "name": "Endemol Shine",
-        "logo": ""
+        "logo": "/logos/endemol-shine.png",
+        "ratio": 2.49,
+        "scale": 1.25
       },
       {
         "name": "Signal.Stream",
-        "logo": ""
+        "logo": "/logos/signal-stream.svg",
+        "ratio": 2.67
       },
       {
         "name": "Hix",
-        "logo": ""
+        "logo": "/logos/hix.svg",
+        "ratio": 1.7
       },
       {
         "name": "Kookgigant",
-        "logo": ""
+        "logo": "/logos/kookgigant.png",
+        "ratio": 1.98
       },
       {
         "name": "Sushi Brothers",
-        "logo": ""
+        "logo": "/logos/sushi-brothers.png",
+        "ratio": 1,
+        "raw": true
       },
       {
         "name": "Wattkraft",
-        "logo": ""
+        "logo": "/logos/wattkraft.webp",
+        "ratio": 5.44
       },
       {
         "name": "Vibe Sound & Design",
-        "logo": ""
+        "logo": "/logos/vibe-sound-design.png",
+        "ratio": 3.5
       },
       {
         "name": "Nick Ligtelijn",
-        "logo": ""
+        "logo": "/logos/nick-ligtelijn.png",
+        "ratio": 0.41,
+        "scale": 1.2
       },
       {
         "name": "The Lemon Tree",
-        "logo": ""
+        "logo": "/logos/the-lemon-tree.svg",
+        "ratio": 1.65,
+        "scale": 1.35
       },
       {
         "name": "Bullseye",
-        "logo": ""
+        "logo": "/logos/bullseye.svg",
+        "ratio": 3.88
       },
       {
         "name": "Bully",
-        "logo": ""
+        "logo": "/logos/bully-mono.svg",
+        "ratio": 1.5,
+        "scale": 1.6
       },
       {
         "name": "Frameworks",
@@ -312,16 +332,19 @@
       },
       {
         "name": "Brandeniers",
-        "logo": ""
+        "logo": "/logos/brandeniers.svg",
+        "ratio": 5.32
       },
       {
         "name": "Smaakverkenners",
-        "logo": ""
+        "logo": "/logos/smaakverkenners.svg",
+        "ratio": 1.44
       },
       {
         "name": "Go Ahead Eagles",
-        "logo": "/logos/go-ahead-eagles.png",
-        "ratio": 0.77
+        "logo": "/logos/go-ahead-eagles.svg",
+        "ratio": 0.9,
+        "raw": true
       }
     ]
   },

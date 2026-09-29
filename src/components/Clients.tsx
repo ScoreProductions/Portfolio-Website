@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { site } from "@/lib/site";
 import SectionHeader from "./SectionHeader";
 
-type Client = { name: string; logo: string; ratio?: number; raw?: boolean };
+type Client = { name: string; logo: string; ratio?: number; raw?: boolean; scale?: number };
 
 const wrap = (min: number, max: number, v: number) => {
   const r = max - min;
@@ -14,7 +14,7 @@ const wrap = (min: number, max: number, v: number) => {
 
 function Logo({ c }: { c: Client }) {
   if (!c.logo) {
-    return <span className="font-display whitespace-nowrap text-4xl leading-none text-fg/55 transition-colors duration-300 group-hover:text-accent md:text-5xl">{c.name}</span>;
+    return <span className="font-display whitespace-nowrap text-3xl leading-none text-fg/55 transition-colors duration-300 group-hover:text-accent md:text-4xl">{c.name}</span>;
   }
   if (c.raw) {
     // eslint-disable-next-line @next/next/no-img-element
@@ -66,7 +66,9 @@ function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number })
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
             {items.map((c) => (
               <div key={`${k}-${c.name}`} className="group flex h-24 items-center px-8 md:h-28 md:px-14" title={c.name}>
-                <Logo c={c} />
+                <div style={c.scale ? { transform: `scale(${c.scale})` } : undefined}>
+                  <Logo c={c} />
+                </div>
               </div>
             ))}
           </div>
