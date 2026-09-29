@@ -283,8 +283,7 @@
       },
       {
         "name": "Endemol Shine",
-        "logo": "/logos/endemol-shine.png",
-        "dark": true
+        "logo": "/logos/endemol-shine-dark.png"
       },
       {
         "name": "Signal.Stream",
@@ -296,8 +295,7 @@
       },
       {
         "name": "Kookgigant",
-        "logo": "/logos/kookgigant.png",
-        "dark": true
+        "logo": "/logos/kookgigant-dark.png"
       },
       {
         "name": "Sushi Brothers",
@@ -309,23 +307,19 @@
       },
       {
         "name": "Vibe Sound & Design",
-        "logo": "/logos/vibe-sound-design.png",
-        "dark": true
+        "logo": "/logos/vibe-sound-design-dark.png"
       },
       {
         "name": "Nick Ligtelijn",
-        "logo": "/logos/nick-ligtelijn.png",
-        "dark": true
+        "logo": "/logos/nick-ligtelijn-dark.png"
       },
       {
         "name": "The Lemon Tree",
-        "logo": "/logos/the-lemon-tree.svg",
-        "dark": true
+        "logo": "/logos/the-lemon-tree-dark.svg"
       },
       {
         "name": "Bullseye",
-        "logo": "/logos/bullseye.svg",
-        "dark": true
+        "logo": "/logos/bullseye-dark.svg"
       },
       {
         "name": "Bully",
@@ -333,17 +327,15 @@
       },
       {
         "name": "Frameworks",
-        "logo": ""
+        "logo": "/logos/frameworks.svg"
       },
       {
         "name": "Brandeniers",
-        "logo": "/logos/brandeniers.svg",
-        "dark": true
+        "logo": "/logos/brandeniers-dark.svg"
       },
       {
         "name": "Smaakverkenners",
-        "logo": "/logos/smaakverkenners.svg",
-        "dark": true
+        "logo": "/logos/smaakverkenners-dark.svg"
       },
       {
         "name": "Go Ahead Eagles",
