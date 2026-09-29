@@ -14,9 +14,12 @@ Per project in `projects`:
 - `thumbnail` (optioneel): eigen afbeelding, bijv. `/images/tastory.jpg`.
 - `preview` (optioneel): korte mp4 die speelt bij hover, bijv. `/videos/tastory.mp4`.
 - `roles`: bepaalt het filter (`Producer`, `Camera`, `Editor`, `Creative`).
-- `size`: `large`, `wide`, `tall` of `normal`.
 
 Showreel: zet een YouTube/Vimeo-link of `/videos/showreel.mp4` bij `showreel`.
+
+### Logo's (Gewerkt met / voor)
+
+Upload een logo (liefst PNG/SVG met transparante achtergrond) naar `public/logos/` en zet bij de klant in `clients.items`: `"logo": "/logos/naam.png"`. Logo's worden automatisch in huisstijl (grijs → rood bij hover) getoond. Zonder logo wordt de naam getoond.
 
 ### Foto's
 

@@ -18,7 +18,7 @@
   --color-line: var(--line);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-serif);
+  --font-display: var(--font-display);
 }
 
 html {
@@ -68,6 +68,12 @@ body {
   90% { transform: translate(-1%, 7%); }
 }
 
+
+.font-display {
+  font-family: var(--font-display), Impact, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.005em;
+}
 
 @media (hover: none) {
   .cursor-dot { display: none; }

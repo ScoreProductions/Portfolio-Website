@@ -3,18 +3,20 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { site } from "@/lib/site";
-import { Reveal, SplitLine } from "./Reveal";
+import { Corners } from "./Frame";
+import { Reveal } from "./Reveal";
+import SectionHeader from "./SectionHeader";
 
 export default function Services() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="diensten" className="grid gap-16 px-5 py-28 md:grid-cols-[1.4fr_1fr] md:gap-20 md:px-10 md:py-40">
+    <section id="diensten" className="mx-auto grid max-w-[1500px] gap-16 px-5 py-28 md:grid-cols-[1.4fr_1fr] md:gap-20 md:px-10 md:py-40">
       <div>
-        <p className="mb-6 text-sm font-medium uppercase tracking-[0.25em] text-accent">{site.brand}</p>
-        <h2 className="mb-12 text-6xl font-semibold tracking-[-0.04em] md:text-8xl">
-          <SplitLine text={site.services.title} />
-        </h2>
+        <SectionHeader label={site.brand} title="Wat we" accent="doen" />
+        <p className="mb-12 mt-6 max-w-lg text-lg text-muted">
+          {site.tagline} {site.taglineAccent}
+        </p>
         <ul className="border-t border-line">
           {site.services.items.map((s, i) => {
             const active = open === i;
@@ -27,7 +29,7 @@ export default function Services() {
                 >
                   <span className="flex items-baseline gap-5 md:gap-8">
                     <span className="text-sm tabular-nums text-muted">0{i + 1}</span>
-                    <span className={`text-3xl font-semibold tracking-tight transition-all duration-500 group-hover:translate-x-2 md:text-5xl ${active ? "text-accent" : ""}`}>
+                    <span className={`font-display text-4xl leading-none transition-all duration-500 group-hover:translate-x-2 md:text-6xl ${active ? "text-accent" : ""}`}>
                       {s.title}
                     </span>
                   </span>
@@ -60,13 +62,14 @@ export default function Services() {
 
       <Reveal className="md:pt-24">
         <div className="sticky top-28 overflow-hidden rounded-3xl bg-accent p-8 text-white md:p-10">
-          <p className="text-sm font-medium uppercase tracking-[0.25em] text-white/70">{site.freelance.title}</p>
+          <Corners both />
+          <p className="pl-8 text-xs font-semibold uppercase tracking-[0.35em] text-white/80 md:pl-10">{site.freelance.title}</p>
           <p className="mt-4 text-xl leading-snug">{site.freelance.intro}</p>
           <ul className="mt-8 space-y-3">
             {site.freelance.items.map((item, i) => (
               <motion.li
                 key={item}
-                className="flex items-center gap-4 border-b border-white/20 pb-3 text-2xl font-semibold tracking-tight md:text-3xl"
+                className="font-display flex items-center gap-4 border-b border-white/20 pb-3 text-3xl leading-none md:text-4xl"
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -77,7 +80,7 @@ export default function Services() {
               </motion.li>
             ))}
           </ul>
-          <p className="mt-10 font-serif text-4xl italic md:text-5xl">{site.freelance.footer}</p>
+          <p className="font-display mt-10 text-5xl leading-none md:text-6xl">{site.freelance.footer}</p>
         </div>
       </Reveal>
     </section>

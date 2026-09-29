@@ -3,18 +3,50 @@
 import { motion, useAnimationFrame, useMotionValue, useScroll, useSpring, useTransform, useVelocity } from "framer-motion";
 import { useRef } from "react";
 import { site } from "@/lib/site";
+import SectionHeader from "./SectionHeader";
+
+type Client = { name: string; logo: string; ratio?: number; raw?: boolean };
 
 const wrap = (min: number, max: number, v: number) => {
   const r = max - min;
   return ((((v - min) % r) + r) % r) + min;
 };
 
-function Row({ items, baseVelocity }: { items: string[]; baseVelocity: number }) {
+function Logo({ c }: { c: Client }) {
+  if (!c.logo) {
+    return <span className="font-display whitespace-nowrap text-4xl leading-none text-fg/55 transition-colors duration-300 group-hover:text-accent md:text-5xl">{c.name}</span>;
+  }
+  if (c.raw) {
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={c.logo} alt={c.name} className="h-12 w-auto object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0 md:h-16" loading="lazy" />;
+  }
+  const ratio = c.ratio ?? 2.5;
+  return (
+    <span
+      role="img"
+      aria-label={c.name}
+      className="block h-10 bg-fg/55 transition-colors duration-300 group-hover:bg-accent md:h-14"
+      style={{
+        aspectRatio: String(Math.min(Math.max(ratio, 0.8), 5)),
+        maskImage: `url("${c.logo}")`,
+        WebkitMaskImage: `url("${c.logo}")`,
+        maskSize: "contain",
+        WebkitMaskSize: "contain",
+        maskRepeat: "no-repeat",
+        WebkitMaskRepeat: "no-repeat",
+        maskPosition: "center",
+        WebkitMaskPosition: "center",
+      }}
+    />
+  );
+}
+
+function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number }) {
   const base = useMotionValue(0);
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
   const smooth = useSpring(velocity, { damping: 50, stiffness: 400 });
-  const factor = useTransform(smooth, [0, 1000], [0, 4], { clamp: false });
+  const factor = useTransform(smooth, [0, 1000], [0, 3], { clamp: false });
   const x = useTransform(base, (v) => `${wrap(-50, 0, v)}%`);
   const dir = useRef(1);
 
@@ -28,15 +60,14 @@ function Row({ items, baseVelocity }: { items: string[]; baseVelocity: number })
   });
 
   return (
-    <div className="overflow-hidden">
-      <motion.div className="flex w-max whitespace-nowrap" style={{ x }}>
+    <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
+      <motion.div className="flex w-max items-center" style={{ x }}>
         {[0, 1].map((k) => (
-          <div key={k} className="flex shrink-0" aria-hidden={k === 1}>
-            {items.map((name, i) => (
-              <span key={`${k}-${i}`} className="flex items-center text-5xl font-semibold uppercase tracking-[-0.04em] md:text-8xl">
-                <span className={i % 3 === 1 ? "text-white/45" : i % 3 === 2 ? "font-serif font-normal normal-case italic" : ""}>{name}</span>
-                <span className="mx-6 inline-block h-3 w-3 rounded-full bg-white md:mx-10 md:h-4 md:w-4" />
-              </span>
+          <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
+            {items.map((c) => (
+              <div key={`${k}-${c.name}`} className="group flex h-24 items-center px-8 md:h-28 md:px-14" title={c.name}>
+                <Logo c={c} />
+              </div>
             ))}
           </div>
         ))}
@@ -46,18 +77,18 @@ function Row({ items, baseVelocity }: { items: string[]; baseVelocity: number })
 }
 
 export default function Clients() {
-  const names = site.clients.names;
-  const half = Math.ceil(names.length / 2);
+  const items = site.clients.items as Client[];
+  const half = Math.ceil(items.length / 2);
   return (
-    <section aria-label={site.clients.title} className="overflow-hidden bg-accent py-20 text-white md:py-28">
-      <p className="mb-10 px-5 text-sm font-medium uppercase tracking-[0.25em] text-white/70 md:mb-14 md:px-10">({site.clients.title})</p>
-      <div className="space-y-4 md:space-y-6">
-        <Row items={names.slice(0, half)} baseVelocity={-2.5} />
-        <Row items={names.slice(half)} baseVelocity={2.5} />
+    <section aria-label={site.clients.title} className="border-y border-line py-20 md:py-28">
+      <SectionHeader center label={site.clients.title} title="" />
+      <div className="mt-10 space-y-2 md:mt-14">
+        <Row items={items.slice(0, half)} baseVelocity={-2} />
+        <Row items={items.slice(half)} baseVelocity={2} />
       </div>
       <ul className="sr-only">
-        {names.map((n) => (
-          <li key={n}>{n}</li>
+        {items.map((c) => (
+          <li key={c.name}>{c.name}</li>
         ))}
       </ul>
     </section>

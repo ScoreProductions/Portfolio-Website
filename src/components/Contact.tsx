@@ -1,30 +1,30 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, type FormEvent } from "react";
+import { motion } from "framer-motion";
+import { useState, type FormEvent } from "react";
 import { site } from "@/lib/site";
 import Magnetic from "./Magnetic";
-import { SplitLine } from "./Reveal";
+import { Reveal } from "./Reveal";
+import SectionHeader from "./SectionHeader";
 
 const c = site.contact;
 
-const socials = [
+export const socials = [
   { label: "Instagram", href: c.instagram },
   { label: "WhatsApp", href: `https://wa.me/${c.whatsapp}` },
   { label: "LinkedIn", href: c.linkedin },
 ];
 
 function Field({ label, name, type = "text", textarea }: { label: string; name: string; type?: string; textarea?: boolean }) {
-  const cls =
-    "peer w-full border-b border-fg/15 bg-transparent pb-3 pt-6 text-lg outline-none transition-colors placeholder-transparent focus:border-accent";
+  const cls = "peer w-full border-b border-white/30 bg-transparent pb-3 pt-6 text-lg text-white outline-none transition-colors placeholder-transparent focus:border-white";
   return (
-    <label className="relative block">
+    <label className="relative block text-left">
       {textarea ? (
-        <textarea name={name} required rows={4} placeholder={label} className={`${cls} resize-none`} />
+        <textarea name={name} required rows={3} placeholder={label} className={`${cls} resize-none`} />
       ) : (
         <input name={name} type={type} required placeholder={label} className={cls} />
       )}
-      <span className="pointer-events-none absolute left-0 top-0 text-xs font-medium uppercase tracking-[0.2em] text-muted transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-lg peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-0 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-[0.2em] peer-focus:text-accent">
+      <span className="pointer-events-none absolute left-0 top-0 text-xs font-medium uppercase tracking-[0.2em] text-white/70 transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-lg peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-0 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-[0.2em] peer-focus:text-white">
         {label}
       </span>
     </label>
@@ -32,11 +32,7 @@ function Field({ label, name, type = "text", textarea }: { label: string; name: 
 }
 
 export default function Contact() {
-  const ref = useRef<HTMLElement>(null);
   const [sent, setSent] = useState(false);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start 30%"] });
-  const radius = useTransform(scrollYProgress, [0, 1], [120, 32]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -48,73 +44,59 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" ref={ref} className="px-3 pb-3 md:px-6 md:pb-6">
-      <motion.div style={{ borderRadius: radius, scale }} className="overflow-hidden bg-accent px-5 pb-8 pt-24 text-white md:px-12 md:pt-32">
-        <p className="mb-8 text-sm font-medium uppercase tracking-[0.25em] text-white/70">(Contact)</p>
-        <h2 className="max-w-5xl text-5xl font-semibold leading-[0.92] tracking-[-0.045em] md:text-[7vw]">
-          {c.title.split(" ").reduce<string[][]>((acc, w, i) => {
-            (acc[Math.floor(i / 3)] ??= []).push(w);
-            return acc;
-          }, []).map((line, i) => (
-            <SplitLine key={i} text={line.join(" ")} delay={i * 0.08} />
+    <section id="contact" className="relative overflow-hidden bg-accent px-5 py-28 text-white md:px-10 md:py-40">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[120vw] w-[120vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_60%)] md:h-[70vw] md:w-[70vw]"
+        animate={{ scale: [1, 1.12, 1] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <div className="relative mx-auto max-w-3xl">
+        <SectionHeader center dark label="Contact" title={c.title}>
+          <p className="mt-3 text-xl text-white/80">{c.text}</p>
+        </SectionHeader>
+
+        <Reveal className="mt-10 flex flex-col items-center gap-2">
+          <a href={`mailto:${c.email}`} className="group relative text-2xl font-medium tracking-tight md:text-4xl">
+            {c.email}
+            <span className="absolute -bottom-2 left-0 h-px w-full origin-left bg-white/40 transition-transform duration-500 group-hover:scale-x-0" />
+            <span className="absolute -bottom-2 left-0 h-px w-full origin-right scale-x-0 bg-white transition-transform delay-200 duration-500 group-hover:origin-left group-hover:scale-x-100" />
+          </a>
+          <a href={`tel:${c.phone.replace(/\s/g, "")}`} className="mt-3 text-lg text-white/80 transition-colors hover:text-white">
+            {c.phone}
+          </a>
+        </Reveal>
+
+        <Reveal className="mt-10 flex items-center justify-center gap-4 text-sm font-medium md:text-base">
+          {socials.map((s, i) => (
+            <span key={s.label} className="flex items-center gap-4">
+              {i > 0 && <span className="h-1 w-1 rounded-full bg-white/50" />}
+              <a href={s.href} target="_blank" rel="noreferrer" className="text-white/85 transition-colors hover:text-white">
+                {s.label}
+              </a>
+            </span>
           ))}
-        </h2>
+        </Reveal>
 
-        <div className="mt-16 grid gap-10 md:mt-24 md:grid-cols-[1fr_1.2fr] md:gap-16">
-          <div className="flex flex-col justify-between gap-10">
-            <p className="max-w-md text-xl leading-snug text-white/90">{c.text}</p>
-            <div className="space-y-2 text-2xl font-medium tracking-tight md:text-3xl">
-              <a href={`mailto:${c.email}`} className="block w-fit break-all underline decoration-white/30 underline-offset-8 transition-colors hover:decoration-white">
-                {c.email}
-              </a>
-              <a href={`tel:${c.phone.replace(/\s/g, "")}`} className="block w-fit underline decoration-white/30 underline-offset-8 transition-colors hover:decoration-white">
-                {c.phone}
-              </a>
+        <Reveal delay={0.1}>
+          <form onSubmit={submit} className="mx-auto mt-16 max-w-2xl space-y-6 rounded-3xl border border-white/20 bg-white/[0.06] p-6 backdrop-blur-sm md:p-10">
+            <div className="grid gap-6 md:grid-cols-2">
+              <Field label="Naam" name="naam" />
+              <Field label="E-mail" name="email" type="email" />
             </div>
-          </div>
-
-          <form onSubmit={submit} className="space-y-6 rounded-3xl bg-white p-6 text-fg md:p-10">
-            <Field label="Naam" name="naam" />
-            <Field label="E-mail" name="email" type="email" />
             <Field label="Bericht" name="bericht" textarea />
             <div className="flex items-center justify-between gap-4 pt-2">
-              <span className="text-sm text-muted">{sent ? "Je mailapp is geopend ✓" : ""}</span>
+              <span className="text-sm text-white/80">{sent ? "Je mailapp is geopend ✓" : ""}</span>
               <Magnetic>
-                <button type="submit" className="group relative overflow-hidden rounded-full bg-accent px-8 py-4 font-semibold text-white">
+                <button type="submit" className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
                   <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-                  <span className="relative">Verstuur →</span>
+                  <span className="relative transition-colors duration-300 group-hover:text-white">Verstuur →</span>
                 </button>
               </Magnetic>
             </div>
           </form>
-        </div>
-
-        <div className="mt-20 grid grid-cols-3 border-t border-white/25 md:mt-28">
-          {socials.map((s, i) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noreferrer"
-              className={`group flex items-center justify-between py-6 text-base font-semibold md:py-8 md:text-3xl md:tracking-tight ${i > 0 ? "border-l border-white/25 pl-3 md:pl-8" : ""} ${i < 2 ? "pr-3 md:pr-8" : ""}`}
-            >
-              {s.label}
-              <span className="hidden transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1 sm:inline">↗</span>
-            </a>
-          ))}
-        </div>
-
-        <div className="flex flex-col justify-between gap-2 border-t border-white/25 pt-6 text-sm text-white/70 md:flex-row">
-          <span>
-            © {new Date().getFullYear()} {site.brand}
-          </span>
-          <span>{site.role}</span>
-        </div>
-
-        <div aria-hidden className="pointer-events-none mt-6 select-none whitespace-nowrap text-center text-[15vw] font-semibold uppercase leading-[0.78] tracking-[-0.06em] text-white/15 md:text-[13vw]">
-          {site.name}
-        </div>
-      </motion.div>
+        </Reveal>
+      </div>
     </section>
   );
 }

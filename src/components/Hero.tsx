@@ -2,28 +2,48 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { site } from "@/lib/site";
+import { embedUrl, site } from "@/lib/site";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-function RoleRotator() {
-  const [i, setI] = useState(0);
+function Timecode() {
+  const [t, setT] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setI((n) => (n + 1) % site.roles.length), 2200);
+    const start = performance.now();
+    const id = setInterval(() => setT(performance.now() - start), 40);
     return () => clearInterval(id);
   }, []);
+  const f = Math.floor((t / 40) % 25);
+  const s = Math.floor(t / 1000);
+  const pad = (n: number) => String(n).padStart(2, "0");
   return (
-    <span className="relative inline-flex h-[1.4em] items-center overflow-hidden pr-[0.15em] leading-[1.4]">
+    <span className="tabular-nums">
+      00:{pad(Math.floor(s / 60))}:{pad(s % 60)}:{pad(f)}
+    </span>
+  );
+}
+
+function RoleWord() {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((n) => (n + 1) % site.roles.length), 2400);
+    return () => clearInterval(id);
+  }, []);
+  const word = site.roles[i];
+  return (
+    <span className="relative block overflow-hidden py-[0.06em]" aria-live="polite">
       <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={site.roles[i]}
-          className="block font-serif italic text-accent"
-          initial={{ y: "100%" }}
-          animate={{ y: "0%" }}
-          exit={{ y: "-100%" }}
-          transition={{ duration: 0.45, ease }}
-        >
-          {site.roles[i]}
+        <motion.span key={word} className="flex justify-center" initial="hidden" animate="show" exit="exit">
+          {word.split("").map((ch, k) => (
+            <motion.span
+              key={k}
+              className="inline-block"
+              variants={{ hidden: { y: "105%" }, show: { y: "0%" }, exit: { y: "-105%" } }}
+              transition={{ duration: 0.55, delay: k * 0.03, ease }}
+            >
+              {ch}
+            </motion.span>
+          ))}
         </motion.span>
       </AnimatePresence>
     </span>
@@ -33,71 +53,99 @@ function RoleRotator() {
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.9], [1, 0]);
-  const words = site.brand.split(" ");
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const isFile = site.showreel && !embedUrl(site.showreel);
 
   return (
-    <section id="home" ref={ref} className="relative flex min-h-[100svh] flex-col justify-end overflow-hidden px-5 pb-12 pt-32 md:px-10 md:pb-16">
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute -right-[25vw] -top-[20vw] h-[70vw] w-[70vw] rounded-full bg-accent/15 blur-[120px] md:-right-[10vw] md:h-[45vw] md:w-[45vw]"
-        animate={{ scale: [1, 1.15, 1], x: [0, -40, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
+    <section id="home" ref={ref} className="relative h-[100svh] min-h-[560px] overflow-hidden bg-accent text-white">
+      <motion.div style={{ scale: bgScale }} className="absolute inset-0">
+        {isFile ? (
+          <video src={site.showreel} poster={site.showreelPoster || undefined} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+        ) : (
+          <div className="h-full w-full" style={{ background: "radial-gradient(70% 60% at 50% 45%, #ff2a36 0%, transparent 70%), radial-gradient(60% 60% at 100% 100%, #6e0008 0%, transparent 70%), radial-gradient(50% 50% at 0% 0%, #8a000b 0%, transparent 70%), #d10714" }}>
+            <motion.div
+              aria-hidden
+              className="absolute inset-0 opacity-[0.07]"
+              style={{ backgroundImage: "repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 4px)" }}
+              animate={{ y: [0, 8] }}
+              transition={{ duration: 0.6, repeat: Infinity, ease: "linear" }}
+            />
+          </div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/10 to-black/45" />
+      </motion.div>
 
-      <motion.div style={{ y, opacity }} className="relative">
-        <motion.div
-          className="mb-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-2xl font-medium tracking-tight md:text-4xl"
+      <motion.div
+        className="absolute inset-x-3 bottom-3 top-20 text-white/70 md:inset-x-6 md:bottom-6 md:top-24"
+        initial={{ opacity: 0, scale: 1.04 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1.2, duration: 1.2, ease }}
+      >
+        {["left-0 top-0 border-l border-t", "right-0 top-0 border-r border-t", "bottom-0 left-0 border-b border-l", "bottom-0 right-0 border-b border-r"].map((c) => (
+          <span key={c} aria-hidden className={`absolute h-8 w-8 border-current md:h-12 md:w-12 ${c}`} />
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="absolute inset-x-7 top-28 flex items-center justify-between text-[11px] font-medium uppercase tracking-[0.3em] text-white/80 md:inset-x-12 md:top-36 md:text-xs"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8 }}
+      >
+        <span className="flex items-center gap-2">
+          <motion.span className="h-2 w-2 rounded-full bg-white" animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.2, repeat: Infinity }} />
+          Rec
+        </span>
+        <Timecode />
+      </motion.div>
+
+      <motion.div style={{ y: contentY, opacity: contentOpacity }} className="relative flex h-full flex-col items-center justify-center px-5 text-center">
+        <motion.p
+          className="font-display text-xl tracking-[0.45em] text-white/85 md:text-3xl"
+          initial={{ opacity: 0, y: 20, letterSpacing: "0.9em" }}
+          animate={{ opacity: 1, y: 0, letterSpacing: "0.45em" }}
+          transition={{ delay: 1.1, duration: 1.4, ease }}
+        >
+          {site.heroEyebrow}
+        </motion.p>
+        <h1 className="font-display mt-2 text-[27vw] leading-[0.85] md:text-[15vw]">
+          <span className="sr-only">
+            {site.name} — {site.roles.join(", ")}
+          </span>
+          <motion.span
+            aria-hidden
+            className="block"
+            initial={{ opacity: 0, scale: 0.9, filter: "blur(12px)" }}
+            animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            transition={{ delay: 1.2, duration: 1.2, ease }}
+          >
+            <RoleWord />
+          </motion.span>
+        </h1>
+        <motion.p
+          className="font-display mt-4 text-lg tracking-[0.4em] text-white/85 md:text-2xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1, ease }}
         >
-          <span>{site.name}</span>
-          <span className="h-px w-8 bg-fg/30 md:w-14" />
-          <RoleRotator />
-        </motion.div>
-
-        <h1 className="text-[13vw] font-semibold uppercase leading-[0.84] tracking-[-0.055em] md:text-[11vw]">
-          {words.map((w, i) => (
-            <span key={w} className="block overflow-hidden pb-[0.04em]">
-              <motion.span
-                className={`block ${i === 1 ? "text-accent md:pl-[8vw]" : ""}`}
-                initial={{ y: "105%", rotate: 5 }}
-                animate={{ y: "0%", rotate: 0 }}
-                transition={{ duration: 1.3, delay: 1.05 + i * 0.12, ease }}
-              >
-                {w}
-              </motion.span>
-            </span>
-          ))}
-        </h1>
-
-        <div className="mt-10 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <motion.p
-            className="max-w-xl text-xl leading-snug tracking-tight md:text-3xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.7, duration: 1, ease }}
-          >
-            {site.tagline} <span className="font-serif italic text-accent">{site.taglineAccent}</span>
-          </motion.p>
-          <motion.a
-            href="#showreel"
-            className="group flex items-center gap-3 text-sm font-medium uppercase tracking-[0.2em]"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.9 }}
-          >
-            <span className="flex h-12 w-12 items-center justify-center rounded-full border border-fg/20 transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white">
-              <motion.span animate={{ y: [0, 4, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
-                ↓
-              </motion.span>
-            </span>
-            Scroll
-          </motion.a>
-        </div>
+          {site.heroSub}
+        </motion.p>
       </motion.div>
+
+      <motion.a
+        href="#diensten"
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[11px] font-medium uppercase tracking-[0.35em] text-white/80 md:bottom-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
+        Scroll
+        <span className="relative block h-14 w-px overflow-hidden bg-white/25">
+          <motion.span className="absolute inset-x-0 top-0 h-1/2 bg-white" animate={{ y: ["-100%", "200%"] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }} />
+        </span>
+      </motion.a>
     </section>
   );
 }

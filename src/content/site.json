@@ -8,64 +8,376 @@
   "location": "Nederland",
   "showreel": "",
   "showreelPoster": "",
-  "roles": ["Producer", "Camera", "Editor", "Creative"],
-
+  "roles": [
+    "Producer",
+    "Camera",
+    "Editor",
+    "Creative"
+  ],
   "services": {
     "title": "Wat we doen",
     "items": [
-      { "title": "Concept", "text": "Van eerste idee tot sterk verhaal. We denken mee over wat je wilt vertellen en hoe je dat het beste in beeld brengt." },
-      { "title": "Productie", "text": "Planning, crew, locaties en budget. Alles strak geregeld, zodat de draaidag soepel loopt." },
-      { "title": "Videografie", "text": "Commercials, bedrijfsfilms, social content en aftermovies. Filmisch geschoten met oog voor detail." },
-      { "title": "Fotografie", "text": "Campagnebeelden, portretten en behind the scenes die je merk laten zien zoals het is." },
-      { "title": "Post-productie", "text": "Montage, kleurcorrectie en sound. Het moment waarop alles samenkomt." }
+      {
+        "title": "Concept",
+        "text": "Van eerste idee tot sterk verhaal. We denken mee over wat je wilt vertellen en hoe je dat het beste in beeld brengt."
+      },
+      {
+        "title": "Productie",
+        "text": "Planning, crew, locaties en budget. Alles strak geregeld, zodat de draaidag soepel loopt."
+      },
+      {
+        "title": "Videografie",
+        "text": "Commercials, bedrijfsfilms, social content en aftermovies. Filmisch geschoten met oog voor detail."
+      },
+      {
+        "title": "Fotografie",
+        "text": "Campagnebeelden, portretten en behind the scenes die je merk laten zien zoals het is."
+      },
+      {
+        "title": "Post-productie",
+        "text": "Montage, kleurcorrectie en sound. Het moment waarop alles samenkomt."
+      }
     ]
   },
-
   "freelance": {
     "title": "Freelance",
     "intro": "Ook los in te huren voor jouw productie.",
-    "items": ["Producer", "Videograaf / Fotograaf / Creative", "Editor"],
+    "items": [
+      "Producer",
+      "Videograaf / Fotograaf / Creative",
+      "Editor"
+    ],
     "footer": "Alles onder één hand."
   },
-
   "projects": [
-    { "title": "DIDD", "brand": "DIDD", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "large" },
-    { "title": "Hunted", "brand": "Endemol Shine", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
-    { "title": "Tastory", "brand": "Tastory", "roles": ["Camera"], "functie": "Camera & fotografie", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "tall" },
-    { "title": "Sushi Brothers", "brand": "Sushi Brothers", "roles": ["Camera", "Producer"], "functie": "Producer & camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
-    { "title": "One Week Film", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
-    { "title": "Ter Land Ter Zee", "brand": "Ter Land Ter Zee", "roles": ["Camera"], "functie": "Camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
-    { "title": "Frameworks", "brand": "Frameworks", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "tall" },
-    { "title": "Dubbelleven", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Concept, regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
-    { "title": "Vibe Sound & Vision", "brand": "Vibe", "roles": ["Camera"], "functie": "Camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
-    { "title": "Bullseye", "brand": "Bullseye", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
-    { "title": "Wattkraft", "brand": "Wattkraft", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
-    { "title": "Docu", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" }
+    {
+      "title": "Hunted",
+      "brand": "Endemol Shine",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Tastory",
+      "brand": "Tastory",
+      "roles": [
+        "Camera"
+      ],
+      "functie": "Camera & fotografie",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "DIDD",
+      "brand": "DIDD",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Wilminktheater",
+      "brand": "Wilminktheater Enschede",
+      "roles": [
+        "Camera"
+      ],
+      "functie": "Camera",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Go Ahead Eagles",
+      "brand": "Go Ahead Eagles",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Sushi Brothers",
+      "brand": "Sushi Brothers",
+      "roles": [
+        "Camera",
+        "Producer"
+      ],
+      "functie": "Producer & camera",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "One Week Film",
+      "brand": "Eigen werk",
+      "roles": [
+        "Creative",
+        "Editor"
+      ],
+      "functie": "Regie & montage",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Frameworks",
+      "brand": "Frameworks",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Ter Land Ter Zee",
+      "brand": "Ter Land Ter Zee",
+      "roles": [
+        "Camera"
+      ],
+      "functie": "Camera",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Kookgigant Kerst",
+      "brand": "Kookgigant",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Vibe Sound & Design",
+      "brand": "Vibe Sound & Design",
+      "roles": [
+        "Camera"
+      ],
+      "functie": "Camera",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Bullseye",
+      "brand": "Bullseye",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Wattkraft",
+      "brand": "Wattkraft",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Brandeniers",
+      "brand": "Brandeniers",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Dubbelleven",
+      "brand": "Eigen werk",
+      "roles": [
+        "Creative",
+        "Editor"
+      ],
+      "functie": "Concept, regie & montage",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Docu",
+      "brand": "Eigen werk",
+      "roles": [
+        "Creative",
+        "Editor"
+      ],
+      "functie": "Regie & montage",
+      "description": "Beschrijving volgt.",
+      "video": "",
+      "preview": "",
+      "thumbnail": ""
+    }
   ],
-
   "clients": {
     "title": "Gewerkt met / voor",
-    "names": ["Tastory", "WT", "Simpel Zodiak", "Endemol Shine", "Signal Stream", "Hix", "LGG", "Sushi Brothers", "Vibe Sound & Vision", "Mich Ligtelijn", "The Lemon Tree", "Bullseye", "Bully", "Frameworks", "Wattkraft", "Brandeniers", "Smaakwerkers", "GAE"]
-  },
-
-  "about": {
-    "title": "Over mij",
-    "photo": "",
-    "blocks": [
-      { "title": "Wie ben ik", "text": "Ik ben Max, maker achter Score Productions. Tekst volgt." },
-      { "title": "Wat doe ik", "text": "Ik produceer, film en monteer. Van het eerste idee tot de laatste export. Tekst volgt." },
-      { "title": "Visie", "text": "Bedrijven helpen hun verhaal te vertellen met beeld dat werkt. Nuchter in aanpak, sterk in beeld. Tekst volgt." },
-      { "title": "Set-up", "text": "Camera, lenzen, licht en audio. Lijst volgt." }
+    "items": [
+      {
+        "name": "Tastory",
+        "logo": ""
+      },
+      {
+        "name": "Wilminktheater Enschede",
+        "logo": ""
+      },
+      {
+        "name": "Simpel Zodiak",
+        "logo": ""
+      },
+      {
+        "name": "Endemol Shine",
+        "logo": ""
+      },
+      {
+        "name": "Signal.Stream",
+        "logo": ""
+      },
+      {
+        "name": "Hix",
+        "logo": ""
+      },
+      {
+        "name": "Kookgigant",
+        "logo": ""
+      },
+      {
+        "name": "Sushi Brothers",
+        "logo": ""
+      },
+      {
+        "name": "Wattkraft",
+        "logo": ""
+      },
+      {
+        "name": "Vibe Sound & Design",
+        "logo": ""
+      },
+      {
+        "name": "Nick Ligtelijn",
+        "logo": ""
+      },
+      {
+        "name": "The Lemon Tree",
+        "logo": ""
+      },
+      {
+        "name": "Bullseye",
+        "logo": ""
+      },
+      {
+        "name": "Bully",
+        "logo": ""
+      },
+      {
+        "name": "Frameworks",
+        "logo": ""
+      },
+      {
+        "name": "Brandeniers",
+        "logo": ""
+      },
+      {
+        "name": "Smaakverkenners",
+        "logo": ""
+      },
+      {
+        "name": "Go Ahead Eagles",
+        "logo": "/logos/go-ahead-eagles.png",
+        "ratio": 0.77
+      }
     ]
   },
-
+  "about": {
+    "title": "Over Max",
+    "photo": "",
+    "blocks": [
+      {
+        "title": "Wie ben ik",
+        "text": "Ik ben Max, maker achter Score Productions. Tekst volgt."
+      },
+      {
+        "title": "Wat doe ik",
+        "text": "Ik produceer, film en monteer. Van het eerste idee tot de laatste export. Tekst volgt."
+      },
+      {
+        "title": "Visie",
+        "text": "Bedrijven helpen hun verhaal te vertellen met beeld dat werkt. Nuchter in aanpak, sterk in beeld. Tekst volgt."
+      },
+      {
+        "title": "Set-up",
+        "text": "Camera, lenzen, licht en audio. Lijst volgt."
+      }
+    ]
+  },
   "contact": {
-    "title": "Laten we iets moois maken.",
-    "text": "Heb je een idee, project of vraag? Stuur een bericht, dan hoor je snel van me.",
+    "title": "Nieuw project?",
+    "text": "Laten we praten.",
     "email": "info@scoreproductions.nl",
     "phone": "+31 6 00000000",
     "whatsapp": "31600000000",
     "instagram": "https://instagram.com/",
     "linkedin": "https://linkedin.com/"
+  },
+  "heroEyebrow": "Score Productions",
+  "heroSub": "Van concept tot content",
+  "stats": [
+    {
+      "value": "50+",
+      "label": "Projecten"
+    },
+    {
+      "value": "18+",
+      "label": "Merken"
+    },
+    {
+      "value": "5+",
+      "label": "Jaar ervaring"
+    }
+  ],
+  "featured": {
+    "label": "Passieproject",
+    "title": "One Week Film",
+    "text": "Eén week, één verhaal. Van idee tot eindproduct, volledig in eigen hand. Tekst volgt.",
+    "tag": "Eigen werk",
+    "video": "",
+    "thumbnail": ""
   }
 }
