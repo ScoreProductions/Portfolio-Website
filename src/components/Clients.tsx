@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { site } from "@/lib/site";
 import SectionHeader from "./SectionHeader";
 
-type Client = { name: string; logo: string; ratio?: number; raw?: boolean; scale?: number };
+type Client = { name: string; logo: string; dark?: boolean };
 
 const wrap = (min: number, max: number, v: number) => {
   const r = max - min;
@@ -13,31 +13,20 @@ const wrap = (min: number, max: number, v: number) => {
 };
 
 function Logo({ c }: { c: Client }) {
-  if (!c.logo) {
-    return <span className="font-display whitespace-nowrap text-3xl leading-none text-fg/55 transition-colors duration-300 group-hover:text-accent md:text-4xl">{c.name}</span>;
-  }
-  if (c.raw) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={c.logo} alt={c.name} className="h-12 w-auto object-contain opacity-70 grayscale transition-all duration-300 group-hover:opacity-100 group-hover:grayscale-0 md:h-16" loading="lazy" />;
-  }
-  const ratio = c.ratio ?? 2.5;
   return (
-    <span
-      role="img"
-      aria-label={c.name}
-      className="block h-10 bg-fg/55 transition-colors duration-300 group-hover:bg-accent md:h-14"
-      style={{
-        aspectRatio: String(Math.min(Math.max(ratio, 0.8), 5)),
-        maskImage: `url("${c.logo}")`,
-        WebkitMaskImage: `url("${c.logo}")`,
-        maskSize: "contain",
-        WebkitMaskSize: "contain",
-        maskRepeat: "no-repeat",
-        WebkitMaskRepeat: "no-repeat",
-        maskPosition: "center",
-        WebkitMaskPosition: "center",
-      }}
-    />
+    <div
+      title={c.name}
+      className={`flex h-24 w-44 shrink-0 items-center justify-center rounded-2xl px-6 py-5 ring-1 transition-all duration-500 hover:-translate-y-1 hover:ring-2 hover:ring-accent md:h-28 md:w-56 md:px-8 ${
+        c.dark ? "bg-fg ring-fg" : "bg-[#f4f4f4] ring-line"
+      }`}
+    >
+      {c.logo ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img src={c.logo} alt={c.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+      ) : (
+        <span className={`font-display text-3xl leading-none ${c.dark ? "text-white" : "text-fg"}`}>{c.name}</span>
+      )}
+    </div>
   );
 }
 
@@ -65,10 +54,8 @@ function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number })
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
             {items.map((c) => (
-              <div key={`${k}-${c.name}`} className="group flex h-24 items-center px-8 md:h-28 md:px-14" title={c.name}>
-                <div style={c.scale ? { transform: `scale(${c.scale})` } : undefined}>
-                  <Logo c={c} />
-                </div>
+              <div key={`${k}-${c.name}`} className="px-2 py-2 md:px-3">
+                <Logo c={c} />
               </div>
             ))}
           </div>

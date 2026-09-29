@@ -42,6 +42,7 @@ export default function Services() {
         <div className="sticky top-28 overflow-hidden rounded-3xl bg-accent p-8 text-white md:p-10">
           <Corners both />
           <p className="pl-8 text-xs font-semibold uppercase tracking-[0.35em] text-white/80 md:pl-10">{site.freelance.title}</p>
+          <p className="mt-6 text-xl leading-snug text-white/90 md:text-2xl">{site.freelance.intro}</p>
           <ul className="mt-8 space-y-3">
             {site.freelance.items.map((item, i) => (
               <motion.li
@@ -57,7 +58,6 @@ export default function Services() {
               </motion.li>
             ))}
           </ul>
-          <p className="font-display mt-10 text-5xl leading-none">{site.freelance.footer}</p>
         </div>
       </Reveal>
     </section>

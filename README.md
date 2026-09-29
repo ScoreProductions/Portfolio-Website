@@ -19,7 +19,7 @@ Showreel: zet een YouTube/Vimeo-link of `/videos/showreel.mp4` bij `showreel`.
 
 ### Logo's (Gewerkt met / voor)
 
-Upload een logo (liefst PNG/SVG met transparante achtergrond) naar `public/logos/` en zet bij de klant in `clients.items`: `"logo": "/logos/naam.png"`. Logo's worden automatisch in huisstijl (grijs → rood bij hover) getoond. Zonder logo wordt de naam getoond.
+Upload een logo (liefst PNG/SVG met transparante achtergrond) naar `public/logos/` en zet bij de klant in `clients.items`: `"logo": "/logos/naam.png"`. Logo's worden in hun eigen kleuren op een tegel getoond. Is het logo wit/licht? Zet er `"dark": true` bij voor een donkere tegel. Zonder logo wordt de naam getoond.
 
 ### Foto's
 
