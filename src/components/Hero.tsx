@@ -23,12 +23,39 @@ function Timecode() {
   );
 }
 
-function RoleWord() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setI((n) => (n + 1) % site.roles.length), 4500);
-    return () => clearInterval(id);
-  }, []);
+const ROLE_MS = 4500;
+
+/** Timeline-style strip listing every role; the active one fills like a playhead. */
+function RoleTimeline({ active, onSelect }: { active: number; onSelect: (i: number) => void }) {
+  return (
+    <div className="flex items-start justify-center gap-3 sm:gap-5">
+      {site.roles.map((r, i) => (
+        <button
+          key={r}
+          onClick={() => onSelect(i)}
+          className={`group flex w-16 flex-col items-center gap-2 text-[10px] font-medium uppercase tracking-[0.25em] transition-colors duration-500 sm:w-24 sm:text-[11px] ${
+            i === active ? "text-white" : "text-white/45 hover:text-white/80"
+          }`}
+        >
+          <span className="relative block h-[2px] w-full overflow-hidden rounded-full bg-white/20">
+            {i === active && (
+              <motion.span
+                key={`fill-${active}`}
+                className="absolute inset-y-0 left-0 bg-white"
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: ROLE_MS / 1000, ease: "linear" }}
+              />
+            )}
+          </span>
+          {r}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function RoleWord({ i }: { i: number }) {
   const word = site.roles[i];
   return (
     <span className="relative block overflow-hidden py-[0.06em]" aria-live="polite">
@@ -51,6 +78,11 @@ function RoleWord() {
 }
 
 export default function Hero() {
+  const [role, setRole] = useState(0);
+  useEffect(() => {
+    const id = setTimeout(() => setRole((n) => (n + 1) % site.roles.length), ROLE_MS);
+    return () => clearTimeout(id);
+  }, [role]);
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
@@ -121,7 +153,7 @@ export default function Hero() {
             animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             transition={{ delay: 1.2, duration: 1.2, ease }}
           >
-            <RoleWord />
+            <RoleWord i={role} />
           </motion.span>
         </h1>
         <motion.p
@@ -133,6 +165,14 @@ export default function Hero() {
           <span className="font-display text-xl tracking-[0.3em] md:text-3xl">{site.heroSub}</span>
           <span className="font-serif text-2xl italic md:text-4xl">{site.heroSubAccent}</span>
         </motion.p>
+        <motion.div
+          className="mt-10 md:mt-12"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 1 }}
+        >
+          <RoleTimeline active={role} onSelect={setRole} />
+        </motion.div>
       </motion.div>
 
       <motion.a
