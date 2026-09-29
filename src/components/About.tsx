@@ -36,7 +36,7 @@ export default function About() {
 
       <div>
         <SectionHeader label="Over mij" title={site.about.title.split(" ")[0]} accent={site.about.title.split(" ").slice(1).join(" ")} />
-        <div className="mt-10 space-y-8">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2">
           {site.about.blocks.map((b, i) => (
             <Reveal key={b.title} delay={i * 0.05}>
               <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{b.title}</h3>
@@ -44,15 +44,6 @@ export default function About() {
             </Reveal>
           ))}
         </div>
-
-        <Reveal className="mt-10 flex flex-wrap gap-2">
-          {site.clients.items.slice(0, 8).map((c) => (
-            <span key={c.name} className="rounded-full border border-line px-3.5 py-1.5 text-sm text-fg/70 transition-colors hover:border-accent hover:text-accent">
-              {c.name}
-            </span>
-          ))}
-          <span className="px-2 py-1.5 text-sm text-muted">+ {site.clients.items.length - 8} anderen</span>
-        </Reveal>
 
         <div className="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8">
           {site.stats.map((s, i) => (

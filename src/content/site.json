@@ -19,32 +19,51 @@
     "items": [
       {
         "title": "Concept",
-        "text": "Van eerste idee tot sterk verhaal. We denken mee over wat je wilt vertellen en hoe je dat het beste in beeld brengt."
+        "points": [
+          "Idee",
+          "Script",
+          "Storyboard"
+        ]
       },
       {
         "title": "Productie",
-        "text": "Planning, crew, locaties en budget. Alles strak geregeld, zodat de draaidag soepel loopt."
+        "points": [
+          "Planning",
+          "Crew",
+          "Locaties"
+        ]
       },
       {
         "title": "Videografie",
-        "text": "Commercials, bedrijfsfilms, social content en aftermovies. Filmisch geschoten met oog voor detail."
+        "points": [
+          "Commercials",
+          "Social",
+          "Events"
+        ]
       },
       {
         "title": "Fotografie",
-        "text": "Campagnebeelden, portretten en behind the scenes die je merk laten zien zoals het is."
+        "points": [
+          "Campagne",
+          "Portret",
+          "BTS"
+        ]
       },
       {
         "title": "Post-productie",
-        "text": "Montage, kleurcorrectie en sound. Het moment waarop alles samenkomt."
+        "points": [
+          "Montage",
+          "Kleur",
+          "Sound"
+        ]
       }
     ]
   },
   "freelance": {
     "title": "Freelance",
-    "intro": "Ook los in te huren voor jouw productie.",
     "items": [
       "Producer",
-      "Videograaf / Fotograaf / Creative",
+      "Camera / Foto",
       "Editor"
     ],
     "footer": "Alles onder één hand."
@@ -354,15 +373,15 @@
     "blocks": [
       {
         "title": "Wie ben ik",
-        "text": "Ik ben Max, maker achter Score Productions. Tekst volgt."
+        "text": "Max, maker achter Score Productions. Tekst volgt."
       },
       {
         "title": "Wat doe ik",
-        "text": "Ik produceer, film en monteer. Van het eerste idee tot de laatste export. Tekst volgt."
+        "text": "Produceren, filmen en monteren. Van idee tot export."
       },
       {
         "title": "Visie",
-        "text": "Bedrijven helpen hun verhaal te vertellen met beeld dat werkt. Nuchter in aanpak, sterk in beeld. Tekst volgt."
+        "text": "Bedrijven helpen hun verhaal sterk in beeld te brengen."
       },
       {
         "title": "Set-up",
@@ -398,7 +417,7 @@
   "featured": {
     "label": "Passieproject",
     "title": "One Week Film",
-    "text": "Eén week, één verhaal. Van idee tot eindproduct, volledig in eigen hand. Tekst volgt.",
+    "text": "Eén week, één verhaal. Volledig in eigen hand.",
     "tag": "Eigen werk",
     "video": "",
     "thumbnail": ""
