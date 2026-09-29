@@ -55,12 +55,17 @@ function RoleTimeline({ active, onSelect }: { active: number; onSelect: (i: numb
   );
 }
 
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=?/<>";
+const GLYPHS = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
 
-/** Text-scramble transition: letters shuffle randomly, then lock in left to right. */
+type Glyph = { ch: string; locked: boolean };
+
+/**
+ * Soft text-scramble: letters shuffle slowly under a motion blur and settle
+ * into the new word one by one, left to right.
+ */
 function RoleWord({ i }: { i: number }) {
   const word = site.roles[i];
-  const [text, setText] = useState(word);
+  const [glyphs, setGlyphs] = useState<Glyph[]>(() => word.split("").map((ch) => ({ ch, locked: true })));
   const prev = useRef(word);
 
   useEffect(() => {
@@ -68,19 +73,26 @@ function RoleWord({ i }: { i: number }) {
     prev.current = word;
     if (from === word) return;
     const len = Math.max(from.length, word.length);
-    const total = 900;
+    const total = 1500;
+    const swapEvery = 70;
     const start = performance.now();
+    let last = 0;
     let raf = 0;
     const tick = (now: number) => {
       const t = Math.min(1, (now - start) / total);
-      let out = "";
-      for (let k = 0; k < len; k++) {
-        const lockAt = 0.25 + (k / len) * 0.75;
-        if (t >= lockAt) out += word[k] ?? "";
-        else if (t < 0.15) out += from[k] ?? "";
-        else out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      if (now - last >= swapEvery || t === 1) {
+        last = now;
+        const next: Glyph[] = [];
+        for (let k = 0; k < len; k++) {
+          const lockAt = 0.35 + (k / len) * 0.6;
+          if (t >= lockAt) {
+            if (word[k]) next.push({ ch: word[k], locked: true });
+          } else {
+            next.push({ ch: GLYPHS[Math.floor(Math.random() * GLYPHS.length)], locked: false });
+          }
+        }
+        setGlyphs(next);
       }
-      setText(out);
       if (t < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -89,7 +101,22 @@ function RoleWord({ i }: { i: number }) {
 
   return (
     <span className="relative block py-[0.06em]" aria-live="polite">
-      <span className="block whitespace-nowrap">{text}</span>
+      <span className="sr-only">{word}</span>
+      <span aria-hidden className="flex justify-center whitespace-nowrap">
+        {glyphs.map((g, k) => (
+          <span
+            key={k}
+            className="inline-block transition-[filter,opacity,transform] duration-300 ease-out"
+            style={{
+              filter: g.locked ? "blur(0px)" : "blur(6px)",
+              opacity: g.locked ? 1 : 0.55,
+              transform: g.locked ? "translateY(0) scaleY(1)" : "translateY(-2%) scaleY(1.06)",
+            }}
+          >
+            {g.ch}
+          </span>
+        ))}
+      </span>
     </span>
   );
 }
