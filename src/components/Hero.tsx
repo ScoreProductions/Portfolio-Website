@@ -125,12 +125,13 @@ export default function Hero() {
           </motion.span>
         </h1>
         <motion.p
-          className="font-display mt-4 text-lg tracking-[0.4em] text-white/85 md:text-2xl"
+          className="mt-5 flex flex-wrap items-baseline justify-center gap-x-3 text-white/90"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 1, ease }}
         >
-          {site.heroSub}
+          <span className="font-display text-xl tracking-[0.3em] md:text-3xl">{site.heroSub}</span>
+          <span className="font-serif text-2xl italic md:text-4xl">{site.heroSubAccent}</span>
         </motion.p>
       </motion.div>
 

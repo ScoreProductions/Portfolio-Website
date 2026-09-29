@@ -380,7 +380,7 @@
     "linkedin": "https://linkedin.com/"
   },
   "heroEyebrow": "Score Productions",
-  "heroSub": "Van concept tot content",
+  "heroSub": "Nuchter in aanpak,",
   "stats": [
     {
       "value": "50+",
@@ -402,5 +402,6 @@
     "tag": "Eigen werk",
     "video": "",
     "thumbnail": ""
-  }
+  },
+  "heroSubAccent": "sterk in beeld."
 }
