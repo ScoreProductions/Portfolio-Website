@@ -9,6 +9,7 @@ import SectionHeader from "./SectionHeader";
 import VideoModal, { type ModalContent } from "./VideoModal";
 
 const filters = ["Alles", ...site.roles];
+const VISIBLE = 6;
 
 /** Bento rhythm per group of 6: big + 2 stacked, then 3 in a row; big flips side every other group. */
 function layout(i: number) {
@@ -21,11 +22,13 @@ function layout(i: number) {
 export function ProjectCard({
   project,
   big,
+  wide,
   onOpen,
   className = "",
 }: {
   project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail"> & { functie?: string };
   big?: boolean;
+  wide?: boolean;
   onOpen: () => void;
   className?: string;
 }) {
@@ -43,7 +46,7 @@ export function ProjectCard({
     >
       <div className="absolute inset-0 transition-transform duration-[1.4s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.07]">
         {thumb ? (
-          <Image src={thumb} alt={project.title} fill sizes={big ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 100vw"} className="object-cover" />
+          <Image src={thumb} alt={project.title} fill sizes={big ? "(min-width: 768px) 66vw, 100vw" : "(min-width: 768px) 33vw, 50vw"} className="object-cover" />
         ) : (
           <div className="h-full w-full" style={{ background: "radial-gradient(90% 80% at 25% 20%, #ff2a36 0%, transparent 60%), radial-gradient(80% 80% at 100% 100%, #5a0007 0%, transparent 60%), #b3000d" }} />
         )}
@@ -53,10 +56,10 @@ export function ProjectCard({
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/5 transition-opacity duration-500 group-hover:opacity-80" />
       <Corners />
-      <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-20 w-20 md:h-28 md:w-28" : "h-14 w-14 md:h-16 md:w-16"}`} />
-      <div className="absolute inset-x-0 bottom-0 p-5 md:p-7">
-        <span className="inline-block rounded-full bg-accent px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] md:text-[11px]">{project.brand}</span>
-        <p className={`mt-3 font-semibold leading-[1.05] tracking-tight ${big ? "text-3xl md:text-5xl" : "text-xl md:text-2xl"}`}>{project.title}</p>
+      <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-16 w-16 md:h-28 md:w-28" : "h-10 w-10 md:h-16 md:w-16"}`} />
+      <div className={`absolute inset-x-0 bottom-0 ${big || wide ? "p-5" : "p-3 sm:p-5"} md:p-7`}>
+        <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
+        <p className={`mt-2 font-semibold leading-[1.05] sm:mt-3 tracking-tight ${big ? "text-2xl sm:text-3xl md:text-5xl" : "text-base sm:text-xl md:text-2xl"}`}>{project.title}</p>
         {project.functie && (
           <p className="mt-1 max-h-0 overflow-hidden text-sm text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-8 group-hover:opacity-100">{project.functie}</p>
         )}
@@ -89,7 +92,38 @@ export default function Portfolio() {
   const [filter, setFilter] = useState("Alles");
   const [modal, setModal] = useState<ModalContent | null>(null);
   const close = useCallback(() => setModal(null), []);
+  const [expanded, setExpanded] = useState(false);
   const shown = filter === "Alles" ? site.projects : site.projects.filter((p) => p.roles.includes(filter));
+  const first = shown.slice(0, VISIBLE);
+  const rest = shown.slice(VISIBLE);
+
+  const toggleMore = () => {
+    if (expanded) document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
+    setExpanded(!expanded);
+  };
+
+  const renderGrid = (items: Project[], offset: number) => (
+    <motion.div layout className="grid grid-flow-dense grid-cols-2 gap-3 md:auto-rows-[clamp(190px,15.5vw,250px)] md:grid-cols-3 md:gap-5">
+      <AnimatePresence mode="popLayout">
+        {items.map((p, j) => {
+          const i = j + offset;
+          return (
+            <motion.div
+              key={p.title}
+              layout
+              className={`${i % 6 === 0 ? "col-span-2 aspect-video" : i % 6 === 5 ? "col-span-2 aspect-video md:col-span-1" : "aspect-[4/5] sm:aspect-video"} md:aspect-auto ${layout(i)}`}
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.94 }}
+              transition={{ duration: 0.7, delay: (j % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <ProjectCard project={p} big={i % 6 === 0} wide={i % 6 === 5} onOpen={() => setModal({ title: p.title, video: p.video, meta: projectMeta(p) })} />
+            </motion.div>
+          );
+        })}
+      </AnimatePresence>
+    </motion.div>
+  );
 
   return (
     <section id="portfolio" className="mx-auto max-w-[1500px] px-5 py-28 md:px-10 md:py-36">
@@ -102,7 +136,10 @@ export default function Portfolio() {
                 key={f}
                 role="tab"
                 aria-selected={filter === f}
-                onClick={() => setFilter(f)}
+                onClick={() => {
+                  setFilter(f);
+                  setExpanded(false);
+                }}
                 className={`relative rounded-full border px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
                   filter === f ? "border-accent text-white" : "border-line hover:border-fg"
                 }`}
@@ -117,27 +154,41 @@ export default function Portfolio() {
         </LayoutGroup>
       </div>
 
-      <motion.div layout className="grid grid-flow-dense grid-cols-1 gap-4 md:auto-rows-[clamp(190px,15.5vw,250px)] md:grid-cols-3 md:gap-5">
-        <AnimatePresence mode="popLayout">
-          {shown.map((p, i) => (
-            <motion.div
-              key={p.title}
-              layout
-              className={`aspect-video md:aspect-auto ${layout(i)}`}
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.94 }}
-              transition={{ duration: 0.7, delay: (i % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <ProjectCard
-                project={p}
-                big={i % 6 === 0}
-                onOpen={() => setModal({ title: p.title, video: p.video, meta: projectMeta(p) })}
-              />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      {renderGrid(first, 0)}
+
+      <AnimatePresence initial={false}>
+        {expanded && rest.length > 0 && (
+          <motion.div
+            key="more"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
+            className="overflow-hidden"
+          >
+            <div className="pt-3 md:pt-5">{renderGrid(rest, VISIBLE)}</div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {rest.length > 0 && (
+        <div className="mt-12 flex justify-center md:mt-16">
+          <button
+            onClick={toggleMore}
+            aria-expanded={expanded}
+            className="group relative flex items-center gap-4 overflow-hidden rounded-full border border-fg/15 py-3 pl-7 pr-3 font-semibold transition-colors duration-500 hover:border-accent hover:text-white"
+          >
+            <span className="absolute inset-0 translate-y-full rounded-full bg-accent transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+            <span className="relative">{expanded ? "Toon minder" : "Bekijk meer projecten"}</span>
+            <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white transition-colors duration-500 group-hover:bg-white group-hover:text-accent">
+              <motion.svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.5 }}>
+                <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+              </motion.svg>
+            </span>
+            {!expanded && <span className="relative -ml-1 mr-1 text-sm font-medium text-muted transition-colors group-hover:text-white/80">+{rest.length}</span>}
+          </button>
+        </div>
+      )}
 
       <VideoModal content={modal} onClose={close} />
     </section>

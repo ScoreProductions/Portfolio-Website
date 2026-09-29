@@ -2,7 +2,7 @@
 export function Corners({ both = false }: { both?: boolean }) {
   return (
     <>
-      <span aria-hidden className="pointer-events-none absolute left-4 top-4 h-7 w-7 border-l border-t border-white/60 md:left-5 md:top-5 md:h-9 md:w-9" />
+      <span aria-hidden className="pointer-events-none absolute left-3 top-3 h-5 w-5 border-l border-t border-white/60 sm:left-4 sm:top-4 sm:h-7 sm:w-7 md:left-5 md:top-5 md:h-9 md:w-9" />
       {both && (
         <span aria-hidden className="pointer-events-none absolute bottom-4 right-4 h-7 w-7 border-b border-r border-white/60 md:bottom-5 md:right-5 md:h-9 md:w-9" />
       )}
