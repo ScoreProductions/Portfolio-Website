@@ -28,7 +28,7 @@ export default function Preloader({ name }: { name: string }) {
     <AnimatePresence>
       {!done && (
         <motion.div
-          className="fixed inset-0 z-[80] flex flex-col justify-between bg-accent p-5 text-bg md:p-10"
+          className="fixed inset-0 z-[80] flex flex-col justify-between bg-accent p-5 text-white md:p-10"
           exit={{ clipPath: "inset(0 0 100% 0)" }}
           initial={{ clipPath: "inset(0 0 0% 0)" }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}

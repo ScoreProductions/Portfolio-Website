@@ -1,85 +1,71 @@
 {
-  "name": "Score Productions",
-  "shortName": "Score",
-  "role": "Creatieve studio voor video, muziek & design",
-  "tagline": "Wij maken werk dat blijft hangen.",
-  "description": "Portfolio van Score Productions — video, muziek, branding en digitale ervaringen die opvallen.",
+  "name": "Max Score",
+  "brand": "Score Productions",
+  "role": "Producer · Camera · Editor",
+  "tagline": "Van concept tot content.",
+  "taglineAccent": "Nuchter in aanpak, sterk in beeld.",
+  "description": "Max Score / Score Productions — producer, cameraman en editor. Van concept tot content: video, fotografie en productie voor merken en bedrijven.",
   "location": "Nederland",
-  "email": "hallo@scoreproductions.nl",
-  "availability": "Beschikbaar voor nieuwe projecten",
-  "hero": {
-    "lines": ["Creative", "Studio &", "Productions"],
-    "intro": "Wij bouwen merken, beelden en geluid met obsessie voor detail. Van concept tot eindproduct."
-  },
-  "marquee": ["Video", "Muziek", "Branding", "Motion", "Web", "Fotografie", "Art Direction"],
-  "about": {
-    "title": "Over ons",
-    "text": "Score Productions is een onafhankelijke creatieve studio. We combineren strategie, design en productie om verhalen te vertellen die mensen raken. Elk project begint met een idee en eindigt met iets waar we trots op zijn.",
-    "stats": [
-      { "value": "8+", "label": "Jaar ervaring" },
-      { "value": "120", "label": "Projecten" },
-      { "value": "40+", "label": "Klanten" }
+  "showreel": "",
+  "showreelPoster": "",
+  "roles": ["Producer", "Camera", "Editor", "Creative"],
+
+  "services": {
+    "title": "Wat we doen",
+    "items": [
+      { "title": "Concept", "text": "Van eerste idee tot sterk verhaal. We denken mee over wat je wilt vertellen en hoe je dat het beste in beeld brengt." },
+      { "title": "Productie", "text": "Planning, crew, locaties en budget. Alles strak geregeld, zodat de draaidag soepel loopt." },
+      { "title": "Videografie", "text": "Commercials, bedrijfsfilms, social content en aftermovies. Filmisch geschoten met oog voor detail." },
+      { "title": "Fotografie", "text": "Campagnebeelden, portretten en behind the scenes die je merk laten zien zoals het is." },
+      { "title": "Post-productie", "text": "Montage, kleurcorrectie en sound. Het moment waarop alles samenkomt." }
     ]
   },
+
+  "freelance": {
+    "title": "Freelance",
+    "intro": "Ook los in te huren voor jouw productie.",
+    "items": ["Producer", "Videograaf / Fotograaf / Creative", "Editor"],
+    "footer": "Alles onder één hand."
+  },
+
   "projects": [
-    {
-      "slug": "neon-nights",
-      "title": "Neon Nights",
-      "client": "Nightlife Collective",
-      "year": "2026",
-      "category": "Music Video",
-      "summary": "Een visuele reis door de stad bij nacht, geschoten in één lange take.",
-      "description": "Voor Nightlife Collective regisseerden en produceerden we een muziekvideo die de energie van de stad vangt. Met een klein team, veel neon en één camera die nooit stopt.",
-      "image": "",
-      "colors": ["#ff3d7f", "#7a2cff"]
-    },
-    {
-      "slug": "atlas-rebrand",
-      "title": "Atlas Rebrand",
-      "client": "Atlas Studio",
-      "year": "2025",
-      "category": "Branding",
-      "summary": "Complete visuele identiteit voor een architectenbureau.",
-      "description": "Van logo tot typografie en motion-richtlijnen: een nieuwe identiteit die rust en precisie uitstraalt.",
-      "image": "",
-      "colors": ["#e8ff47", "#1b9c85"]
-    },
-    {
-      "slug": "echo-campaign",
-      "title": "Echo Campaign",
-      "client": "Echo Audio",
-      "year": "2025",
-      "category": "Commercial",
-      "summary": "Campagnefilm en sound design voor een nieuwe koptelefoon.",
-      "description": "We schreven, filmden en scoorden een campagne rond het idee van stilte. Uitgerold op social, web en in de bioscoop.",
-      "image": "",
-      "colors": ["#3dd6ff", "#2742ff"]
-    },
-    {
-      "slug": "bloom-festival",
-      "title": "Bloom Festival",
-      "client": "Bloom",
-      "year": "2024",
-      "category": "Aftermovie",
-      "summary": "Aftermovie en live visuals voor een driedaags festival.",
-      "description": "Drie dagen, vier camera's, één verhaal. Plus live visuals op het hoofdpodium die in realtime reageerden op de muziek.",
-      "image": "",
-      "colors": ["#ff9f1c", "#ff3d3d"]
-    }
+    { "title": "DIDD", "brand": "DIDD", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "large" },
+    { "title": "Hunted", "brand": "Endemol Shine", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
+    { "title": "Tastory", "brand": "Tastory", "roles": ["Camera"], "functie": "Camera & fotografie", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "tall" },
+    { "title": "Sushi Brothers", "brand": "Sushi Brothers", "roles": ["Camera", "Producer"], "functie": "Producer & camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
+    { "title": "One Week Film", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
+    { "title": "Ter Land Ter Zee", "brand": "Ter Land Ter Zee", "roles": ["Camera"], "functie": "Camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
+    { "title": "Frameworks", "brand": "Frameworks", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "tall" },
+    { "title": "Dubbelleven", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Concept, regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
+    { "title": "Vibe Sound & Vision", "brand": "Vibe", "roles": ["Camera"], "functie": "Camera", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
+    { "title": "Bullseye", "brand": "Bullseye", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "wide" },
+    { "title": "Wattkraft", "brand": "Wattkraft", "roles": ["Producer"], "functie": "Producer", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" },
+    { "title": "Docu", "brand": "Eigen werk", "roles": ["Creative", "Editor"], "functie": "Regie & montage", "description": "Beschrijving volgt.", "video": "", "preview": "", "thumbnail": "", "size": "normal" }
   ],
-  "services": [
-    { "title": "Video & Film", "text": "Concept, regie, productie en montage. Van commercials tot muziekvideo's." },
-    { "title": "Muziek & Sound", "text": "Compositie, productie, mixing en sound design voor beeld en merk." },
-    { "title": "Branding", "text": "Identiteit, logo, typografie en richtlijnen die werken op elk formaat." },
-    { "title": "Motion & Web", "text": "Animatie, 3D en websites met beweging en karakter." }
-  ],
+
+  "clients": {
+    "title": "Gewerkt met / voor",
+    "names": ["Tastory", "WT", "Simpel Zodiak", "Endemol Shine", "Signal Stream", "Hix", "LGG", "Sushi Brothers", "Vibe Sound & Vision", "Mich Ligtelijn", "The Lemon Tree", "Bullseye", "Bully", "Frameworks", "Wattkraft", "Brandeniers", "Smaakwerkers", "GAE"]
+  },
+
+  "about": {
+    "title": "Over mij",
+    "photo": "",
+    "blocks": [
+      { "title": "Wie ben ik", "text": "Ik ben Max, maker achter Score Productions. Tekst volgt." },
+      { "title": "Wat doe ik", "text": "Ik produceer, film en monteer. Van het eerste idee tot de laatste export. Tekst volgt." },
+      { "title": "Visie", "text": "Bedrijven helpen hun verhaal te vertellen met beeld dat werkt. Nuchter in aanpak, sterk in beeld. Tekst volgt." },
+      { "title": "Set-up", "text": "Camera, lenzen, licht en audio. Lijst volgt." }
+    ]
+  },
+
   "contact": {
     "title": "Laten we iets moois maken.",
-    "button": "Start een project"
-  },
-  "socials": [
-    { "label": "Instagram", "url": "https://instagram.com" },
-    { "label": "YouTube", "url": "https://youtube.com" },
-    { "label": "LinkedIn", "url": "https://linkedin.com" }
-  ]
+    "text": "Heb je een idee, project of vraag? Stuur een bericht, dan hoor je snel van me.",
+    "email": "info@scoreproductions.nl",
+    "phone": "+31 6 00000000",
+    "whatsapp": "31600000000",
+    "instagram": "https://instagram.com/",
+    "linkedin": "https://linkedin.com/"
+  }
 }

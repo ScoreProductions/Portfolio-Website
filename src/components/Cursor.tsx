@@ -15,9 +15,7 @@ export default function Cursor() {
     const move = (e: PointerEvent) => {
       x.set(e.clientX);
       y.set(e.clientY);
-      const el = (e.target as HTMLElement).closest<HTMLElement>(
-        "a, button, [data-cursor]"
-      );
+      const el = (e.target as HTMLElement).closest<HTMLElement>("a, button, [data-cursor]");
       setHover(!!el);
       setLabel(el?.dataset.cursor ?? "");
     };
@@ -28,15 +26,16 @@ export default function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="cursor-dot pointer-events-none fixed left-0 top-0 z-[70] hidden items-center justify-center rounded-full bg-fg text-[11px] font-medium uppercase tracking-widest text-bg mix-blend-difference md:flex"
+      className="cursor-dot pointer-events-none fixed left-0 top-0 z-[90] hidden items-center justify-center rounded-full bg-accent text-[11px] font-semibold uppercase tracking-widest text-white md:flex"
       style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
       animate={{
-        width: label ? 96 : hover ? 56 : 12,
-        height: label ? 96 : hover ? 56 : 12,
+        width: label ? 92 : hover ? 44 : 10,
+        height: label ? 92 : hover ? 44 : 10,
+        opacity: hover && !label ? 0.35 : 1,
       }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
     >
-      {label && <span className="mix-blend-normal">{label}</span>}
+      {label && <span>{label}</span>}
     </motion.div>
   );
 }

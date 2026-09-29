@@ -11,11 +11,16 @@ export const siteUrl = (
     : "http://localhost:3000")
 ).replace(/\/$/, "");
 
-export function getProject(slug: string) {
-  return site.projects.find((p) => p.slug === slug);
+/** Turns a YouTube/Vimeo link into an embeddable URL; returns null for direct video files. */
+export function embedUrl(url: string) {
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0&modestbranding=1`;
+  const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1&title=0&byline=0`;
+  return null;
 }
 
-export function projectGradient(p: Project) {
-  const [a, b] = p.colors;
-  return `radial-gradient(120% 120% at 20% 10%, ${a} 0%, transparent 55%), radial-gradient(120% 120% at 90% 90%, ${b} 0%, transparent 60%), #0b0b0c`;
+export function youtubeThumb(url: string) {
+  const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);
+  return yt ? `https://i.ytimg.com/vi/${yt[1]}/maxresdefault.jpg` : null;
 }

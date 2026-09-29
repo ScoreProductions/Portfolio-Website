@@ -1,21 +1,21 @@
 import About from "@/components/About";
-import Footer from "@/components/Footer";
+import Clients from "@/components/Clients";
+import Contact from "@/components/Contact";
 import Hero from "@/components/Hero";
-import Marquee from "@/components/Marquee";
+import Portfolio from "@/components/Portfolio";
 import Services from "@/components/Services";
-import Work from "@/components/Work";
-import { site } from "@/lib/site";
+import Showreel from "@/components/Showreel";
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Marquee items={site.marquee} />
-      <Work />
-      <About />
-      <Marquee items={site.services.map((s) => s.title)} baseVelocity={3} />
+      <Showreel />
       <Services />
-      <Footer />
+      <Portfolio />
+      <Clients />
+      <About />
+      <Contact />
     </>
   );
 }
