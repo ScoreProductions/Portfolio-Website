@@ -26,7 +26,7 @@ function Timecode() {
 function RoleWord() {
   const [i, setI] = useState(0);
   useEffect(() => {
-    const id = setInterval(() => setI((n) => (n + 1) % site.roles.length), 2400);
+    const id = setInterval(() => setI((n) => (n + 1) % site.roles.length), 4500);
     return () => clearInterval(id);
   }, []);
   const word = site.roles[i];
@@ -39,7 +39,7 @@ function RoleWord() {
               key={k}
               className="inline-block"
               variants={{ hidden: { y: "105%" }, show: { y: "0%" }, exit: { y: "-105%" } }}
-              transition={{ duration: 0.55, delay: k * 0.03, ease }}
+              transition={{ duration: 0.7, delay: k * 0.04, ease }}
             >
               {ch}
             </motion.span>
