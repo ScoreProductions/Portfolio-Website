@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { site } from "@/lib/site";
 import SectionHeader from "./SectionHeader";
 
-type Client = { name: string; logo: string; dark?: boolean };
+type Client = { name: string; logo: string };
 
 const wrap = (min: number, max: number, v: number) => {
   const r = max - min;
@@ -14,17 +14,12 @@ const wrap = (min: number, max: number, v: number) => {
 
 function Logo({ c }: { c: Client }) {
   return (
-    <div
-      title={c.name}
-      className={`flex h-24 w-44 shrink-0 items-center justify-center rounded-2xl px-6 py-5 ring-1 transition-all duration-500 hover:-translate-y-1 hover:ring-2 hover:ring-accent md:h-28 md:w-56 md:px-8 ${
-        c.dark ? "bg-fg ring-fg" : "bg-[#f4f4f4] ring-line"
-      }`}
-    >
+    <div title={c.name} className="flex h-24 items-center px-8 transition-transform duration-500 hover:scale-110 md:h-28 md:px-12">
       {c.logo ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={c.logo} alt={c.name} loading="lazy" className="max-h-full max-w-full object-contain" />
+        <img src={c.logo} alt={c.name} loading="lazy" className="h-12 w-auto max-w-[200px] object-contain md:h-16 md:max-w-[240px]" />
       ) : (
-        <span className={`font-display text-3xl leading-none ${c.dark ? "text-white" : "text-fg"}`}>{c.name}</span>
+        <span className="font-display whitespace-nowrap text-3xl leading-none text-fg md:text-4xl">{c.name}</span>
       )}
     </div>
   );
@@ -54,9 +49,7 @@ function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number })
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
             {items.map((c) => (
-              <div key={`${k}-${c.name}`} className="px-2 py-2 md:px-3">
-                <Logo c={c} />
-              </div>
+              <Logo key={`${k}-${c.name}`} c={c} />
             ))}
           </div>
         ))}
