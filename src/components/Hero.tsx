@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { embedUrl, site } from "@/lib/site";
 
@@ -55,24 +55,41 @@ function RoleTimeline({ active, onSelect }: { active: number; onSelect: (i: numb
   );
 }
 
+const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ#%&*+=?/<>";
+
+/** Text-scramble transition: letters shuffle randomly, then lock in left to right. */
 function RoleWord({ i }: { i: number }) {
   const word = site.roles[i];
+  const [text, setText] = useState(word);
+  const prev = useRef(word);
+
+  useEffect(() => {
+    const from = prev.current;
+    prev.current = word;
+    if (from === word) return;
+    const len = Math.max(from.length, word.length);
+    const total = 900;
+    const start = performance.now();
+    let raf = 0;
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / total);
+      let out = "";
+      for (let k = 0; k < len; k++) {
+        const lockAt = 0.25 + (k / len) * 0.75;
+        if (t >= lockAt) out += word[k] ?? "";
+        else if (t < 0.15) out += from[k] ?? "";
+        else out += GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+      }
+      setText(out);
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [word]);
+
   return (
-    <span className="relative block overflow-hidden py-[0.06em]" aria-live="polite">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span key={word} className="flex justify-center" initial="hidden" animate="show" exit="exit">
-          {word.split("").map((ch, k) => (
-            <motion.span
-              key={k}
-              className="inline-block"
-              variants={{ hidden: { y: "105%" }, show: { y: "0%" }, exit: { y: "-105%" } }}
-              transition={{ duration: 0.7, delay: k * 0.04, ease }}
-            >
-              {ch}
-            </motion.span>
-          ))}
-        </motion.span>
-      </AnimatePresence>
+    <span className="relative block py-[0.06em]" aria-live="polite">
+      <span className="block whitespace-nowrap">{text}</span>
     </span>
   );
 }
