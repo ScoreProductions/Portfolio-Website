@@ -55,7 +55,7 @@ export function ProjectCard({
       }}
       data-cursor="Play"
       aria-label={`${project.title} bekijken`}
-      className={`group relative block h-full w-full overflow-hidden rounded-2xl bg-fg text-left text-white md:rounded-3xl ${className}`}
+      className={`group relative block h-full w-full overflow-hidden rounded-2xl bg-surface text-left text-white md:rounded-3xl ${className}`}
     >
       <div className="absolute inset-0 transition-transform duration-[1.4s] ease-[cubic-bezier(.22,1,.36,1)] group-hover:scale-[1.07]">
         {thumb ? (
@@ -163,7 +163,7 @@ function ProjectTile({
             key={d}
             onClick={() => go(d)}
             aria-label={d < 0 ? "Vorige video" : "Volgende video"}
-            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-fg shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white md:h-11 md:w-11"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-ink shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white md:h-11 md:w-11"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
@@ -180,7 +180,7 @@ function ProjectTile({
   );
 }
 
-function modalContent(p: Project, n: number, setN: (n: number) => void): ModalContent {
+export function modalContent(p: Project, n: number, setN: (n: number) => void): ModalContent {
   const v = projectVariant(p, n);
   const count = p.items?.length ?? 0;
   return {
@@ -231,7 +231,7 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
             <ol className="mt-4 space-y-3 border-l-2 border-line pl-5">
               {p.timeline.map((t) => (
                 <li key={t.label} className="relative">
-                  <span className="absolute -left-[27px] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-white" />
+                  <span className="absolute -left-[27px] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-surface" />
                   <p className="font-semibold">{t.label}</p>
                   <p className="text-sm text-muted">{t.date}</p>
                 </li>

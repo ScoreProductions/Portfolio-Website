@@ -45,7 +45,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
     <AnimatePresence>
       {content && (
         <motion.div
-          className="fixed inset-0 z-[85] flex items-center justify-center bg-fg/80 p-3 backdrop-blur-md md:p-10"
+          className="fixed inset-0 z-[85] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md md:p-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           data-lenis-prevent
         >
           <motion.div
-            className={`relative grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "max-w-5xl md:grid-cols-[auto_1fr]" : "max-w-6xl md:grid-cols-[1.6fr_1fr]"}`}
+            className={`relative grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl border border-line bg-surface ${content.vertical ? "max-w-5xl md:grid-cols-[auto_1fr]" : "max-w-6xl md:grid-cols-[1.6fr_1fr]"}`}
             initial={{ y: 60, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 40, scale: 0.97, opacity: 0 }}
@@ -70,7 +70,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               if (Math.abs(dx) > 50) nav.go(dx < 0 ? 1 : -1);
             }}
           >
-            <div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
+            <div className={`relative bg-black ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
               {embed ? (
                 <iframe key={embed} src={embed} title={content.title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
               ) : content.video ? (
@@ -107,7 +107,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
             <button
               onClick={onClose}
               aria-label="Sluiten"
-              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-fg shadow-lg transition-transform duration-300 hover:rotate-90"
+              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-ink shadow-lg transition-transform duration-300 hover:rotate-90"
             >
               ×
             </button>

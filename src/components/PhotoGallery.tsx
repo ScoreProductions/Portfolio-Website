@@ -78,7 +78,7 @@ export default function PhotoGallery({ photos, alt }: { photos: string[]; alt: s
                         go(d);
                       }}
                       aria-label={d < 0 ? "Vorige foto" : "Volgende foto"}
-                      className={`absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-fg shadow-lg transition-colors hover:bg-accent hover:text-white ${d < 0 ? "left-3 md:left-6" : "right-3 md:right-6"}`}
+                      className={`absolute top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-ink shadow-lg transition-colors hover:bg-accent hover:text-white ${d < 0 ? "left-3 md:left-6" : "right-3 md:right-6"}`}
                     >
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
@@ -91,7 +91,7 @@ export default function PhotoGallery({ photos, alt }: { photos: string[]; alt: s
                     setOpen(null);
                   }}
                   aria-label="Sluiten"
-                  className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-fg shadow-lg transition-transform duration-300 hover:rotate-90 md:right-6 md:top-6"
+                  className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-ink shadow-lg transition-transform duration-300 hover:rotate-90 md:right-6 md:top-6"
                 >
                   ×
                 </button>

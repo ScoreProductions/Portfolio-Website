@@ -19,7 +19,7 @@ function Logo({ c }: { c: Client }) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={c.logo} alt={c.name} decoding="async" className="h-12 w-auto max-w-[200px] object-contain md:h-16 md:max-w-[240px]" />
       ) : (
-        <span className="font-display whitespace-nowrap text-3xl leading-none text-fg md:text-4xl">{c.name}</span>
+        <span className="font-display whitespace-nowrap text-3xl leading-none text-ink md:text-4xl">{c.name}</span>
       )}
     </div>
   );
@@ -63,7 +63,7 @@ export default function Clients() {
   const items = site.clients.items as Client[];
   const half = Math.ceil(items.length / 2);
   return (
-    <section aria-label={site.clients.title} className="border-y border-line py-20 md:py-28">
+    <section aria-label={site.clients.title} className="bg-paper py-20 text-ink md:py-28">
       <SectionHeader center label={site.clients.title} title="" />
       <div className="mt-10 space-y-2 md:mt-14">
         <Row items={items.slice(0, half)} baseVelocity={-2} />

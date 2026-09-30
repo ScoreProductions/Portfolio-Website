@@ -142,7 +142,7 @@ export default function Contact() {
               </span>
               <Magnetic>
                 <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
-                  <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+                  <span className="absolute inset-0 translate-y-full rounded-full bg-ink transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
                   <span className="relative transition-colors duration-300 group-hover:text-white">Verstuur →</span>
                 </button>
               </Magnetic>
