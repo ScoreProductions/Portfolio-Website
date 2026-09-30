@@ -3,7 +3,6 @@ import { Bebas_Neue, Geist, Geist_Mono, Instrument_Serif } from "next/font/googl
 import Cursor from "@/components/Cursor";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import Preloader from "@/components/Preloader";
 import SmoothScroll from "@/components/SmoothScroll";
 import { site, siteUrl } from "@/lib/site";
 import "./globals.css";
@@ -61,7 +60,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="nl" className={`${geistSans.variable} ${geistMono.variable} ${display.variable} ${serif.variable} antialiased`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <Preloader name={site.brand} />
         <SmoothScroll />
         <Cursor />
         <Nav />
