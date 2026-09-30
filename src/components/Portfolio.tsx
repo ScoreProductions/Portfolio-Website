@@ -6,6 +6,7 @@ import { useCallback, useRef, useState } from "react";
 import { isVertical, projectVariant, site, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
+import PhotoGallery from "./PhotoGallery";
 import VideoModal, { type ModalContent } from "./VideoModal";
 
 const filters = ["Alles", "TV", ...site.roles];
@@ -192,12 +193,8 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
       {!!p.photos?.length && (
         <div>
           <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</dt>
-          <dd className="mt-4 grid grid-cols-2 items-start gap-3">
-            {p.photos.map((src) => (
-              <a key={src} href={src} target="_blank" rel="noopener noreferrer" className="group block overflow-hidden rounded-xl">
-                <Image src={src} alt={`Behind the scenes`} width={600} height={600} sizes="(min-width: 768px) 20vw, 45vw" className="h-auto w-full transition-transform duration-700 group-hover:scale-105" />
-              </a>
-            ))}
+          <dd>
+            <PhotoGallery photos={p.photos} alt="Behind the scenes" />
           </dd>
         </div>
       )}
