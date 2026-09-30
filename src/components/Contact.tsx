@@ -15,6 +15,31 @@ export const socials = [
   { label: "LinkedIn", href: c.linkedin },
 ];
 
+function SocialIcon({ name }: { name: string }) {
+  const p = { viewBox: "0 0 24 24", className: "h-5 w-5", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
+  if (name === "Instagram")
+    return (
+      <svg {...p}>
+        <rect x="3" y="3" width="18" height="18" rx="5" />
+        <circle cx="12" cy="12" r="4" />
+        <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+      </svg>
+    );
+  if (name === "WhatsApp")
+    return (
+      <svg {...p}>
+        <path d="M4 20l1.3-4A8 8 0 1 1 8 18.7L4 20z" />
+        <path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-1.8-1.8l.8-1-1-2L9 9.5z" />
+      </svg>
+    );
+  return (
+    <svg {...p}>
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M8 10.5V16M8 8v.01M12 16v-5.5M12 13a2.5 2.5 0 0 1 5 0v3" />
+    </svg>
+  );
+}
+
 function Field({ label, name, type = "text", textarea, optional }: { label: string; name: string; type?: string; textarea?: boolean; optional?: boolean }) {
   const cls = "peer w-full border-b border-white/30 bg-transparent pb-3 pt-6 text-lg text-white outline-none transition-colors placeholder-transparent focus:border-white";
   return (
@@ -87,14 +112,19 @@ export default function Contact() {
           </a>
         </Reveal>
 
-        <Reveal className="mt-10 flex items-center justify-center gap-4 text-sm font-medium md:text-base">
-          {socials.map((s, i) => (
-            <span key={s.label} className="flex items-center gap-4">
-              {i > 0 && <span className="h-1 w-1 rounded-full bg-white/50" />}
-              <a href={s.href} target="_blank" rel="noreferrer" className="text-white/85 transition-colors hover:text-white">
-                {s.label}
-              </a>
-            </span>
+        <Reveal className="mt-10 flex items-center justify-center gap-4">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.label}
+              title={s.label}
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-white/30 text-white transition-colors duration-300 hover:bg-white hover:text-accent"
+            >
+              <SocialIcon name={s.label} />
+            </a>
           ))}
         </Reveal>
 
