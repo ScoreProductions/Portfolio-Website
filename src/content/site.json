@@ -198,7 +198,7 @@
       "brand": "Hout in de Tuin",
       "roles": [
         "Producer",
-        "Camera"
+        "Creative"
       ],
       "functie": "Productie & BTS-fotografie",
       "description": "Bedrijfsfilmcampagne voor Hout in de Tuin, een bedrijf uit het noorden van Nederland. Ik had de lead in de productie: alles vooraf regelen en de organisatie op de set. Daarnaast maakte ik de behind-the-scenes-fotografie.",
@@ -211,10 +211,10 @@
       "title": "Tastory",
       "brand": "Tastory",
       "roles": [
-        "Creative",
         "Producer",
         "Camera",
-        "Editor"
+        "Editor",
+        "Creative"
       ],
       "functie": "Concept, regie, camera & edit",
       "description": "Doorlopende samenwerking met het marketingteam van Tastory. Ik denk mee over de strategie, bedenk de concepten en neem de volledige productie voor mijn rekening: regie, camera en montage. Deze voxpop is er één uit tientallen video's die we samen hebben gemaakt.",
@@ -242,10 +242,10 @@
       "title": "Wilminktheater",
       "brand": "Wilminktheater Enschede",
       "roles": [
-        "Creative",
         "Producer",
         "Camera",
-        "Editor"
+        "Editor",
+        "Creative"
       ],
       "functie": "Concept, regie, camera & edit",
       "description": "Verschillende stukken content om de verbouwing van het theater in de zomer van 2026 te promoten, bij de vaste (vaak oudere) bezoekers en bij een breder publiek. Ik dacht mee over het idee, de setting en het script, en had de lead in regie, camera en montage.",
@@ -337,11 +337,12 @@
       "title": "One Week Film",
       "brand": "Eigen werk",
       "roles": [
-        "Creative",
-        "Editor"
+        "Producer",
+        "Camera",
+        "Creative"
       ],
-      "functie": "Regie & montage",
-      "description": "Beschrijving volgt.",
+      "functie": "Concept, regie, productie & camera",
+      "description": "Een korte film die in één week van idee tot eindresultaat kwam. Ik bedacht de film en regisseerde hem, en deed daarnaast de productie en de camera.",
       "video": "https://youtu.be/iA3SGJ-37Z4",
       "preview": "",
       "thumbnail": "/images/work/one-week-film.jpg"
@@ -391,9 +392,7 @@
       "title": "Wattkraft",
       "brand": "Wattkraft",
       "roles": [
-        "Producer",
-        "Creative",
-        "Editor"
+        "Producer"
       ],
       "functie": "Productie, script & edit",
       "description": "Voor Wattkraft, de zusteronderneming van Huawei, maakte ik een reeks video's die als campagnemiddel zijn ingezet. Ik deed de productie en de planning, schreef de scripts en monteerde de video's.",
@@ -406,8 +405,7 @@
       "title": "Brandeniers",
       "brand": "Brandeniers",
       "roles": [
-        "Producer",
-        "Camera"
+        "Producer"
       ],
       "functie": "Productie & camera",
       "description": "Voor Brandeniers maakten we meerdere producties. Een daarvan is een aftermovie van een ideeënmarathon waarin twee teams het tegen elkaar opnamen. Meer volgt.",
@@ -420,11 +418,12 @@
       "title": "Dubbelleven",
       "brand": "Eigen werk",
       "roles": [
-        "Creative",
-        "Editor"
+        "Producer",
+        "Editor",
+        "Creative"
       ],
-      "functie": "Concept, regie & montage",
-      "description": "Beschrijving volgt.",
+      "functie": "Script, regie, productie & montage",
+      "description": "Een verhaal van mijn eigen hand dat tot leven kwam. De focus lag op het creatieve werk: ik schreef het volledige script en deed de regie. Daarnaast verzorgde ik de productie en de montage.",
       "video": "https://youtu.be/NWDdLRMljeM",
       "preview": "",
       "thumbnail": "/images/work/dubbelleven.jpg"
@@ -433,11 +432,13 @@
       "title": "Het Kippenhok",
       "brand": "Eigen werk",
       "roles": [
-        "Creative",
-        "Editor"
+        "Producer",
+        "Camera",
+        "Editor",
+        "Creative"
       ],
-      "functie": "Regie & montage",
-      "description": "Beschrijving volgt.",
+      "functie": "Regie, productie, camera & montage",
+      "description": "Documentaire die ik zelf in gang zette. Ik was de regisseur en deed daarnaast de productie, de camera en de montage.",
       "video": "https://youtu.be/vFqGCO9bEPI",
       "preview": "",
       "thumbnail": "/images/work/het-kippenhok.jpg"
