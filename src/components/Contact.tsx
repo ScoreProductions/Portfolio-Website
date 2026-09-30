@@ -15,14 +15,14 @@ export const socials = [
   { label: "LinkedIn", href: c.linkedin },
 ];
 
-function Field({ label, name, type = "text", textarea }: { label: string; name: string; type?: string; textarea?: boolean }) {
+function Field({ label, name, type = "text", textarea, optional }: { label: string; name: string; type?: string; textarea?: boolean; optional?: boolean }) {
   const cls = "peer w-full border-b border-white/30 bg-transparent pb-3 pt-6 text-lg text-white outline-none transition-colors placeholder-transparent focus:border-white";
   return (
     <label className="relative block text-left">
       {textarea ? (
         <textarea name={name} required rows={3} placeholder={label} className={`${cls} resize-none`} />
       ) : (
-        <input name={name} type={type} required placeholder={label} className={cls} />
+        <input name={name} type={type} required={!optional} placeholder={label} className={cls} />
       )}
       <span className="pointer-events-none absolute left-0 top-0 text-xs font-medium uppercase tracking-[0.2em] text-white/70 transition-all peer-placeholder-shown:top-6 peer-placeholder-shown:text-lg peer-placeholder-shown:normal-case peer-placeholder-shown:tracking-normal peer-focus:top-0 peer-focus:text-xs peer-focus:uppercase peer-focus:tracking-[0.2em] peer-focus:text-white">
         {label}
@@ -50,6 +50,7 @@ export default function Contact() {
           from_name: "Score Productions website",
           name: d.get("naam"),
           email: d.get("email"),
+          telefoon: d.get("telefoon") || "-",
           message: d.get("bericht"),
         }),
       });
@@ -103,10 +104,11 @@ export default function Contact() {
               <Field label="Naam" name="naam" />
               <Field label="E-mail" name="email" type="email" />
             </div>
+            <Field label="Telefoonnummer (optioneel)" name="telefoon" type="tel" optional />
             <Field label="Bericht" name="bericht" textarea />
             <div className="flex items-center justify-between gap-4 pt-2">
               <span className="text-sm text-white/80" aria-live="polite">
-                {{ idle: "", sending: "Versturen…", sent: "Bedankt! Je bericht is verstuurd ✓", error: `Versturen lukte niet. Mail gerust direct naar ${c.email}` }[status]}
+                {{ idle: "", sending: "Versturen…", sent: "Bedankt! We nemen snel contact met je op ✓", error: `Versturen lukte niet. Mail gerust direct naar ${c.email}` }[status]}
               </span>
               <Magnetic>
                 <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
