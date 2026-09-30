@@ -216,13 +216,17 @@
       "title": "Wilminktheater",
       "brand": "Wilminktheater Enschede",
       "roles": [
-        "Camera"
+        "Creative",
+        "Producer",
+        "Camera",
+        "Editor"
       ],
-      "functie": "Camera",
-      "description": "Beschrijving volgt.",
+      "functie": "Concept, regie, camera & edit",
+      "description": "Verschillende stukken content om de verbouwing van het theater in de zomer van 2026 te promoten, bij de vaste (vaak oudere) bezoekers en bij een breder publiek. Ik dacht mee over het idee, de setting en het script, en had de lead in regie, camera en montage.",
       "video": "",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "jaar": "2026"
     },
     {
       "title": "Go Ahead Eagles",
@@ -230,11 +234,40 @@
       "roles": [
         "Producer"
       ],
-      "functie": "Producer",
-      "description": "Beschrijving volgt.",
+      "functie": "Productie",
+      "description": "Campagnevideo rond de bekerfinale van 2025 in De Kuip, samen met Drukwerkdeal en State of Football. Alle meereizende supporters kregen een gratis shirt, en de video maakte die actie bekend. Ik regelde de volledige productie, en we interviewden oud-spelers van de club.",
       "video": "",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "via": "Frameworks",
+      "jaar": "2025"
+    },
+    {
+      "title": "Hout in de Tuin",
+      "brand": "Hout in de Tuin",
+      "roles": [
+        "Producer",
+        "Camera"
+      ],
+      "functie": "Productie & BTS-fotografie",
+      "description": "Bedrijfsfilmcampagne voor Hout in de Tuin, een bedrijf uit het noorden van Nederland. Ik had de lead in de productie: alles vooraf regelen en de organisatie op de set. Daarnaast maakte ik de behind-the-scenes-fotografie.",
+      "video": "",
+      "preview": "",
+      "thumbnail": "",
+      "via": "Frameworks"
+    },
+    {
+      "title": "Smaakverkenners",
+      "brand": "Smaakverkenners",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Productie",
+      "description": "Moederdagcampagne waarin de box van Smaakverkenners centraal staat, als manier om (weer) in contact te komen met je moeder en je waardering te laten zien. Ik pakte de productie op, regelde de locaties en ondersteunde op de set als producer.",
+      "video": "",
+      "preview": "",
+      "thumbnail": "",
+      "via": "Frameworks"
     },
     {
       "title": "One Week Film",
@@ -262,25 +295,43 @@
       "thumbnail": ""
     },
     {
-      "title": "Kookgigant Kerst",
+      "title": "Kookgigant",
       "brand": "Kookgigant",
       "roles": [
         "Producer"
       ],
-      "functie": "Producer",
-      "description": "Beschrijving volgt.",
+      "functie": "Productie & klantcontact",
+      "description": "Golden Ticket-campagne, bedacht om de verkoop te stimuleren: klanten konden een golden ticket vinden en daarmee gratis shoptegoed winnen. Ik had de lead in het klantcontact en de hele productie: locaties, props en figuratie, en op de set.",
       "video": "",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "via": "Frameworks",
+      "items": [
+        {
+          "title": "Golden Ticket",
+          "functie": "Productie & klantcontact",
+          "description": "Golden Ticket-campagne, bedacht om de verkoop te stimuleren: klanten konden een golden ticket vinden en daarmee gratis shoptegoed winnen. Ik had de lead in het klantcontact en de hele productie: locaties, props en figuratie, en op de set.",
+          "video": "",
+          "thumbnail": ""
+        },
+        {
+          "title": "Kerst",
+          "functie": "Producer",
+          "description": "Beschrijving volgt.",
+          "video": "",
+          "thumbnail": ""
+        }
+      ]
     },
     {
       "title": "Vibe Sound & Design",
       "brand": "Vibe Sound & Design",
       "roles": [
-        "Camera"
+        "Camera",
+        "Editor"
       ],
-      "functie": "Camera",
-      "description": "Beschrijving volgt.",
+      "functie": "Camera & edit",
+      "description": "Promotiemateriaal voor DJ-bedrijf Vibe Sound & Design. Ik filmde een DJ-set op een bruiloft en haalde daar meerdere stukken social content uit.",
       "video": "",
       "preview": "",
       "thumbnail": ""
@@ -289,25 +340,30 @@
       "title": "Wattkraft",
       "brand": "Wattkraft",
       "roles": [
-        "Producer"
+        "Producer",
+        "Creative",
+        "Editor"
       ],
-      "functie": "Producer",
-      "description": "Beschrijving volgt.",
+      "functie": "Productie, script & edit",
+      "description": "Voor Wattkraft, de zusteronderneming van Huawei, maakte ik een reeks video's die als campagnemiddel zijn ingezet. Ik deed de productie en de planning, schreef de scripts en monteerde de video's.",
       "video": "",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "via": "Frameworks"
     },
     {
       "title": "Brandeniers",
       "brand": "Brandeniers",
       "roles": [
-        "Producer"
+        "Producer",
+        "Camera"
       ],
-      "functie": "Producer",
-      "description": "Beschrijving volgt.",
+      "functie": "Productie & camera",
+      "description": "Voor Brandeniers maakten we meerdere producties. Een daarvan is een aftermovie van een ideeënmarathon waarin twee teams het tegen elkaar opnamen. Meer volgt.",
       "video": "",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "via": "Frameworks"
     },
     {
       "title": "Dubbelleven",
@@ -410,6 +466,10 @@
       {
         "name": "Go Ahead Eagles",
         "logo": "/logos/go-ahead-eagles.svg"
+      },
+      {
+        "name": "Hout in de Tuin",
+        "logo": ""
       }
     ]
   },

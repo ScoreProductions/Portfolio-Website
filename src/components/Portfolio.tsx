@@ -164,8 +164,8 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
   };
 }
 
-export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk">) {
-  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
+export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via">) {
+  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.via ? [["Via", `${p.via} (productiehuis)`]] : []), ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
   return (
     <dl className="space-y-5">
       {rows.map(([k, v]) => (

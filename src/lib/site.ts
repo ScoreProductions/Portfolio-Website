@@ -13,6 +13,8 @@ export type Project = {
   jaar?: string;
   timeline?: { label: string; date: string }[];
   kijk?: { label: string; url: string };
+  /** Production company the work was made through. */
+  via?: string;
   /** Extra videos for the same client; the tile lets visitors swipe between them. */
   items?: ProjectItem[];
 };
