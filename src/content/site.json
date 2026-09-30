@@ -122,7 +122,12 @@
       "thumbnail": "/images/tv/jachtseizoen.jpg",
       "tv": true,
       "jaar": "2026",
-      "timeline": [],
+      "timeline": [
+        {
+          "label": "Most Wanted seizoen 3",
+          "date": "Runner / producer · 2026"
+        }
+      ],
       "kijk": {
         "label": "Videoland",
         "url": "https://www.videoland.com"
@@ -141,7 +146,12 @@
       "thumbnail": "/images/tv/dames-in-de-dop-s1.jpg",
       "tv": true,
       "jaar": "2024",
-      "timeline": [],
+      "timeline": [
+        {
+          "label": "Seizoen 1",
+          "date": "Producer · 2024"
+        }
+      ],
       "kijk": {
         "label": "Prime Video",
         "url": "https://www.primevideo.com/-/nl/detail/0TWRXZ5VTRHNLEF85M7O1D2E8Y"
@@ -160,7 +170,12 @@
       "thumbnail": "/images/tv/te-land.jpg",
       "tv": true,
       "jaar": "2024",
-      "timeline": [],
+      "timeline": [
+        {
+          "label": "RTL seizoen 1",
+          "date": "Camera · 2024"
+        }
+      ],
       "kijk": {
         "label": "Videoland",
         "url": "https://www.videoland.com"
@@ -173,18 +188,6 @@
         "Camera"
       ],
       "functie": "Camera & fotografie",
-      "description": "Beschrijving volgt.",
-      "video": "",
-      "preview": "",
-      "thumbnail": ""
-    },
-    {
-      "title": "DIDD",
-      "brand": "DIDD",
-      "roles": [
-        "Producer"
-      ],
-      "functie": "Producer",
       "description": "Beschrijving volgt.",
       "video": "",
       "preview": "",
@@ -236,9 +239,9 @@
       ],
       "functie": "Regie & montage",
       "description": "Beschrijving volgt.",
-      "video": "",
+      "video": "https://vimeo.com/1231565720",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "/images/work/one-week-film.jpg"
     },
     {
       "title": "Frameworks",
@@ -321,12 +324,12 @@
       ],
       "functie": "Concept, regie & montage",
       "description": "Beschrijving volgt.",
-      "video": "",
+      "video": "https://vimeo.com/1231565878",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "/images/work/dubbelleven.jpg"
     },
     {
-      "title": "Docu",
+      "title": "Het Kippenhok",
       "brand": "Eigen werk",
       "roles": [
         "Creative",
@@ -334,9 +337,9 @@
       ],
       "functie": "Regie & montage",
       "description": "Beschrijving volgt.",
-      "video": "",
+      "video": "https://vimeo.com/1231565860",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "/images/work/het-kippenhok.jpg"
     }
   ],
   "clients": {
@@ -468,8 +471,8 @@
     "title": "One Week Film",
     "text": "Eén week, één verhaal. Volledig in eigen hand.",
     "tag": "Eigen werk",
-    "video": "",
-    "thumbnail": ""
+    "video": "https://vimeo.com/1231565720",
+    "thumbnail": "/images/work/one-week-film.jpg"
   },
   "heroSubAccent": "sterk in beeld."
 }
