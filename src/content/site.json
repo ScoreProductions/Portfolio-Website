@@ -235,10 +235,32 @@
       ],
       "functie": "Concept, regie, camera & edit",
       "description": "Verschillende stukken content om de verbouwing van het theater in de zomer van 2026 te promoten, bij de vaste (vaak oudere) bezoekers en bij een breder publiek. Ik dacht mee over het idee, de setting en het script, en had de lead in regie, camera en montage.",
-      "video": "",
+      "video": "https://youtube.com/shorts/6_vuOtIozDA",
       "preview": "",
       "thumbnail": "",
-      "jaar": "2026"
+      "jaar": "2026",
+      "items": [
+        {
+          "title": "Garderobe",
+          "video": "https://youtube.com/shorts/6_vuOtIozDA",
+          "thumbnail": ""
+        },
+        {
+          "title": "Foyer",
+          "video": "https://youtube.com/shorts/bPTN79KO9l8",
+          "thumbnail": ""
+        },
+        {
+          "title": "Bars",
+          "video": "https://youtube.com/shorts/rIYLwg7KuXs",
+          "thumbnail": "https://i.ytimg.com/vi/rIYLwg7KuXs/hqdefault.jpg"
+        },
+        {
+          "title": "Kassa",
+          "video": "https://youtube.com/shorts/vTeto5j8gMU",
+          "thumbnail": "https://i.ytimg.com/vi/vTeto5j8gMU/hqdefault.jpg"
+        }
+      ]
     },
     {
       "title": "Go Ahead Eagles",

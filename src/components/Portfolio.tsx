@@ -145,8 +145,8 @@ function ProjectTile({
         ))}
       </div>
       <div className="pointer-events-none absolute left-1/2 top-3 z-10 flex -translate-x-1/2 gap-1.5 md:top-5">
-        {project.items!.map((it, k) => (
-          <span key={it.title} className={`h-1.5 rounded-full transition-all duration-300 ${k === n ? "w-5 bg-white" : "w-1.5 bg-white/50"}`} />
+        {project.items!.map((_, k) => (
+          <span key={k} className={`h-1.5 rounded-full transition-all duration-300 ${k === n ? "w-5 bg-white" : "w-1.5 bg-white/50"}`} />
         ))}
       </div>
     </div>
