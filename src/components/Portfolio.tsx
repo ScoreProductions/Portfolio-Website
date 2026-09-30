@@ -255,8 +255,10 @@ export default function Portfolio() {
   const [expanded, setExpanded] = useState(false);
   const shown =
     filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
-  const first = shown.slice(0, VISIBLE);
-  const rest = shown.slice(VISIBLE);
+  // Only "Alles" is collapsed; a role filter shows every matching project at once.
+  const limit = filter === "Alles" ? VISIBLE : shown.length;
+  const first = shown.slice(0, limit);
+  const rest = shown.slice(limit);
 
   const toggleMore = () => {
     if (expanded) document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
