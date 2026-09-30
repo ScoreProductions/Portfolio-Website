@@ -538,11 +538,11 @@
   ],
   "featured": {
     "label": "Passieproject",
-    "title": "One Week Film",
-    "text": "Eén week, één verhaal. Volledig in eigen hand.",
+    "title": "Vietnam",
+    "text": "Een reis door Vietnam in een snelle, flitsende edit. Een andere stijl dan de rest van mijn werk: puur ritme, energie en beeld.",
     "tag": "Eigen werk",
-    "video": "https://youtu.be/iA3SGJ-37Z4",
-    "thumbnail": "/images/work/one-week-film.jpg"
+    "video": "",
+    "thumbnail": ""
   },
   "heroSubAccent": "sterk in beeld."
 }
