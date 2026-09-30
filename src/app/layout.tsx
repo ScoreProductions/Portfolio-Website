@@ -51,7 +51,7 @@ const jsonLd = {
   email: site.contact.email,
   telephone: site.contact.phone,
   description: site.description,
-  worksFor: { "@type": "Organization", name: site.brand },
+  worksFor: { "@type": "Organization", name: site.brand, address: { "@type": "PostalAddress", streetAddress: "Molenstraat 5-24", addressLocality: "Enschede", addressCountry: "NL" } },
   sameAs: [site.contact.instagram, site.contact.linkedin],
 };
 

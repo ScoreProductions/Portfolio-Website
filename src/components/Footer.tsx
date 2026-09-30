@@ -58,6 +58,7 @@ export default function Footer() {
       <div className="mt-16 flex flex-col justify-between gap-3 border-t border-line py-8 text-sm text-muted md:flex-row">
         <span className="flex flex-wrap gap-x-4 gap-y-1">
           <span>© {new Date().getFullYear()} {site.brand}. Alle rechten voorbehouden.</span>
+          <span>{site.contact.address}</span>
           <span>KvK {site.contact.kvk}</span>
           <Link href="/privacy" className="transition-colors hover:text-accent">
             Privacyverklaring
