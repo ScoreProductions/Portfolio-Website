@@ -3,7 +3,7 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import { isVertical, projectVariant, site, youtubeThumb, type Project } from "@/lib/site";
+import { isVertical, projectVariant, site, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import PhotoGallery from "./PhotoGallery";
@@ -27,7 +27,7 @@ export function ProjectCard({
   onOpen,
   className = "",
 }: {
-  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar"> & { functie?: string; subtitle?: string };
+  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar" | "vertical" | "previewStart"> & { functie?: string; subtitle?: string };
   big?: boolean;
   wide?: boolean;
   onOpen: () => void;
@@ -35,12 +35,24 @@ export function ProjectCard({
 }) {
   const video = useRef<HTMLVideoElement>(null);
   const thumb = project.thumbnail || youtubeThumb(project.video);
+  const vertical = isVertical(project);
+  // Without an own preview clip, hovering plays a muted loop straight from the YouTube video.
+  const ytPreview = !project.preview && project.video ? youtubePreviewUrl(project.video, project.previewStart ?? (vertical ? 1 : 15)) : null;
+  const [hover, setHover] = useState(false);
+  const [ready, setReady] = useState(false);
 
   return (
     <button
       onClick={onOpen}
-      onPointerEnter={() => video.current?.play().catch(() => {})}
-      onPointerLeave={() => video.current?.pause()}
+      onPointerEnter={(e) => {
+        video.current?.play().catch(() => {});
+        if (e.pointerType === "mouse") setHover(true);
+      }}
+      onPointerLeave={() => {
+        video.current?.pause();
+        setHover(false);
+        setReady(false);
+      }}
       data-cursor="Play"
       aria-label={`${project.title} bekijken`}
       className={`group relative block h-full w-full overflow-hidden rounded-2xl bg-fg text-left text-white md:rounded-3xl ${className}`}
@@ -53,6 +65,20 @@ export function ProjectCard({
         )}
         {project.preview && (
           <video ref={video} src={project.preview} muted loop playsInline preload="none" className="absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+        )}
+        {ytPreview && hover && (
+          <div className="pointer-events-none absolute inset-0 overflow-hidden [container-type:size]">
+            <iframe
+              src={ytPreview}
+              title=""
+              tabIndex={-1}
+              aria-hidden
+              allow="autoplay; encrypted-media"
+              onLoad={() => setTimeout(() => setReady(true), 700)}
+              className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 border-0 transition-opacity duration-700 ${ready ? "opacity-100" : "opacity-0"}`}
+              style={vertical ? { width: "max(100cqw, 56.25cqh)", height: "max(100cqh, 177.78cqw)" } : { width: "max(100cqw, 177.78cqh)", height: "max(100cqh, 56.25cqw)" }}
+            />
+          </div>
         )}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/5 transition-opacity duration-500 group-hover:opacity-80" />

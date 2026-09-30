@@ -13,6 +13,8 @@ export type Project = {
   jaar?: string;
   timeline?: { label: string; date: string }[];
   kijk?: { label: string; url: string };
+  /** Second where the muted hover preview of a YouTube video starts. */
+  previewStart?: number;
   /** Portrait (9:16) video; defaults to true for YouTube Shorts links. */
   vertical?: boolean;
   /** Behind-the-scenes photos shown in the project modal. */
@@ -23,7 +25,7 @@ export type Project = {
   items?: ProjectItem[];
 };
 
-export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical">> & { title: string };
+export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical" | "previewStart">> & { title: string };
 
 /** Project merged with its n-th item (item 0 is the project itself). */
 export function projectVariant(p: Project, n: number): Project & { subtitle?: string } {
@@ -48,6 +50,18 @@ export function embedUrl(url: string) {
   const hash = vimeo?.[2] ?? url.match(/[?&]h=([\da-f]+)/)?.[1];
   if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1&title=0&byline=0${hash ? `&h=${hash}` : ""}`;
   return null;
+}
+
+export function youtubeId(url: string) {
+  return url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/)?.[1] ?? null;
+}
+
+/** Muted, chromeless, looping YouTube embed used as a hover preview on tiles. */
+export function youtubePreviewUrl(url: string, start: number) {
+  const id = youtubeId(url);
+  if (!id) return null;
+  const q = new URLSearchParams({ autoplay: "1", mute: "1", controls: "0", loop: "1", playlist: id, start: String(start), end: String(start + 8), playsinline: "1", rel: "0", modestbranding: "1", disablekb: "1", iv_load_policy: "3" });
+  return `https://www.youtube-nocookie.com/embed/${id}?${q}`;
 }
 
 export function isVertical(p: Pick<Project, "video" | "vertical">) {
