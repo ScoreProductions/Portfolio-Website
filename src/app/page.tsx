@@ -10,12 +10,15 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Services />
-      <Portfolio />
-      <Featured />
-      <Clients />
-      <About />
-      <Contact />
+      {/* Rest of the page slides up over the hero as a rounded sheet for a softer transition. */}
+      <div className="relative z-10 -mt-10 rounded-t-[2rem] bg-bg shadow-[0_-20px_60px_rgba(0,0,0,0.18)] md:-mt-14 md:rounded-t-[3rem]">
+        <Services />
+        <Portfolio />
+        <Featured />
+        <Clients />
+        <About />
+        <Contact />
+      </div>
     </>
   );
 }

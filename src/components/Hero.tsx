@@ -110,7 +110,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.div
-        className="absolute inset-x-3 bottom-3 top-20 text-white/70 md:inset-x-6 md:bottom-6 md:top-24"
+        className="absolute inset-x-3 bottom-14 top-20 text-white/70 md:inset-x-6 md:bottom-20 md:top-24"
         initial={{ opacity: 0, scale: 1.04 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 1.2, duration: 1.2, ease }}
@@ -177,7 +177,8 @@ export default function Hero() {
 
       <motion.a
         href="#diensten"
-        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[11px] font-medium uppercase tracking-[0.35em] text-white/80 md:bottom-10"
+        style={{ opacity: contentOpacity }}
+        className="absolute bottom-16 left-1/2 flex -translate-x-1/2 flex-col items-center gap-3 text-[11px] font-medium uppercase tracking-[0.35em] text-white/80 md:bottom-20"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
