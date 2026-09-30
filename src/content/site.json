@@ -57,13 +57,14 @@
           "Sound"
         ]
       }
-    ]
+    ],
+    "intro": "De hele productie van A tot Z: van het eerste idee tot de laatste export. In één hand, of precies het stuk dat je nodig hebt."
   },
   "freelance": {
     "title": "Freelance",
     "items": [
       "Producer",
-      "Camera / Foto",
+      "Foto / Videograaf",
       "Editor"
     ],
     "intro": "Ook los in te huren als:"
@@ -588,8 +589,8 @@
     ]
   },
   "contact": {
-    "title": "Nieuw project?",
-    "text": "Laten we praten.",
+    "title": "Iets in gedachten?",
+    "text": "Vertel kort wat je zoekt, dan denk ik mee.",
     "email": "max@scoreproductions.nl",
     "phone": "06 57321544",
     "whatsapp": "31657321544",
@@ -617,7 +618,7 @@
     "label": "Passieproject",
     "title": "Vietnam",
     "text": "Een reis door Vietnam in een snelle, flitsende edit. Een andere stijl dan de rest van mijn werk: puur ritme, energie en beeld.",
-    "tag": "Eigen werk",
+    "tag": "Passieproject",
     "video": "",
     "thumbnail": ""
   },

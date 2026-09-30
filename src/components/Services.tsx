@@ -10,7 +10,9 @@ export default function Services() {
   return (
     <section id="diensten" className="mx-auto grid max-w-[1500px] gap-14 px-5 py-24 md:grid-cols-[1.5fr_1fr] md:gap-20 md:px-10 md:py-36">
       <div>
-        <SectionHeader label={site.brand} title="Wat we" accent="doen" />
+        <SectionHeader label={site.brand} title="Wat we" accent="doen">
+          <p className="mt-4 max-w-xl text-lg text-muted">{site.services.intro}</p>
+        </SectionHeader>
         <ul className="mt-10 border-t border-line md:mt-14">
           {site.services.items.map((s, i) => (
             <Reveal key={s.title} delay={i * 0.05}>

@@ -18,8 +18,9 @@ export default function Footer() {
             {site.brand}
             <span className="text-accent">.</span>
           </p>
-          <p className="mt-4 max-w-xs text-muted">
-            {site.taglineAccent}
+          <p className="mt-4 flex flex-wrap items-baseline gap-x-2 text-muted">
+            <span className="font-display text-xl tracking-[0.2em]">{site.heroSub}</span>
+            <span className="font-serif text-2xl italic">{site.heroSubAccent}</span>
           </p>
         </div>
         <div>
