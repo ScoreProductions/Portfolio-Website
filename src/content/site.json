@@ -425,7 +425,7 @@
       },
       {
         "name": "Endemol Shine",
-        "logo": "/logos/endemol-shine-dark.png"
+        "logo": "/logos/endemol-shine.png"
       },
       {
         "name": "Signal.Stream",
@@ -437,7 +437,7 @@
       },
       {
         "name": "Kookgigant",
-        "logo": "/logos/kookgigant-dark.png"
+        "logo": "/logos/kookgigant.png"
       },
       {
         "name": "Sushi Brothers",
@@ -449,19 +449,19 @@
       },
       {
         "name": "Vibe Sound & Vision",
-        "logo": "/logos/vibe-sound-design-dark.png"
+        "logo": "/logos/vibe-sound-vision.png"
       },
       {
         "name": "Nick Ligtelijn",
-        "logo": "/logos/nick-ligtelijn-dark.png"
+        "logo": "/logos/nick-ligtelijn.png"
       },
       {
         "name": "The Lemon Tree",
-        "logo": "/logos/the-lemon-tree-dark.svg"
+        "logo": "/logos/the-lemon-tree.svg"
       },
       {
         "name": "Bullseye",
-        "logo": "/logos/bullseye-dark.svg"
+        "logo": "/logos/bullseye.svg"
       },
       {
         "name": "Bully",
@@ -473,11 +473,11 @@
       },
       {
         "name": "Brandeniers",
-        "logo": "/logos/brandeniers-dark.svg"
+        "logo": "/logos/brandeniers.svg"
       },
       {
         "name": "Smaakverkenners",
-        "logo": "/logos/smaakverkenners-dark.svg"
+        "logo": "/logos/smaakverkenners.png"
       },
       {
         "name": "Go Ahead Eagles",
@@ -491,7 +491,7 @@
   },
   "about": {
     "title": "Over Max",
-    "photo": "",
+    "photo": "/images/max.jpg",
     "blocks": [
       {
         "title": "Wie ben ik",
