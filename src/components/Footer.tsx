@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { site } from "@/lib/site";
 import { socials } from "./Contact";
 
@@ -55,8 +56,12 @@ export default function Footer() {
         </div>
       </div>
       <div className="mt-16 flex flex-col justify-between gap-3 border-t border-line py-8 text-sm text-muted md:flex-row">
-        <span>
-          © {new Date().getFullYear()} {site.brand}. Alle rechten voorbehouden.
+        <span className="flex flex-wrap gap-x-4 gap-y-1">
+          <span>© {new Date().getFullYear()} {site.brand}. Alle rechten voorbehouden.</span>
+          <span>KvK {site.contact.kvk}</span>
+          <Link href="/privacy" className="transition-colors hover:text-accent">
+            Privacyverklaring
+          </Link>
         </span>
         <a href="#home" className="transition-colors hover:text-accent">
           Terug naar boven ↑
