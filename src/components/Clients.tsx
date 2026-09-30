@@ -17,7 +17,7 @@ function Logo({ c }: { c: Client }) {
     <div title={c.name} className="flex h-24 items-center px-8 transition-transform duration-500 hover:scale-110 md:h-28 md:px-12">
       {c.logo ? (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={c.logo} alt={c.name} loading="lazy" className="h-12 w-auto max-w-[200px] object-contain md:h-16 md:max-w-[240px]" />
+        <img src={c.logo} alt={c.name} decoding="async" className="h-12 w-auto max-w-[200px] object-contain md:h-16 md:max-w-[240px]" />
       ) : (
         <span className="font-display whitespace-nowrap text-3xl leading-none text-fg md:text-4xl">{c.name}</span>
       )}
@@ -30,12 +30,13 @@ function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number })
   const { scrollY } = useScroll();
   const velocity = useVelocity(scrollY);
   const smooth = useSpring(velocity, { damping: 50, stiffness: 400 });
-  const factor = useTransform(smooth, [0, 1000], [0, 3], { clamp: false });
+  const factor = useTransform(smooth, [-2000, 0, 2000], [-1.5, 0, 1.5]);
   const x = useTransform(base, (v) => `${wrap(-50, 0, v)}%`);
   const dir = useRef(1);
 
   useAnimationFrame((_, delta) => {
-    let move = dir.current * baseVelocity * (delta / 1000);
+    // Cap the frame delta so a background tab or a slow frame can't make the row jump.
+    let move = dir.current * baseVelocity * (Math.min(delta, 50) / 1000);
     const f = factor.get();
     if (f < 0) dir.current = -1;
     else if (f > 0) dir.current = 1;
@@ -45,7 +46,7 @@ function Row({ items, baseVelocity }: { items: Client[]; baseVelocity: number })
 
   return (
     <div className="overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_12%,#000_88%,transparent)]">
-      <motion.div className="flex w-max items-center" style={{ x }}>
+      <motion.div className="flex w-max items-center will-change-transform" style={{ x }}>
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 items-center" aria-hidden={k === 1}>
             {items.map((c) => (
