@@ -213,6 +213,18 @@
       ]
     },
     {
+      "title": "Renee Rose",
+      "brand": "Videoclip",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Videoclip voor 'Liefde & Lust' van zangeres Renee Rose. Ik was producer: ik regelde de productie van voorbereiding tot draaidag.",
+      "video": "https://youtu.be/luxAMqi43ks",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
       "title": "Wilminktheater",
       "brand": "Wilminktheater Enschede",
       "roles": [
@@ -528,7 +540,7 @@
       "label": "Projecten"
     },
     {
-      "value": "18+",
+      "value": "27",
       "label": "Merken"
     },
     {
