@@ -131,7 +131,11 @@
       "kijk": {
         "label": "Videoland",
         "url": "https://www.videoland.com"
-      }
+      },
+      "photos": [
+        "/images/bts/jachtseizoen-1.jpg",
+        "/images/bts/jachtseizoen-2.jpg"
+      ]
     },
     {
       "title": "Dames in de Dop",
