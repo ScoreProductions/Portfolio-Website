@@ -34,32 +34,31 @@ function Field({ label, name, type = "text", textarea }: { label: string; name: 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  // Sends the form straight to the inbox via FormSubmit; falls back to the visitor's mail app if that fails.
+  // Sends the form straight to the inbox via Web3Forms (access key in site.json → contact.formKey).
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const d = new FormData(form);
     setStatus("sending");
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${c.email}`, {
+      const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          _subject: `Nieuw project — ${d.get("naam")}`,
-          _template: "table",
-          naam: d.get("naam"),
+          access_key: c.formKey,
+          subject: `Nieuw project — ${d.get("naam")}`,
+          from_name: "Score Productions website",
+          name: d.get("naam"),
           email: d.get("email"),
-          bericht: d.get("bericht"),
+          message: d.get("bericht"),
         }),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || !json.success) throw new Error(json.message ?? String(res.status));
       form.reset();
       setStatus("sent");
     } catch {
       setStatus("error");
-      const subject = encodeURIComponent(`Nieuw project — ${d.get("naam")}`);
-      const body = encodeURIComponent(`${d.get("bericht")}\n\n${d.get("naam")}\n${d.get("email")}`);
-      window.location.href = `mailto:${c.email}?subject=${subject}&body=${body}`;
     }
   };
 
@@ -107,7 +106,7 @@ export default function Contact() {
             <Field label="Bericht" name="bericht" textarea />
             <div className="flex items-center justify-between gap-4 pt-2">
               <span className="text-sm text-white/80" aria-live="polite">
-                {{ idle: "", sending: "Versturen…", sent: "Bedankt! Je bericht is verstuurd ✓", error: "Versturen lukte niet, je mailapp is geopend" }[status]}
+                {{ idle: "", sending: "Versturen…", sent: "Bedankt! Je bericht is verstuurd ✓", error: `Versturen lukte niet. Mail gerust direct naar ${c.email}` }[status]}
               </span>
               <Magnetic>
                 <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
