@@ -9,6 +9,7 @@ export type ModalContent = {
   title: string;
   video: string;
   meta?: ReactNode;
+  vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
 };
@@ -55,7 +56,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           data-lenis-prevent
         >
           <motion.div
-            className="relative grid max-h-full w-full max-w-6xl gap-0 overflow-y-auto rounded-3xl bg-white md:grid-cols-[1.6fr_1fr]"
+            className={`relative grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "max-w-5xl md:grid-cols-[auto_1fr]" : "max-w-6xl md:grid-cols-[1.6fr_1fr]"}`}
             initial={{ y: 60, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 40, scale: 0.97, opacity: 0 }}
@@ -69,7 +70,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               if (Math.abs(dx) > 50) nav.go(dx < 0 ? 1 : -1);
             }}
           >
-            <div className="relative aspect-video bg-fg md:aspect-auto md:min-h-[420px]">
+            <div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
               {embed ? (
                 <iframe key={embed} src={embed} title={content.title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
               ) : content.video ? (

@@ -19,7 +19,7 @@ export default function Footer() {
             <span className="text-accent">.</span>
           </p>
           <p className="mt-4 max-w-xs text-muted">
-            {site.role}. {site.tagline} {site.taglineAccent}
+            {site.taglineAccent}
           </p>
         </div>
         <div>

@@ -13,13 +13,15 @@ export type Project = {
   jaar?: string;
   timeline?: { label: string; date: string }[];
   kijk?: { label: string; url: string };
+  /** Portrait (9:16) video; defaults to true for YouTube Shorts links. */
+  vertical?: boolean;
   /** Production company the work was made through. */
   via?: string;
   /** Extra videos for the same client; the tile lets visitors swipe between them. */
   items?: ProjectItem[];
 };
 
-export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar">> & { title: string };
+export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical">> & { title: string };
 
 /** Project merged with its n-th item (item 0 is the project itself). */
 export function projectVariant(p: Project, n: number): Project & { subtitle?: string } {
@@ -46,7 +48,12 @@ export function embedUrl(url: string) {
   return null;
 }
 
+export function isVertical(p: Pick<Project, "video" | "vertical">) {
+  return p.vertical ?? /youtube\.com\/shorts\//.test(p.video);
+}
+
 export function youtubeThumb(url: string) {
   const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);
+  if (yt && /youtube\.com\/shorts\//.test(url)) return `https://i.ytimg.com/vi/${yt[1]}/oardefault.jpg`;
   return yt ? `https://i.ytimg.com/vi/${yt[1]}/maxresdefault.jpg` : null;
 }

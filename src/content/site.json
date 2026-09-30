@@ -182,6 +182,32 @@
       }
     },
     {
+      "title": "Renee Rose",
+      "brand": "Videoclip",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Videoclip voor 'Liefde & Lust' van zangeres Renee Rose. Ik was producer: ik regelde de productie van voorbereiding tot draaidag.",
+      "video": "https://youtu.be/luxAMqi43ks",
+      "preview": "",
+      "thumbnail": ""
+    },
+    {
+      "title": "Hout in de Tuin",
+      "brand": "Hout in de Tuin",
+      "roles": [
+        "Producer",
+        "Camera"
+      ],
+      "functie": "Productie & BTS-fotografie",
+      "description": "Bedrijfsfilmcampagne voor Hout in de Tuin, een bedrijf uit het noorden van Nederland. Ik had de lead in de productie: alles vooraf regelen en de organisatie op de set. Daarnaast maakte ik de behind-the-scenes-fotografie.",
+      "video": "https://www.youtube.com/watch?v=NH3NZ68myBk",
+      "preview": "",
+      "thumbnail": "",
+      "via": "Frameworks"
+    },
+    {
       "title": "Tastory",
       "brand": "Tastory",
       "roles": [
@@ -213,18 +239,6 @@
       ]
     },
     {
-      "title": "Renee Rose",
-      "brand": "Videoclip",
-      "roles": [
-        "Producer"
-      ],
-      "functie": "Producer",
-      "description": "Videoclip voor 'Liefde & Lust' van zangeres Renee Rose. Ik was producer: ik regelde de productie van voorbereiding tot draaidag.",
-      "video": "https://youtu.be/luxAMqi43ks",
-      "preview": "",
-      "thumbnail": ""
-    },
-    {
       "title": "Wilminktheater",
       "brand": "Wilminktheater Enschede",
       "roles": [
@@ -248,7 +262,7 @@
         {
           "title": "Kassa",
           "video": "https://youtube.com/shorts/vTeto5j8gMU",
-          "thumbnail": "https://i.ytimg.com/vi/vTeto5j8gMU/hqdefault.jpg"
+          "thumbnail": ""
         },
         {
           "title": "Garderobe",
@@ -258,9 +272,23 @@
         {
           "title": "Bars",
           "video": "https://youtube.com/shorts/rIYLwg7KuXs",
-          "thumbnail": "https://i.ytimg.com/vi/rIYLwg7KuXs/hqdefault.jpg"
+          "thumbnail": ""
         }
       ]
+    },
+    {
+      "title": "Vibe Sound & Vision",
+      "brand": "Vibe Sound & Vision",
+      "roles": [
+        "Camera",
+        "Editor"
+      ],
+      "functie": "Camera & edit",
+      "description": "Promotiemateriaal voor DJ-bedrijf Vibe Sound & Vision. Ik filmde een DJ-set op een bruiloft en haalde daar meerdere stukken social content uit.",
+      "video": "",
+      "preview": "",
+      "thumbnail": "",
+      "vertical": true
     },
     {
       "title": "Go Ahead Eagles",
@@ -275,20 +303,6 @@
       "thumbnail": "",
       "via": "Frameworks",
       "jaar": "2025"
-    },
-    {
-      "title": "Hout in de Tuin",
-      "brand": "Hout in de Tuin",
-      "roles": [
-        "Producer",
-        "Camera"
-      ],
-      "functie": "Productie & BTS-fotografie",
-      "description": "Bedrijfsfilmcampagne voor Hout in de Tuin, een bedrijf uit het noorden van Nederland. Ik had de lead in de productie: alles vooraf regelen en de organisatie op de set. Daarnaast maakte ik de behind-the-scenes-fotografie.",
-      "video": "https://www.youtube.com/watch?v=NH3NZ68myBk",
-      "preview": "",
-      "thumbnail": "",
-      "via": "Frameworks"
     },
     {
       "title": "Smaakverkenners",
@@ -372,19 +386,6 @@
           "thumbnail": ""
         }
       ]
-    },
-    {
-      "title": "Vibe Sound & Vision",
-      "brand": "Vibe Sound & Vision",
-      "roles": [
-        "Camera",
-        "Editor"
-      ],
-      "functie": "Camera & edit",
-      "description": "Promotiemateriaal voor DJ-bedrijf Vibe Sound & Vision. Ik filmde een DJ-set op een bruiloft en haalde daar meerdere stukken social content uit.",
-      "video": "",
-      "preview": "",
-      "thumbnail": ""
     },
     {
       "title": "Wattkraft",

@@ -3,7 +3,7 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import { projectVariant, site, youtubeThumb, type Project } from "@/lib/site";
+import { isVertical, projectVariant, site, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import VideoModal, { type ModalContent } from "./VideoModal";
@@ -159,6 +159,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
   return {
     title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
     video: v.video,
+    vertical: isVertical(v),
     meta: projectMeta(v),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
   };
@@ -236,7 +237,11 @@ export default function Portfolio() {
             <motion.div
               key={p.title}
               layout
-              className={`${i % 6 === 0 ? "col-span-2 aspect-video" : i % 6 === 5 ? "col-span-2 aspect-video md:col-span-1" : "aspect-[4/5] sm:aspect-video"} md:aspect-auto ${layout(i)}`}
+              className={
+                isVertical(p)
+                  ? "aspect-[9/16] md:row-span-3 md:aspect-auto"
+                  : `${i % 6 === 0 ? "col-span-2 aspect-video" : i % 6 === 5 ? "col-span-2 aspect-video md:col-span-1" : "aspect-[4/5] sm:aspect-video"} md:aspect-auto ${layout(i)}`
+              }
               initial={{ opacity: 0, y: 40, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.94 }}
@@ -244,8 +249,8 @@ export default function Portfolio() {
             >
               <ProjectTile
                 project={p}
-                big={i % 6 === 0}
-                wide={i % 6 === 5}
+                big={!isVertical(p) && i % 6 === 0}
+                wide={!isVertical(p) && i % 6 === 5}
                 n={variantOf(p)}
                 setN={(n) => setVariant(p, n)}
                 onOpen={() => setOpen(p)}
