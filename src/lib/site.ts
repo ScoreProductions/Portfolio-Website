@@ -13,7 +13,17 @@ export type Project = {
   jaar?: string;
   timeline?: { label: string; date: string }[];
   kijk?: { label: string; url: string };
+  /** Extra videos for the same client; the tile lets visitors swipe between them. */
+  items?: ProjectItem[];
 };
+
+export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar">> & { title: string };
+
+/** Project merged with its n-th item (item 0 is the project itself). */
+export function projectVariant(p: Project, n: number): Project & { subtitle?: string } {
+  const item = p.items?.[n];
+  return item ? { ...p, ...item, title: p.title, subtitle: item.title } : p;
+}
 
 export const site = content as Omit<typeof content, "projects"> & { projects: Project[] };
 

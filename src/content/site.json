@@ -194,7 +194,23 @@
       "description": "Doorlopende samenwerking met het marketingteam van Tastory. Ik denk mee over de strategie, bedenk de concepten en neem de volledige productie voor mijn rekening: regie, camera en montage. Deze voxpop is er één uit tientallen video's die we samen hebben gemaakt.",
       "video": "https://vimeo.com/1231573904",
       "preview": "",
-      "thumbnail": "/images/work/tastory.jpg"
+      "thumbnail": "/images/work/tastory.jpg",
+      "items": [
+        {
+          "title": "Voxpop",
+          "video": "https://vimeo.com/1231573904",
+          "thumbnail": "/images/work/tastory.jpg",
+          "functie": "Concept, regie, camera & edit",
+          "description": "Doorlopende samenwerking met het marketingteam van Tastory. Ik denk mee over de strategie, bedenk de concepten en neem de volledige productie voor mijn rekening: regie, camera en montage. Deze voxpop is er één uit tientallen video's die we samen hebben gemaakt."
+        },
+        {
+          "title": "Taste Story",
+          "video": "https://youtu.be/MivEXBi26Lw",
+          "thumbnail": "",
+          "functie": "Concept, regie, camera & edit",
+          "description": "Doorlopende samenwerking met het marketingteam van Tastory. Taste Story is een format dat we samen hebben bedacht: we zetten een restaurant op de kaart en laten de volgers tegelijk kennismaken met de app. Ik deed ook hier de regie, camera en montage."
+        }
+      ]
     },
     {
       "title": "Wilminktheater",

@@ -3,7 +3,7 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import { useCallback, useRef, useState } from "react";
-import { site, youtubeThumb, type Project } from "@/lib/site";
+import { projectVariant, site, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import VideoModal, { type ModalContent } from "./VideoModal";
@@ -26,7 +26,7 @@ export function ProjectCard({
   onOpen,
   className = "",
 }: {
-  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar"> & { functie?: string };
+  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar"> & { functie?: string; subtitle?: string };
   big?: boolean;
   wide?: boolean;
   onOpen: () => void;
@@ -60,11 +60,83 @@ export function ProjectCard({
       <div className={`absolute inset-x-0 bottom-0 ${big || wide ? "p-5" : "p-3 sm:p-5"} md:p-7`}>
         <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
         <p className={`mt-2 font-semibold leading-[1.05] sm:mt-3 tracking-tight ${big ? "text-2xl sm:text-3xl md:text-5xl" : "text-base sm:text-xl md:text-2xl"}`}>{project.title}</p>
+        {project.subtitle && <p className="mt-1 text-sm font-medium text-white/85">{project.subtitle}</p>}
         {project.functie && (
           <p className="mt-1 max-h-0 overflow-hidden text-sm text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-8 group-hover:opacity-100">{[project.functie, project.jaar].filter(Boolean).join(" · ")}</p>
         )}
       </div>
     </button>
+  );
+}
+
+/** Card for a project; when it has several items, arrows/swipe switch the video, info and modal content. */
+function ProjectTile({ project, big, wide, onOpen }: { project: Project; big: boolean; wide: boolean; onOpen: (p: ReturnType<typeof projectVariant>) => void }) {
+  const count = project.items?.length ?? 0;
+  const [n, setN] = useState(0);
+  const start = useRef<number | null>(null);
+  const swiped = useRef(false);
+  const current = projectVariant(project, n);
+
+  const go = (d: number) => setN((v) => (v + d + count) % count);
+
+  if (count < 2) return <ProjectCard project={current} big={big} wide={wide} onOpen={() => onOpen(current)} />;
+
+  return (
+    <div
+      className="relative h-full w-full touch-pan-y"
+      onPointerDown={(e) => {
+        start.current = e.clientX;
+        swiped.current = false;
+      }}
+      onPointerUp={(e) => {
+        if (start.current === null) return;
+        const dx = e.clientX - start.current;
+        start.current = null;
+        if (Math.abs(dx) > 40) {
+          swiped.current = true;
+          go(dx < 0 ? 1 : -1);
+        }
+      }}
+      onClickCapture={(e) => {
+        if (swiped.current) {
+          e.stopPropagation();
+          e.preventDefault();
+          swiped.current = false;
+        }
+      }}
+    >
+      <AnimatePresence mode="popLayout" initial={false}>
+        <motion.div
+          key={n}
+          className="h-full w-full"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <ProjectCard project={current} big={big} wide={wide} onOpen={() => onOpen(current)} />
+        </motion.div>
+      </AnimatePresence>
+      <div className="absolute bottom-3 right-3 z-10 flex gap-2 md:bottom-6 md:right-6">
+        {[-1, 1].map((d) => (
+          <button
+            key={d}
+            onClick={() => go(d)}
+            aria-label={d < 0 ? "Vorige video" : "Volgende video"}
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-fg shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white md:h-11 md:w-11"
+          >
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        ))}
+      </div>
+      <div className="pointer-events-none absolute left-1/2 top-3 z-10 flex -translate-x-1/2 gap-1.5 md:top-5">
+        {project.items!.map((it, k) => (
+          <span key={it.title} className={`h-1.5 rounded-full transition-all duration-300 ${k === n ? "w-5 bg-white" : "w-1.5 bg-white/50"}`} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -142,7 +214,12 @@ export default function Portfolio() {
               exit={{ opacity: 0, scale: 0.94 }}
               transition={{ duration: 0.7, delay: (j % 6) * 0.05, ease: [0.22, 1, 0.36, 1] }}
             >
-              <ProjectCard project={p} big={i % 6 === 0} wide={i % 6 === 5} onOpen={() => setModal({ title: p.title, video: p.video, meta: projectMeta(p) })} />
+              <ProjectTile
+                project={p}
+                big={i % 6 === 0}
+                wide={i % 6 === 5}
+                onOpen={(v) => setModal({ title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title, video: v.video, meta: projectMeta(v) })}
+              />
             </motion.div>
           );
         })}
