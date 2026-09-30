@@ -185,13 +185,16 @@
       "title": "Tastory",
       "brand": "Tastory",
       "roles": [
-        "Camera"
+        "Creative",
+        "Producer",
+        "Camera",
+        "Editor"
       ],
-      "functie": "Camera & fotografie",
-      "description": "Beschrijving volgt.",
-      "video": "",
+      "functie": "Concept, regie, camera & edit",
+      "description": "Doorlopende samenwerking met het marketingteam van Tastory. Ik denk mee over de strategie, bedenk de concepten en neem de volledige productie voor mijn rekening: regie, camera en montage. Deze voxpop is er één uit tientallen video's die we samen hebben gemaakt.",
+      "video": "https://vimeo.com/1231573904",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "/images/work/tastory.jpg"
     },
     {
       "title": "Wilminktheater",
