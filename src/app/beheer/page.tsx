@@ -42,7 +42,7 @@ export default function Beheer() {
           const p = byTitle.get(title)!;
           const thumb = p.thumbnail || youtubeThumb(p.video);
           return (
-            <Reorder.Item key={title} value={title} className="flex cursor-grab items-center gap-4 rounded-2xl border border-line bg-surface p-3 active:cursor-grabbing">
+            <Reorder.Item key={title} value={title} className="flex cursor-grab items-center gap-4 rounded-2xl border border-line bg-white p-3 active:cursor-grabbing">
               <span className="w-6 text-right text-sm tabular-nums text-muted">{i + 1}</span>
               <div className="relative h-12 w-20 shrink-0 overflow-hidden rounded-lg bg-accent">
                 {thumb && <Image src={thumb} alt="" fill sizes="80px" className="object-cover" draggable={false} />}

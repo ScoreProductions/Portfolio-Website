@@ -7,7 +7,6 @@ import { lockScroll } from "./SmoothScroll";
 
 const links = [
   { id: "home", label: "Home" },
-  { id: "tv", label: "TV" },
   { id: "portfolio", label: "Portfolio" },
   { id: "over-mij", label: "Over mij" },
   { id: "contact", label: "Contact" },
@@ -49,7 +48,7 @@ export default function Nav() {
             href="#home"
             onClick={() => toggle(false)}
             className={`font-display relative z-50 rounded-full px-4 py-2 text-2xl tracking-wide backdrop-blur-xl transition-all duration-500 md:text-3xl ${
-              light ? "-ml-4 text-white" : "border border-fg/10 bg-surface/70 text-fg shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+              light ? "-ml-4 text-white" : "border border-fg/10 bg-white/70 text-fg shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
             }`}
           >
             {site.name}
@@ -57,7 +56,7 @@ export default function Nav() {
 
           <nav
             className={`absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 rounded-full border p-1.5 backdrop-blur-xl transition-colors duration-500 md:flex ${
-              light ? "border-white/20 bg-white/10" : "border-fg/10 bg-surface/70 shadow-[0_10px_40px_rgba(0,0,0,0.35)]"
+              light ? "border-white/20 bg-white/10" : "border-fg/10 bg-white/70 shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
             }`}
           >
             {links.map((l) => (
@@ -86,7 +85,7 @@ export default function Nav() {
               light || onRed ? "bg-white text-accent" : "bg-accent text-white"
             }`}
           >
-            <span className="absolute inset-0 translate-y-full rounded-full bg-ink transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+            <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
             <span className="relative transition-colors duration-300 group-hover:text-white">Neem contact op</span>
           </a>
 
@@ -94,7 +93,7 @@ export default function Nav() {
             aria-label={open ? "Sluit menu" : "Open menu"}
             aria-expanded={open}
             className={`relative z-50 flex h-12 w-12 flex-col items-center justify-center gap-1.5 rounded-full border backdrop-blur-md transition-colors duration-500 md:hidden ${
-              light ? "border-white/30 bg-white/10" : "border-fg/10 bg-surface/80"
+              light ? "border-white/30 bg-white/10" : "border-fg/10 bg-white/80"
             }`}
             onClick={() => toggle(!open)}
           >

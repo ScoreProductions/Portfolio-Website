@@ -44,7 +44,7 @@ export default function About() {
         <motion.div
           variants={{ hidden: { clipPath: "inset(100% 0% 0% 0% round 24px)" }, show: { clipPath: "inset(0% 0% 0% 0% round 24px)" } }}
           transition={{ duration: 1.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-surface"
+          className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-accent"
         >
           <motion.div style={{ y }} className="absolute -inset-[8%]">
             {site.about.photo ? (

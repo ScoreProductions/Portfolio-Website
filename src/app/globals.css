@@ -1,16 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark, cinematic base with the red as accent. */
-  --bg: #0b0b0c;
-  --fg: #f2eee8;
-  --muted: #8f8a84;
+  --bg: #ffffff;
+  --fg: #0e0e0e;
+  --muted: #6b6b6b;
   --accent: #e10a17;
   --accent-dark: #a8000c;
-  --line: rgba(242, 238, 232, 0.12);
-  --surface: #151517;
-  --ink: #0b0b0c;
-  --paper: #f2eee8;
+  --line: rgba(14, 14, 14, 0.12);
 }
 
 @theme inline {
@@ -20,9 +16,6 @@
   --color-accent: var(--accent);
   --color-accent-dark: var(--accent-dark);
   --color-line: var(--line);
-  --color-surface: var(--surface);
-  --color-ink: var(--ink);
-  --color-paper: var(--paper);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-display: var(--font-display);
