@@ -61,7 +61,7 @@ export default function Footer() {
           Terug naar boven ↑
         </a>
       </div>
-      <div aria-hidden className="font-display pointer-events-none -mb-[0.18em] select-none overflow-hidden whitespace-nowrap text-center text-[20vw] leading-[0.8] text-accent">
+      <div aria-hidden className="font-display pointer-events-none -mb-[0.18em] select-none overflow-hidden whitespace-nowrap text-center text-[13vw] leading-[0.8] text-fg/[0.06]">
         {site.name}
       </div>
     </footer>
