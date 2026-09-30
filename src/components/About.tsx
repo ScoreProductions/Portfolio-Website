@@ -1,12 +1,37 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { animate, motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 import { Corners } from "./Frame";
 import { Reveal } from "./Reveal";
 import SectionHeader from "./SectionHeader";
+
+/** Counts up from 0 to the number in `value` (e.g. "25+") once it scrolls into view. */
+function CountUp({ value }: { value: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-10%" });
+  const reduce = useReducedMotion();
+  const [, prefix = "", num = "", suffix = ""] = value.match(/^(\D*)(\d+)(.*)$/) ?? [];
+  const target = Number(num);
+  const [n, setN] = useState(0);
+
+  useEffect(() => {
+    if (!inView || !num || reduce) return;
+    const controls = animate(0, target, { duration: 1.8, ease: [0.22, 1, 0.36, 1], onUpdate: (v) => setN(Math.round(v)) });
+    return () => controls.stop();
+  }, [inView, num, reduce, target]);
+
+  if (!num) return <span>{value}</span>;
+  return (
+    <span ref={ref} aria-label={value}>
+      {prefix}
+      {reduce ? target : n}
+      {suffix}
+    </span>
+  );
+}
 
 export default function About() {
   const ref = useRef<HTMLDivElement>(null);
@@ -48,7 +73,7 @@ export default function About() {
         <div className="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8">
           {site.stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
-              <div className="font-display text-6xl leading-none text-accent md:text-7xl">{s.value}</div>
+              <div className="font-display text-6xl leading-none text-accent md:text-7xl"><CountUp value={s.value} /></div>
               <div className="mt-2 text-xs font-medium uppercase tracking-[0.2em] text-muted">{s.label}</div>
             </Reveal>
           ))}

@@ -498,6 +498,38 @@
       {
         "name": "Hout in de Tuin",
         "logo": "/logos/hout-in-de-tuin.svg"
+      },
+      {
+        "name": "Drukwerkdeal",
+        "logo": "/logos/drukwerkdeal.svg"
+      },
+      {
+        "name": "State of Football",
+        "logo": "/logos/state-of-football.svg"
+      },
+      {
+        "name": "Goodnight Slaapkamers",
+        "logo": "/logos/goodnight-slaapkamers.svg"
+      },
+      {
+        "name": "Megatuinshop",
+        "logo": "/logos/megatuinshop.png"
+      },
+      {
+        "name": "Rapid Prototyping",
+        "logo": "/logos/rapid-prototyping.svg"
+      },
+      {
+        "name": "Valencia",
+        "logo": "/logos/valencia.svg"
+      },
+      {
+        "name": "Restaurant 273",
+        "logo": "/logos/restaurant-273.png"
+      },
+      {
+        "name": "Renee Rose",
+        "logo": ""
       }
     ]
   },
