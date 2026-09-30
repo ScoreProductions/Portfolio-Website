@@ -165,7 +165,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
   };
 }
 
-export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via">) {
+export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos">) {
   const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.via ? [["Via", `${p.via} (productiehuis)`]] : []), ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
   return (
     <dl className="space-y-5">
@@ -186,6 +186,18 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
             <a href={p.kijk.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent underline-offset-4 hover:underline">
               {p.kijk.label} ↗
             </a>
+          </dd>
+        </div>
+      )}
+      {!!p.photos?.length && (
+        <div>
+          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</dt>
+          <dd className="mt-4 grid grid-cols-2 items-start gap-3">
+            {p.photos.map((src) => (
+              <a key={src} href={src} target="_blank" rel="noopener noreferrer" className="group block overflow-hidden rounded-xl">
+                <Image src={src} alt={`Behind the scenes`} width={600} height={600} sizes="(min-width: 768px) 20vw, 45vw" className="h-auto w-full transition-transform duration-700 group-hover:scale-105" />
+              </a>
+            ))}
           </dd>
         </div>
       )}

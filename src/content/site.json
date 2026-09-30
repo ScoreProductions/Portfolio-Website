@@ -179,7 +179,11 @@
       "kijk": {
         "label": "Videoland",
         "url": "https://www.videoland.com"
-      }
+      },
+      "photos": [
+        "/images/bts/te-land-1.jpg",
+        "/images/bts/te-land-2.jpg"
+      ]
     },
     {
       "title": "Renee Rose",

@@ -15,6 +15,8 @@ export type Project = {
   kijk?: { label: string; url: string };
   /** Portrait (9:16) video; defaults to true for YouTube Shorts links. */
   vertical?: boolean;
+  /** Behind-the-scenes photos shown in the project modal. */
+  photos?: string[];
   /** Production company the work was made through. */
   via?: string;
   /** Extra videos for the same client; the tile lets visitors swipe between them. */
