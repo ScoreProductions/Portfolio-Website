@@ -267,7 +267,23 @@
       "video": "",
       "preview": "",
       "thumbnail": "",
-      "via": "Frameworks"
+      "via": "Frameworks",
+      "items": [
+        {
+          "title": "Moederdag",
+          "functie": "Productie",
+          "description": "Moederdagcampagne waarin de box van Smaakverkenners centraal staat, als manier om (weer) in contact te komen met je moeder en je waardering te laten zien. Ik pakte de productie op, regelde de locaties en ondersteunde op de set als producer.",
+          "video": "",
+          "thumbnail": ""
+        },
+        {
+          "title": "UGC op Vlieland",
+          "functie": "Productie",
+          "video": "",
+          "thumbnail": "",
+          "description": "UGC-content voor Smaakverkenners, gefilmd op Vlieland. Ik regelde de locaties, alle props en de cast, en zorgde dat de draaidag goed verliep."
+        }
+      ]
     },
     {
       "title": "One Week Film",
