@@ -8,7 +8,7 @@ import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import VideoModal, { type ModalContent } from "./VideoModal";
 
-const filters = ["Alles", ...site.roles];
+const filters = ["Alles", "TV", ...site.roles];
 const VISIBLE = 6;
 
 /** Bento rhythm per group of 6: big + 2 stacked, then 3 in a row; big flips side every other group. */
@@ -26,7 +26,7 @@ export function ProjectCard({
   onOpen,
   className = "",
 }: {
-  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail"> & { functie?: string };
+  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar"> & { functie?: string };
   big?: boolean;
   wide?: boolean;
   onOpen: () => void;
@@ -61,20 +61,18 @@ export function ProjectCard({
         <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
         <p className={`mt-2 font-semibold leading-[1.05] sm:mt-3 tracking-tight ${big ? "text-2xl sm:text-3xl md:text-5xl" : "text-base sm:text-xl md:text-2xl"}`}>{project.title}</p>
         {project.functie && (
-          <p className="mt-1 max-h-0 overflow-hidden text-sm text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-8 group-hover:opacity-100">{project.functie}</p>
+          <p className="mt-1 max-h-0 overflow-hidden text-sm text-white/75 opacity-0 transition-all duration-500 group-hover:max-h-8 group-hover:opacity-100">{[project.functie, project.jaar].filter(Boolean).join(" · ")}</p>
         )}
       </div>
     </button>
   );
 }
 
-export function projectMeta(p: { brand: string; functie: string; description: string }) {
+export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk">) {
+  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.jaar ? [[p.tv ? "Uitzending" : "Jaar", p.jaar]] : [])];
   return (
     <dl className="space-y-5">
-      {[
-        ["Merk", p.brand],
-        ["Functie", p.functie],
-      ].map(([k, v]) => (
+      {rows.map(([k, v]) => (
         <div key={k} className="border-b border-line pb-4">
           <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">{k}</dt>
           <dd className="mt-1 text-lg">{v}</dd>
@@ -84,6 +82,32 @@ export function projectMeta(p: { brand: string; functie: string; description: st
         <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Beschrijving</dt>
         <dd className="mt-2 leading-relaxed">{p.description}</dd>
       </div>
+      {p.kijk && (
+        <div className="border-b border-line pb-4">
+          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Te zien op</dt>
+          <dd className="mt-1 text-lg">
+            <a href={p.kijk.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent underline-offset-4 hover:underline">
+              {p.kijk.label} ↗
+            </a>
+          </dd>
+        </div>
+      )}
+      {!!p.timeline?.length && (
+        <div>
+          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Tijdlijn</dt>
+          <dd>
+            <ol className="mt-4 space-y-3 border-l-2 border-line pl-5">
+              {p.timeline.map((t) => (
+                <li key={t.label} className="relative">
+                  <span className="absolute -left-[27px] top-1.5 h-3 w-3 rounded-full border-2 border-accent bg-white" />
+                  <p className="font-semibold">{t.label}</p>
+                  <p className="text-sm text-muted">{t.date}</p>
+                </li>
+              ))}
+            </ol>
+          </dd>
+        </div>
+      )}
     </dl>
   );
 }
@@ -93,7 +117,8 @@ export default function Portfolio() {
   const [modal, setModal] = useState<ModalContent | null>(null);
   const close = useCallback(() => setModal(null), []);
   const [expanded, setExpanded] = useState(false);
-  const shown = filter === "Alles" ? site.projects : site.projects.filter((p) => p.roles.includes(filter));
+  const shown =
+    filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
   const first = shown.slice(0, VISIBLE);
   const rest = shown.slice(VISIBLE);
 

@@ -1,8 +1,21 @@
 import content from "@/content/site.json";
 
-export type Project = (typeof content.projects)[number];
+export type Project = {
+  title: string;
+  brand: string;
+  roles: string[];
+  functie: string;
+  description: string;
+  video: string;
+  preview: string;
+  thumbnail: string;
+  tv?: boolean;
+  jaar?: string;
+  timeline?: { label: string; date: string }[];
+  kijk?: { label: string; url: string };
+};
 
-export const site = content;
+export const site = content as Omit<typeof content, "projects"> & { projects: Project[] };
 
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ??

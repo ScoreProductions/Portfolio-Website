@@ -8,7 +8,6 @@ import { lockScroll } from "./SmoothScroll";
 const links = [
   { id: "home", label: "Home" },
   { id: "portfolio", label: "Portfolio" },
-  { id: "televisie", label: "TV" },
   { id: "over-mij", label: "Over mij" },
   { id: "contact", label: "Contact" },
 ];

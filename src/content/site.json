@@ -70,6 +70,103 @@
   },
   "projects": [
     {
+      "title": "Hunted",
+      "brand": "AVROTROS · NPO 1",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Gewone Nederlanders slaan op de vlucht en moeten een team ervaren jagers ontlopen. Die zetten echte opsporingstechnieken in: camera's, telefoondata en veldteams. Het doel: zo lang mogelijk uit handen blijven.",
+      "video": "https://youtu.be/EtSmMOAORYs",
+      "preview": "",
+      "thumbnail": "/images/tv/hunted.jpg",
+      "tv": true,
+      "jaar": "2024 – 2026",
+      "timeline": [
+        {
+          "label": "Seizoen 9",
+          "date": "nov – dec 2024"
+        },
+        {
+          "label": "VIPS seizoen 4",
+          "date": "feb – mrt 2025"
+        },
+        {
+          "label": "Seizoen 10",
+          "date": "nov 2025 – jan 2026"
+        },
+        {
+          "label": "Seizoen 11",
+          "date": "vanaf okt 2026"
+        },
+        {
+          "label": "VIPS seizoen 6",
+          "date": "binnenkort"
+        }
+      ],
+      "kijk": {
+        "label": "NPO Start",
+        "url": "https://npo.nl/start/serie/hunted"
+      }
+    },
+    {
+      "title": "Het Jachtseizoen: Most Wanted",
+      "brand": "Videoland · StukTV",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Runner / producer",
+      "description": "Seizoen 3. Team StukTV jaagt op bekende Nederlanders die met een voorsprong het land door vluchten. Ik liep mee in het team rond Maan de Steenwinkel.",
+      "video": "https://youtu.be/RHAhQhA8cRI",
+      "preview": "",
+      "thumbnail": "/images/tv/jachtseizoen.jpg",
+      "tv": true,
+      "jaar": "2026",
+      "timeline": [],
+      "kijk": {
+        "label": "Videoland",
+        "url": "https://www.videoland.com"
+      }
+    },
+    {
+      "title": "Dames in de Dop",
+      "brand": "Prime Video",
+      "roles": [
+        "Producer"
+      ],
+      "functie": "Producer",
+      "description": "Seizoen 1. Negen eigenzinnige vrouwen krijgen een stoomcursus etiquette, stijl en omgangsvormen. Met vaste experts en gastdocenten werken ze aan hun presentatie en aan zichzelf. Gepresenteerd door Robbert Rodenburg.",
+      "video": "https://youtu.be/39f6nPRB1DQ",
+      "preview": "",
+      "thumbnail": "/images/tv/dames-in-de-dop-s1.jpg",
+      "tv": true,
+      "jaar": "2024",
+      "timeline": [],
+      "kijk": {
+        "label": "Prime Video",
+        "url": "https://www.primevideo.com/-/nl/detail/0TWRXZ5VTRHNLEF85M7O1D2E8Y"
+      }
+    },
+    {
+      "title": "Te Land, ter Zee en in de Lucht",
+      "brand": "RTL 4 · Videoland",
+      "roles": [
+        "Camera"
+      ],
+      "functie": "Camera",
+      "description": "De klassieke spelshow is terug, dit keer in de Efteling. Kandidaten stormen met zelfgebouwde voertuigen de helling af, op weg naar de bel. Gepresenteerd door Ruben Nicolai en Gerard Joling.",
+      "video": "https://youtu.be/ZaiF93GlVp0",
+      "preview": "",
+      "thumbnail": "/images/tv/te-land.jpg",
+      "tv": true,
+      "jaar": "2024",
+      "timeline": [],
+      "kijk": {
+        "label": "Videoland",
+        "url": "https://www.videoland.com"
+      }
+    },
+    {
       "title": "Tastory",
       "brand": "Tastory",
       "roles": [
@@ -242,71 +339,6 @@
       "thumbnail": ""
     }
   ],
-  "tv": {
-    "label": "Televisie",
-    "title": "Op",
-    "accent": "tv",
-    "intro": "Programma's waar ik aan heb meegewerkt.",
-    "items": [
-      {
-        "title": "Hunted",
-        "zender": "AVROTROS · NPO 1",
-        "jaar": "2024 – 2026",
-        "rol": "Producer",
-        "description": "Gewone Nederlanders slaan op de vlucht en moeten een team ervaren jagers ontlopen. Die zetten echte opsporingstechnieken in: camera's, telefoondata en veldteams. Het doel: zo lang mogelijk uit handen blijven.",
-        "thumbnail": "/images/tv/hunted.jpg",
-        "timeline": [
-          {
-            "label": "Seizoen 9",
-            "date": "nov – dec 2024"
-          },
-          {
-            "label": "VIPS seizoen 4",
-            "date": "feb – mrt 2025"
-          },
-          {
-            "label": "Seizoen 10",
-            "date": "nov 2025 – jan 2026"
-          },
-          {
-            "label": "Seizoen 11",
-            "date": "vanaf okt 2026"
-          },
-          {
-            "label": "VIPS seizoen 6",
-            "date": "binnenkort"
-          }
-        ]
-      },
-      {
-        "title": "Het Jachtseizoen: Most Wanted",
-        "zender": "Videoland · StukTV",
-        "jaar": "2026",
-        "rol": "Runner / producer",
-        "description": "Seizoen 3. Team StukTV jaagt op bekende Nederlanders die met een voorsprong het land door vluchten. Ik liep mee in het team rond Maan de Steenwinkel.",
-        "thumbnail": "/images/tv/jachtseizoen.jpg",
-        "timeline": []
-      },
-      {
-        "title": "Dames in de Dop",
-        "zender": "Prime Video",
-        "jaar": "2024",
-        "rol": "Producer",
-        "description": "Seizoen 1. Negen eigenzinnige vrouwen krijgen een stoomcursus etiquette, stijl en omgangsvormen. Met vaste experts en gastdocenten werken ze aan hun presentatie en aan zichzelf. Gepresenteerd door Robbert Rodenburg.",
-        "thumbnail": "/images/tv/dames-in-de-dop-s1.jpg",
-        "timeline": []
-      },
-      {
-        "title": "Te Land, ter Zee en in de Lucht",
-        "zender": "RTL 4 · Videoland",
-        "jaar": "2024",
-        "rol": "Camera",
-        "description": "De klassieke spelshow is terug, dit keer in de Efteling. Kandidaten stormen met zelfgebouwde voertuigen de helling af, op weg naar de bel. Gepresenteerd door Ruben Nicolai en Gerard Joling.",
-        "thumbnail": "/images/tv/te-land.jpg",
-        "timeline": []
-      }
-    ]
-  },
   "clients": {
     "title": "Gewerkt met / voor",
     "items": [
