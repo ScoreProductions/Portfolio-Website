@@ -70,16 +70,29 @@ export function ProjectCard({
 }
 
 /** Card for a project; when it has several items, arrows/swipe switch the video, info and modal content. */
-function ProjectTile({ project, big, wide, onOpen }: { project: Project; big: boolean; wide: boolean; onOpen: (p: ReturnType<typeof projectVariant>) => void }) {
+function ProjectTile({
+  project,
+  big,
+  wide,
+  n,
+  setN,
+  onOpen,
+}: {
+  project: Project;
+  big: boolean;
+  wide: boolean;
+  n: number;
+  setN: (n: number) => void;
+  onOpen: () => void;
+}) {
   const count = project.items?.length ?? 0;
-  const [n, setN] = useState(0);
   const start = useRef<number | null>(null);
   const swiped = useRef(false);
   const current = projectVariant(project, n);
 
-  const go = (d: number) => setN((v) => (v + d + count) % count);
+  const go = (d: number) => setN((n + d + count) % count);
 
-  if (count < 2) return <ProjectCard project={current} big={big} wide={wide} onOpen={() => onOpen(current)} />;
+  if (count < 2) return <ProjectCard project={current} big={big} wide={wide} onOpen={onOpen} />;
 
   return (
     <div
@@ -114,7 +127,7 @@ function ProjectTile({ project, big, wide, onOpen }: { project: Project; big: bo
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
-          <ProjectCard project={current} big={big} wide={wide} onOpen={() => onOpen(current)} />
+          <ProjectCard project={current} big={big} wide={wide} onOpen={onOpen} />
         </motion.div>
       </AnimatePresence>
       <div className="absolute bottom-3 right-3 z-10 flex gap-2 md:bottom-6 md:right-6">
@@ -138,6 +151,17 @@ function ProjectTile({ project, big, wide, onOpen }: { project: Project; big: bo
       </div>
     </div>
   );
+}
+
+function modalContent(p: Project, n: number, setN: (n: number) => void): ModalContent {
+  const v = projectVariant(p, n);
+  const count = p.items?.length ?? 0;
+  return {
+    title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
+    video: v.video,
+    meta: projectMeta(v),
+    nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
+  };
 }
 
 export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk">) {
@@ -186,8 +210,12 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
 
 export default function Portfolio() {
   const [filter, setFilter] = useState("Alles");
-  const [modal, setModal] = useState<ModalContent | null>(null);
-  const close = useCallback(() => setModal(null), []);
+  const [open, setOpen] = useState<Project | null>(null);
+  const [variants, setVariants] = useState<Record<string, number>>({});
+  const close = useCallback(() => setOpen(null), []);
+  const variantOf = (p: Project) => variants[p.title] ?? 0;
+  const setVariant = (p: Project, n: number) => setVariants((v) => ({ ...v, [p.title]: n }));
+  const modal: ModalContent | null = open ? modalContent(open, variantOf(open), (n) => setVariant(open, n)) : null;
   const [expanded, setExpanded] = useState(false);
   const shown =
     filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
@@ -218,7 +246,9 @@ export default function Portfolio() {
                 project={p}
                 big={i % 6 === 0}
                 wide={i % 6 === 5}
-                onOpen={(v) => setModal({ title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title, video: v.video, meta: projectMeta(v) })}
+                n={variantOf(p)}
+                setN={(n) => setVariant(p, n)}
+                onOpen={() => setOpen(p)}
               />
             </motion.div>
           );
