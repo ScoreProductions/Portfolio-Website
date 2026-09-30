@@ -32,15 +32,35 @@ function Field({ label, name, type = "text", textarea }: { label: string; name: 
 }
 
 export default function Contact() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  // Sends the form straight to the inbox via FormSubmit; falls back to the visitor's mail app if that fails.
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const d = new FormData(e.currentTarget);
-    const subject = encodeURIComponent(`Nieuw project — ${d.get("naam")}`);
-    const body = encodeURIComponent(`${d.get("bericht")}\n\n${d.get("naam")}\n${d.get("email")}`);
-    window.location.href = `mailto:${c.email}?subject=${subject}&body=${body}`;
-    setSent(true);
+    const form = e.currentTarget;
+    const d = new FormData(form);
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${c.email}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          _subject: `Nieuw project — ${d.get("naam")}`,
+          _template: "table",
+          naam: d.get("naam"),
+          email: d.get("email"),
+          bericht: d.get("bericht"),
+        }),
+      });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+      const subject = encodeURIComponent(`Nieuw project — ${d.get("naam")}`);
+      const body = encodeURIComponent(`${d.get("bericht")}\n\n${d.get("naam")}\n${d.get("email")}`);
+      window.location.href = `mailto:${c.email}?subject=${subject}&body=${body}`;
+    }
   };
 
   return (
@@ -86,9 +106,11 @@ export default function Contact() {
             </div>
             <Field label="Bericht" name="bericht" textarea />
             <div className="flex items-center justify-between gap-4 pt-2">
-              <span className="text-sm text-white/80">{sent ? "Je mailapp is geopend ✓" : ""}</span>
+              <span className="text-sm text-white/80" aria-live="polite">
+                {{ idle: "", sending: "Versturen…", sent: "Bedankt! Je bericht is verstuurd ✓", error: "Versturen lukte niet, je mailapp is geopend" }[status]}
+              </span>
               <Magnetic>
-                <button type="submit" className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
+                <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
                   <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
                   <span className="relative transition-colors duration-300 group-hover:text-white">Verstuur →</span>
                 </button>
