@@ -69,7 +69,7 @@ export function ProjectCard({
 }
 
 export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk">) {
-  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.jaar ? [[p.tv ? "Uitzending" : "Jaar", p.jaar]] : [])];
+  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
   return (
     <dl className="space-y-5">
       {rows.map(([k, v]) => (
@@ -94,7 +94,7 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
       )}
       {!!p.timeline?.length && (
         <div>
-          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Tijdlijn</dt>
+          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Mijn seizoenen</dt>
           <dd>
             <ol className="mt-4 space-y-3 border-l-2 border-line pl-5">
               {p.timeline.map((t) => (
