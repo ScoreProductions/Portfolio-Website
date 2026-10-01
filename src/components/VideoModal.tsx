@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { embedUrl } from "@/lib/site";
 import { lockScroll } from "./SmoothScroll";
 
@@ -41,7 +42,10 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
 
   const embed = content?.video ? embedUrl(content.video) : null;
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  // Portal to <body> so the modal sits above the fixed nav instead of inside the page's stacking context.
+  return createPortal(
     <AnimatePresence>
       {content && (
         <motion.div
@@ -56,7 +60,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           data-lenis-prevent
         >
           <motion.div
-            className={`relative grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "max-w-5xl md:grid-cols-[auto_1fr]" : "max-w-6xl md:grid-cols-[1.6fr_1fr]"}`}
+            className={`relative flex max-h-full w-full ${content.vertical ? "max-w-5xl" : "max-w-6xl"}`}
             initial={{ y: 60, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 40, scale: 0.97, opacity: 0 }}
@@ -70,6 +74,8 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               if (Math.abs(dx) > 50) nav.go(dx < 0 ? 1 : -1);
             }}
           >
+            {/* Only this inner panel scrolls, so the close button below stays in place. */}
+            <div className={`grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "md:grid-cols-[auto_1fr]" : "md:grid-cols-[1.6fr_1fr]"}`}>
             <div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
               {embed ? (
                 <iframe key={embed} src={embed} title={content.title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
@@ -104,16 +110,18 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               <h3 className="text-3xl font-semibold tracking-tight md:text-5xl">{content.title}</h3>
               <div className="mt-6 flex-1">{content.meta}</div>
             </div>
+            </div>
             <button
               onClick={onClose}
               aria-label="Sluiten"
-              className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-fg shadow-lg transition-transform duration-300 hover:rotate-90"
+              className="absolute right-3 top-3 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-white text-xl text-fg shadow-lg transition-transform duration-300 hover:rotate-90"
             >
               ×
             </button>
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
