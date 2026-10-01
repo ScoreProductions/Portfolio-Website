@@ -294,10 +294,21 @@
       ],
       "functie": "Camera & edit",
       "description": "Promotiemateriaal voor DJ-bedrijf Vibe Sound & Vision. Ik filmde een DJ-set op een bruiloft en haalde daar meerdere stukken social content uit.",
-      "video": "",
+      "video": "https://youtu.be/r-sUs3s2z5o",
       "preview": "",
       "thumbnail": "",
-      "vertical": true
+      "items": [
+        {
+          "title": "Promo 1",
+          "video": "https://youtu.be/r-sUs3s2z5o",
+          "thumbnail": ""
+        },
+        {
+          "title": "Promo 2",
+          "video": "https://youtu.be/VwZ4FfWWucI",
+          "thumbnail": ""
+        }
+      ]
     },
     {
       "title": "Go Ahead Eagles",
