@@ -314,15 +314,25 @@
       "title": "Go Ahead Eagles",
       "brand": "Go Ahead Eagles",
       "roles": [
-        "Producer"
+        "Producer",
+        "Camera"
       ],
       "functie": "Productie",
       "description": "Campagnevideo rond de bekerfinale van 2025 in De Kuip, samen met Drukwerkdeal en State of Football. Alle meereizende supporters kregen een gratis shirt, en de video maakte die actie bekend. Ik regelde de volledige productie, en we interviewden oud-spelers van de club.",
-      "video": "",
+      "video": "https://youtu.be/NpZJcI0DWus",
       "preview": "",
       "thumbnail": "",
       "via": "Frameworks",
-      "jaar": "2025"
+      "jaar": "2025",
+      "items": [
+        {
+          "title": "Behind the scenes",
+          "video": "https://youtu.be/NpZJcI0DWus",
+          "thumbnail": "",
+          "functie": "Productie & camera (deel van de shots)",
+          "description": "Campagnevideo rond de bekerfinale van 2025 in De Kuip, samen met Drukwerkdeal en State of Football. Alle meereizende supporters kregen een gratis shirt, en de video maakte die actie bekend. Ik regelde de volledige productie, en we interviewden oud-spelers van de club. In deze behind-the-scenes video zijn ook shots te zien die ik zelf heb gefilmd."
+        }
+      ]
     },
     {
       "title": "Smaakverkenners",
