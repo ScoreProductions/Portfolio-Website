@@ -3,6 +3,7 @@
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { embedUrl, site, youtubeBackgroundUrl } from "@/lib/site";
+import BackgroundVideo from "./BackgroundVideo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -111,7 +112,7 @@ export default function Hero() {
           </div>
         ) : isFile ? (
           <>
-            <video src={site.showreel} poster={site.showreelPoster || undefined} autoPlay muted loop playsInline className="h-full w-full object-cover blur-[2px]" />
+            <BackgroundVideo src={site.showreel} poster={site.showreelPoster || undefined} className="h-full w-full object-cover blur-[2px]" />
             <div className="absolute inset-0 bg-black/45" />
           </>
         ) : (
