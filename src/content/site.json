@@ -36,9 +36,9 @@
       {
         "title": "Videografie",
         "points": [
-          "Commercials",
-          "Social",
-          "Events"
+          "Advertentie",
+          "Social media",
+          "Commercial"
         ]
       },
       {
@@ -58,7 +58,7 @@
         ]
       }
     ],
-    "intro": "De hele productie van A tot Z: van het eerste idee tot de laatste export. In één hand, of precies het stuk dat je nodig hebt."
+    "intro": "De hele productie van A tot Z. Van het eerste idee tot de laatste edit."
   },
   "freelance": {
     "title": "Freelance",
@@ -663,11 +663,11 @@
     "blocks": [
       {
         "title": "Wie ben ik",
-        "text": "Max Score, eigenaar van Score Productions en woonachtig in Twente. Met een achtergrond in Creative Business en drie jaar ervaring in videoproductie. Ik werkte veel voor televisie en bij meerdere productiehuizen. Nu ligt de focus op eigen content en eigen creativiteit."
+        "text": "Ik ben Max Score, eigenaar van Score Productions en woonachtig in Twente. Ik heb een achtergrond in Creative Business en drie jaar ervaring in videoproductie. Ik heb voor meerdere productiehuizen en televisieprogramma's gewerkt. Nu ligt de focus op eigen content en eigen creativiteit."
       },
       {
         "title": "Wat doe ik",
-        "text": "Van A tot Z inzetbaar. Aan de voorkant brainstormen, bedenken, scripten en storyboarden. Daarna filmen en fotograferen, en tot slot monteren en afwerken."
+        "text": "Score Productions is van A tot Z inzetbaar: van het eerste idee tot de laatste edit. Maar ook los in te huren als freelancer, voor fotografie, videografie, productie en montage."
       },
       {
         "title": "Visie",
@@ -675,7 +675,13 @@
       },
       {
         "title": "Set-up",
-        "text": "Sony A7 IV met Sigma 24-70mm F2.8 DG DN II Art, aangevuld met een eigen licht- en audioset."
+        "text": "",
+        "items": [
+          "Sony A7 IV",
+          "Sigma 24-70mm F2.8 DG DN II Art",
+          "Eigen lichtset",
+          "Eigen audioset"
+        ]
       }
     ]
   },
@@ -710,7 +716,7 @@
   "featured": {
     "label": "Passieproject",
     "title": "Vietnam",
-    "text": "Een reis door Vietnam in een snelle, flitsende edit. Een andere stijl dan de rest van mijn werk: puur ritme, energie en beeld.",
+    "text": "Een passieproject van mijn reis door Vietnam.",
     "tag": "Passieproject",
     "video": "https://youtu.be/z8SIYwubQMA",
     "thumbnail": ""

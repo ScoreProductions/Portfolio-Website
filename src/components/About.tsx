@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRef } from "react";
 import { site } from "@/lib/site";
 import CountUp from "./CountUp";
+import GearAssembly from "./GearAssembly";
 import { Corners } from "./Frame";
 import { Reveal } from "./Reveal";
 import SectionHeader from "./SectionHeader";
@@ -38,12 +39,28 @@ export default function About() {
       <div>
         <SectionHeader label="Over mij" title={site.about.title.split(" ")[0]} accent={site.about.title.split(" ").slice(1).join(" ")} />
         <div className="mt-10 grid gap-8 sm:grid-cols-2">
-          {site.about.blocks.map((b, i) => (
-            <Reveal key={b.title} delay={i * 0.05}>
-              <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{b.title}</h3>
-              <p className="mt-2 text-lg leading-relaxed text-fg/75">{b.text}</p>
-            </Reveal>
-          ))}
+          {site.about.blocks.map((b, i) => {
+            const items = "items" in b ? (b.items as string[]) : undefined;
+            return (
+              <Reveal key={b.title} delay={i * 0.05} className={items ? "sm:col-span-2" : undefined}>
+                <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{b.title}</h3>
+                {b.text && <p className="mt-2 text-lg leading-relaxed text-fg/75">{b.text}</p>}
+                {items && (
+                  <div className="mt-3 grid items-center gap-6 sm:grid-cols-[1fr_1.3fr]">
+                    <ul className="space-y-2 text-lg text-fg/75">
+                      {items.map((it) => (
+                        <li key={it} className="flex items-center gap-3">
+                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                          {it}
+                        </li>
+                      ))}
+                    </ul>
+                    <GearAssembly />
+                  </div>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
 
         <div className="mt-12 grid grid-cols-3 gap-6 border-t border-line pt-8">
