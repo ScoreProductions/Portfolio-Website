@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import CountUp from "@/components/CountUp";
 import Portfolio from "@/components/Portfolio";
 import { site, siteUrl, slugify } from "@/lib/site";
 
@@ -31,13 +32,15 @@ export default function ProjectenPage() {
           </p>
           <dl className="mt-10 flex flex-wrap gap-x-12 gap-y-4">
             {[
-              [site.projects.length, "Projecten"],
-              [tv, "Tv-producties"],
-              [site.clients.items.length, "Merken"],
+              [site.stats.find((s) => s.label === "Projecten")?.value ?? String(site.projects.length), "Projecten"],
+              [String(tv), "Tv-producties"],
+              [site.stats.find((s) => s.label === "Merken")?.value ?? String(site.clients.items.length), "Merken"],
             ].map(([n, l]) => (
               <div key={l}>
                 <dt className="sr-only">{l}</dt>
-                <dd className="font-display text-5xl leading-none md:text-6xl">{n}</dd>
+                <dd className="font-display text-5xl leading-none md:text-6xl">
+                  <CountUp value={n} />
+                </dd>
                 <dd className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-white/75">{l}</dd>
               </div>
             ))}
