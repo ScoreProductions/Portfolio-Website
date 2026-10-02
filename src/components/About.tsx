@@ -42,21 +42,19 @@ export default function About() {
           {site.about.blocks.map((b, i) => {
             const items = "items" in b ? (b.items as string[]) : undefined;
             return (
-              <Reveal key={b.title} delay={i * 0.05} className={items ? "sm:col-span-2" : undefined}>
+              <Reveal key={b.title} delay={i * 0.05} className={items ? "relative" : undefined}>
+                {items && <GearAssembly className="pointer-events-none absolute -right-2 top-1/2 -z-10 w-44 -translate-y-1/2 opacity-[0.14] md:w-52" />}
                 <h3 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{b.title}</h3>
                 {b.text && <p className="mt-2 text-lg leading-relaxed text-fg/75">{b.text}</p>}
                 {items && (
-                  <div className="mt-3 grid items-center gap-6 sm:grid-cols-[1fr_1.3fr]">
-                    <ul className="space-y-2 text-lg text-fg/75">
-                      {items.map((it) => (
-                        <li key={it} className="flex items-center gap-3">
-                          <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-                          {it}
-                        </li>
-                      ))}
-                    </ul>
-                    <GearAssembly />
-                  </div>
+                  <ul className="mt-2 space-y-1 text-lg leading-relaxed text-fg/75">
+                    {items.map((it) => (
+                      <li key={it} className="flex gap-3">
+                        <span className="mt-[0.7em] h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </Reveal>
             );
