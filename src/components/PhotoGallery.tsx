@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 /**
@@ -23,7 +23,18 @@ export function galleryTile(i: number, n: number, wide = false) {
 }
 
 /** Thumbnail grid that opens photos in an in-page lightbox (arrows, swipe, Esc). */
-export default function PhotoGallery({ photos, alt, wide = false }: { photos: string[]; alt: string; wide?: boolean }) {
+export default function PhotoGallery({
+  photos,
+  alt,
+  wide = false,
+  renderGrid,
+}: {
+  photos: string[];
+  alt: string;
+  wide?: boolean;
+  /** Custom thumbnail layout; receives a callback that opens the lightbox at a photo index. */
+  renderGrid?: (open: (i: number) => void) => ReactNode;
+}) {
   const [open, setOpen] = useState<number | null>(null);
   const [start, setStart] = useState<number | null>(null);
   const go = (d: number) => setOpen((i) => (i === null ? i : (i + d + photos.length) % photos.length));
@@ -44,6 +55,7 @@ export default function PhotoGallery({ photos, alt, wide = false }: { photos: st
 
   return (
     <>
+      {renderGrid ? renderGrid(setOpen) : (
       <div className={`mt-4 grid grid-flow-row-dense gap-3 ${wide ? "grid-cols-2 md:grid-cols-6 md:gap-4" : "grid-cols-2"}`}>
         {photos.map((src, i) => (
           <button
@@ -57,6 +69,7 @@ export default function PhotoGallery({ photos, alt, wide = false }: { photos: st
           </button>
         ))}
       </div>
+      )}
       {typeof document !== "undefined" &&
         createPortal(
           <AnimatePresence>

@@ -7,7 +7,6 @@ import { useCallback, useRef, useState, type ReactNode } from "react";
 import { brandLogo, clientLogo, isVertical, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
-import PhotoGallery from "./PhotoGallery";
 import VideoModal, { type ModalContent } from "./VideoModal";
 
 const filters = ["Alles", "TV", ...site.roles];
@@ -197,13 +196,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
       </>
     ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
-    // Behind-the-scenes photos run full width under the video and info, so the video stays put at the top.
-    below: v.photos?.length ? (
-      <div className="border-t border-line p-6 md:p-10">
-        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
-        <PhotoGallery photos={v.photos} alt="Behind the scenes" wide />
-      </div>
-    ) : undefined,
+    photos: v.photos,
   };
 }
 
