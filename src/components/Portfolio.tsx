@@ -201,7 +201,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
 }
 
 export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos">) {
-  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.via ? [["Via", `${p.via} (productiehuis)`]] : []), ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
+  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.via ? [["Via", p.via]] : []), ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
   return (
     <dl className="space-y-5">
       {rows.map(([k, v]) => (

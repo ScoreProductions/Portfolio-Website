@@ -40,7 +40,7 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
   const rows: [string, string][] = [
     [p.tv ? "Zender" : "Opdrachtgever", p.brand],
     ["Mijn rol", p.functie],
-    ...(p.via ? ([["Via", `${p.via} (productiehuis)`]] as [string, string][]) : []),
+    ...(p.via ? ([["Via", p.via]] as [string, string][]) : []),
     ...(p.jaar ? ([[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] as [string, string][]) : []),
   ];
 
