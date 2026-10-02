@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useEffect, useRef, type ReactNode } from "react";
 import PhotoGallery from "./PhotoGallery";
 import { createPortal } from "react-dom";
@@ -137,15 +136,17 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                   // Small thumbnail strip under the normal video + info layout.
                   <div className="border-t border-line px-6 py-5 md:col-span-2 md:px-10">
                     <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
-                    <div className="-mx-6 mt-3 flex gap-3 overflow-x-auto px-6 pb-1 md:-mx-10 md:px-10">
+                    <div className="mt-3 flex flex-wrap gap-3">
                       {photos.map((src, i) => (
                         <button
                           key={src}
                           onClick={() => open(i)}
                           aria-label={`Foto ${i + 1} groot bekijken`}
-                          className="group relative aspect-[4/3] h-20 shrink-0 overflow-hidden rounded-lg bg-line md:h-24"
+                          className="group shrink-0 overflow-hidden rounded-lg bg-line"
                         >
-                          <Image src={src} alt="Behind the scenes" fill sizes="160px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                          {/* Fixed height, natural width: portrait stays portrait, landscape stays landscape. */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={src} alt="Behind the scenes" loading="lazy" className="block h-24 w-auto transition-transform duration-500 group-hover:scale-105 md:h-32" />
                         </button>
                       ))}
                     </div>
