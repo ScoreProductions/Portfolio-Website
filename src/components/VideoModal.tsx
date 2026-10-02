@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import PhotoGallery, { galleryTile } from "./PhotoGallery";
+import { useEffect, useRef, type ReactNode } from "react";
+import PhotoGallery from "./PhotoGallery";
 import { createPortal } from "react-dom";
 import { embedUrl } from "@/lib/site";
 import { lockScroll } from "./SmoothScroll";
@@ -12,7 +12,7 @@ export type ModalContent = {
   title: string;
   video: string;
   meta?: ReactNode;
-  /** Behind-the-scenes photos: fill the space under the video, overflow runs full width below. */
+  /** Behind-the-scenes photos, shown as a small strip under the video and info. */
   photos?: string[];
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
@@ -25,29 +25,6 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
   const isOpen = !!content;
   const nav = content?.nav;
   const photos = content?.photos?.length ? content.photos : undefined;
-  const vertical = content?.vertical;
-  const leftRef = useRef<HTMLDivElement>(null);
-  const infoRef = useRef<HTMLDivElement>(null);
-  const openPhoto = useRef<((i: number) => void) | null>(null);
-  // How many photos (2 per row) fit in the empty space under the video, next to the info column.
-  const [fill, setFill] = useState(0);
-  useLayoutEffect(() => {
-    const measure = () => {
-      const left = leftRef.current;
-      const info = infoRef.current;
-      if (!photos || vertical || !left || !info || !window.matchMedia("(min-width: 768px)").matches) return setFill(0);
-      const w = left.clientWidth;
-      const free = info.offsetHeight - (w * 9) / 16 - 12;
-      const rowH = ((w - 36) / 2) * 0.7 + 12;
-      const rows = Math.max(0, Math.round(free / rowH));
-      setFill(Math.min(photos.length - (photos.length % 2), rows * 2));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    if (infoRef.current) ro.observe(infoRef.current);
-    if (leftRef.current) ro.observe(leftRef.current);
-    return () => ro.disconnect();
-  }, [photos, vertical]);
   const projectNav = content?.projectNav;
   // Arrow keys and swipes step through a project's videos when it has several, otherwise through projects.
   const step = (d: number) => (nav ?? projectNav)?.go(d);
@@ -109,8 +86,8 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           >
             {/* Only this inner panel scrolls, so the close button below stays in place. */}
             <div className={`grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "md:grid-cols-[auto_1fr]" : "md:grid-cols-[1.6fr_1fr]"}`}>
-                        <div ref={leftRef} className="flex min-w-0 flex-col">
-<div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : fill > 0 ? "aspect-video shrink-0" : "aspect-video md:aspect-auto md:min-h-[420px] md:flex-1"}`}>
+                        <div className="flex min-w-0 flex-col">
+<div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px] md:flex-1"}`}>
               {embed ? (
                 <iframe key={embed} src={embed} title={content.title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
               ) : content.video ? (
@@ -121,22 +98,8 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                 </div>
               )}
             </div>
-              {fill > 0 && photos && (
-                <div className="grid min-h-0 flex-1 auto-rows-fr grid-cols-2 gap-3 p-3">
-                  {photos.slice(0, fill).map((src, i) => (
-                    <button
-                      key={src}
-                      onClick={() => openPhoto.current?.(i)}
-                      aria-label={`Foto ${i + 1} groot bekijken`}
-                      className="group relative overflow-hidden rounded-xl bg-line"
-                    >
-                      <Image src={src} alt="Behind the scenes" fill sizes="30vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
-            <div ref={infoRef} className="flex flex-col p-6 md:p-10">
+            <div className="flex flex-col p-6 md:p-10">
               {nav && (
                 <div className="mb-6 flex items-center gap-3 pr-12">
                   {[-1, 1].map((d) => (
@@ -170,28 +133,24 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               <PhotoGallery
                 photos={photos}
                 alt="Behind the scenes"
-                renderGrid={(open) => {
-                  openPhoto.current = open;
-                  const rest = photos.slice(fill);
-                  if (!rest.length) return null;
-                  return (
-                    <div className="border-t border-line p-6 md:col-span-2 md:p-10">
-                      <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
-                      <div className="mt-4 grid grid-flow-row-dense grid-cols-2 gap-3 md:grid-cols-6 md:gap-4">
-                        {rest.map((src, i) => (
-                          <button
-                            key={src}
-                            onClick={() => open(fill + i)}
-                            aria-label={`Foto ${fill + i + 1} groot bekijken`}
-                            className={`group relative block overflow-hidden rounded-xl bg-line ${galleryTile(i, rest.length, true)}`}
-                          >
-                            <Image src={src} alt="Behind the scenes" fill sizes="(min-width: 768px) 40vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                          </button>
-                        ))}
-                      </div>
+                renderGrid={(open) => (
+                  // Small thumbnail strip under the normal video + info layout.
+                  <div className="border-t border-line px-6 py-5 md:col-span-2 md:px-10">
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
+                    <div className="-mx-6 mt-3 flex gap-3 overflow-x-auto px-6 pb-1 md:-mx-10 md:px-10">
+                      {photos.map((src, i) => (
+                        <button
+                          key={src}
+                          onClick={() => open(i)}
+                          aria-label={`Foto ${i + 1} groot bekijken`}
+                          className="group relative aspect-[4/3] h-20 shrink-0 overflow-hidden rounded-lg bg-line md:h-24"
+                        >
+                          <Image src={src} alt="Behind the scenes" fill sizes="160px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                        </button>
+                      ))}
                     </div>
-                  );
-                }}
+                  </div>
+                )}
               />
             )}
             </div>
