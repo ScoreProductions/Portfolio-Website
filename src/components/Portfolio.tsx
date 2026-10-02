@@ -4,7 +4,7 @@ import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useRef, useState, type ReactNode } from "react";
-import { isVertical, projectLogos, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
+import { brandLogo, clientLogo, isVertical, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import PhotoGallery from "./PhotoGallery";
@@ -188,7 +188,6 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
     video: v.video,
     vertical: isVertical(v),
-    logos: projectLogos(p),
     meta: (
       <>
         {projectMeta(v)}
@@ -201,10 +200,16 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
   };
 }
 
-export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos" | "credits">) {
+/** Logo image when available, otherwise the plain name. */
+export function LogoOrName({ name, logo }: { name: string; logo?: string }) {
+  // eslint-disable-next-line @next/next/no-img-element
+  return logo ? <img src={logo} alt={name} title={name} className="mt-1 h-9 w-auto max-w-[180px] object-contain md:h-11" /> : <>{name}</>;
+}
+
+export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos" | "credits" | "logo">) {
   const rows: [string, ReactNode][] = [
-    [p.tv ? "Zender" : "Merk", p.brand],
-    ...(p.via ? ([["Via", p.via]] as [string, ReactNode][]) : []),
+    [p.tv ? "Zender" : "Merk", <LogoOrName key="b" name={p.brand} logo={brandLogo(p)} />],
+    ...(p.via ? ([["Via", <LogoOrName key="v" name={p.via} logo={clientLogo(p.via)} />]] as [string, ReactNode][]) : []),
     [
       "Functie",
       p.credits?.length ? (

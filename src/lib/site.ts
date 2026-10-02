@@ -56,12 +56,9 @@ export function clientLogo(name?: string) {
   return c?.logo || undefined;
 }
 
-/** Brand and production-company logos to show on a project. */
-export function projectLogos(p: Pick<Project, "brand" | "via" | "logo">) {
-  return [
-    { name: p.brand, logo: p.logo ?? clientLogo(p.brand) },
-    { name: p.via ?? "", logo: clientLogo(p.via) },
-  ].filter((l): l is { name: string; logo: string } => !!l.name && !!l.logo);
+/** Renders as the logo image when one exists, otherwise null (callers fall back to text). */
+export function brandLogo(p: Pick<Project, "brand" | "logo">) {
+  return p.logo ?? clientLogo(p.brand);
 }
 
 /** URL-friendly id for a project, used for /projecten/[slug]. */
