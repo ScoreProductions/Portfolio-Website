@@ -446,10 +446,19 @@
       ],
       "functie": "Productie & camera",
       "description": "Voor Brandeniers maakten we meerdere producties. Een daarvan is een aftermovie van een ideeënmarathon waarin twee teams het tegen elkaar opnamen. Meer volgt.",
-      "video": "",
+      "video": "https://youtu.be/9GVEvFcduiM",
       "preview": "",
       "thumbnail": "",
-      "via": "Frameworks"
+      "via": "Frameworks",
+      "items": [
+        {
+          "title": "Salesvideo",
+          "video": "https://youtu.be/9GVEvFcduiM",
+          "thumbnail": "",
+          "functie": "Productie",
+          "description": "Salesvideo voor Brandeniers, in samenwerking met Frameworks. Bestaande klanten komen aan het woord en vertellen over hun ervaring, zodat Brandeniers de video kan doorsturen naar klanten en kan inzetten om nieuwe klanten te werven."
+        }
+      ]
     },
     {
       "title": "Dubbelleven",
