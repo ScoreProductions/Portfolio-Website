@@ -65,7 +65,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           data-lenis-prevent
         >
           <motion.div
-            className={`relative flex max-h-full w-full ${content.vertical ? "max-w-5xl" : "max-w-6xl"}`}
+            className={`relative flex w-full ${projectNav ? "max-h-[calc(100%-4.5rem)] xl:max-h-full" : "max-h-full"} ${content.vertical ? "max-w-5xl xl:max-w-4xl" : "max-w-6xl xl:max-w-5xl"}`}
             initial={{ y: 60, scale: 0.96, opacity: 0 }}
             animate={{ y: 0, scale: 1, opacity: 1 }}
             exit={{ y: 40, scale: 0.97, opacity: 0 }}
@@ -114,20 +114,6 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               )}
               <h3 className="text-3xl font-semibold tracking-tight md:text-5xl">{content.title}</h3>
               <div className="mt-6 flex-1">{content.meta}</div>
-              {projectNav && (
-                <div className="mt-10 grid grid-cols-2 gap-3 border-t border-line pt-6">
-                  {[-1, 1].map((d) => (
-                    <button
-                      key={d}
-                      onClick={() => projectNav.go(d)}
-                      className={`group flex flex-col gap-1 rounded-2xl border border-line p-4 transition-colors duration-300 hover:border-accent ${d > 0 ? "items-end text-right" : "items-start text-left"}`}
-                    >
-                      <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted">{d < 0 ? "← Vorig project" : "Volgend project →"}</span>
-                      <span className="line-clamp-1 font-semibold transition-colors group-hover:text-accent">{d < 0 ? projectNav.prev : projectNav.next}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
             </div>
             </div>
             {projectNav &&
@@ -136,11 +122,15 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                   key={d}
                   onClick={() => projectNav.go(d)}
                   aria-label={d < 0 ? `Vorig project: ${projectNav.prev}` : `Volgend project: ${projectNav.next}`}
-                  className={`absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-fg shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white xl:flex ${d < 0 ? "-left-20" : "-right-20"}`}
+                  className={`group absolute top-1/2 hidden w-28 -translate-y-1/2 flex-col items-center gap-3 text-center text-white xl:flex ${d < 0 ? "-left-36" : "-right-36"}`}
                 >
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-fg shadow-lg transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+                    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">{d < 0 ? "Vorig project" : "Volgend project"}</span>
+                  <span className="line-clamp-2 text-sm font-semibold leading-tight">{d < 0 ? projectNav.prev : projectNav.next}</span>
                 </button>
               ))}
             <button
@@ -151,6 +141,25 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               ×
             </button>
           </motion.div>
+          {projectNav && (
+            <div className="absolute inset-x-3 bottom-3 flex justify-between gap-3 xl:hidden" onClick={(e) => e.stopPropagation()}>
+              {[-1, 1].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => projectNav.go(d)}
+                  aria-label={d < 0 ? `Vorig project: ${projectNav.prev}` : `Volgend project: ${projectNav.next}`}
+                  className={`flex min-w-0 max-w-[48%] items-center gap-2 rounded-full bg-white py-2 text-sm font-semibold text-fg shadow-lg ${d < 0 ? "pl-2 pr-4" : "ml-auto flex-row-reverse pl-4 pr-2"}`}
+                >
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-white">
+                    <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                  <span className="truncate">{d < 0 ? projectNav.prev : projectNav.next}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </motion.div>
       )}
     </AnimatePresence>,
