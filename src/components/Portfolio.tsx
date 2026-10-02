@@ -3,8 +3,8 @@
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useRef, useState } from "react";
-import { isVertical, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
+import { useCallback, useRef, useState, type ReactNode } from "react";
+import { isVertical, projectLogos, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import PhotoGallery from "./PhotoGallery";
@@ -188,6 +188,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
     video: v.video,
     vertical: isVertical(v),
+    logos: projectLogos(p),
     meta: (
       <>
         {projectMeta(v)}
@@ -200,8 +201,26 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
   };
 }
 
-export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos">) {
-  const rows = [[p.tv ? "Zender" : "Merk", p.brand], ["Functie", p.functie], ...(p.via ? [["Via", p.via]] : []), ...(p.jaar ? [[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] : [])];
+export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos" | "credits">) {
+  const rows: [string, ReactNode][] = [
+    [p.tv ? "Zender" : "Merk", p.brand],
+    ...(p.via ? ([["Via", p.via]] as [string, ReactNode][]) : []),
+    [
+      "Functie",
+      p.credits?.length ? (
+        <ul className="space-y-1">
+          {p.credits.map((c) => (
+            <li key={c.name}>
+              <span className="font-semibold">{c.name}</span> <span className="text-muted">— {c.role}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        p.functie
+      ),
+    ],
+    ...(p.jaar ? ([[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] as [string, ReactNode][]) : []),
+  ];
   return (
     <dl className="space-y-5">
       {rows.map(([k, v]) => (

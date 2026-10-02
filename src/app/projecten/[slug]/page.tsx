@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import VideoSwitcher from "@/components/VideoSwitcher";
-import { embedUrl, isVertical, site, siteUrl, slugify, youtubeThumb } from "@/lib/site";
+import { embedUrl, isVertical, projectLogos, site, siteUrl, slugify, youtubeThumb } from "@/lib/site";
 
 const find = (slug: string) => site.projects.find((p) => slugify(p.title) === slug);
 
@@ -37,10 +37,24 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
   const thumb = p.thumbnail || youtubeThumb(p.video);
   const url = `${siteUrl}/projecten/${slugify(p.title)}`;
 
-  const rows: [string, string][] = [
-    [p.tv ? "Zender" : "Opdrachtgever", p.brand],
-    ["Mijn rol", p.functie],
+  const logos = projectLogos(p);
+  const rows: [string, React.ReactNode][] = [
+    [p.tv ? "Zender" : "Merk", p.brand],
     ...(p.via ? ([["Via", p.via]] as [string, string][]) : []),
+    [
+      p.credits?.length ? "Team" : "Mijn rol",
+      p.credits?.length ? (
+        <ul className="space-y-1">
+          {p.credits.map((c) => (
+            <li key={c.name}>
+              <span className="font-semibold">{c.name}</span> <span className="text-muted">— {c.role}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        p.functie
+      ),
+    ],
     ...(p.jaar ? ([[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] as [string, string][]) : []),
   ];
 
@@ -80,6 +94,14 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
       </nav>
 
       <header className="mt-8">
+        {!!logos.length && (
+          <div className="mb-6 flex flex-wrap items-center gap-8">
+            {logos.map((l) => (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img key={l.logo} src={l.logo} alt={l.name} className="h-12 w-auto max-w-[200px] object-contain md:h-16" />
+            ))}
+          </div>
+        )}
         <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">{p.brand}</span>
         <h1 className="font-display mt-4 text-7xl leading-[0.9] md:text-[9rem]">{p.title}</h1>
         <p className="mt-4 text-xl text-muted md:text-2xl">{p.functie}{p.jaar ? ` · ${p.jaar}` : ""}</p>

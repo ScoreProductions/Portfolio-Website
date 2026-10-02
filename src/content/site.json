@@ -200,7 +200,8 @@
       "description": "Videoclip voor 'Liefde & Lust' van zangeres Renee Rose. Ik was producer: ik regelde de productie van voorbereiding tot draaidag.",
       "video": "https://youtu.be/luxAMqi43ks",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "logo": "/logos/renee-rose.webp"
     },
     {
       "title": "Hout in de Tuin",
@@ -214,7 +215,17 @@
       "video": "https://www.youtube.com/watch?v=NH3NZ68myBk",
       "preview": "",
       "thumbnail": "",
-      "via": "Frameworks Productions"
+      "via": "Frameworks Productions",
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer & behind-the-scenes fotograaf"
+        }
+      ]
     },
     {
       "title": "Tastory",
@@ -339,6 +350,16 @@
           "functie": "Productie & camera (deel van de shots)",
           "description": "Campagnevideo rond de bekerfinale van 2025 in De Kuip, samen met Drukwerkdeal en State of Football. Alle meereizende supporters kregen een gratis shirt, en de video maakte die actie bekend. Ik regelde de volledige productie, en we interviewden oud-spelers van de club. In deze behind-the-scenes video zijn ook shots te zien die ik zelf heb gefilmd."
         }
+      ],
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer & behind-the-scenes videograaf"
+        }
       ]
     },
     {
@@ -368,6 +389,16 @@
           "thumbnail": "",
           "description": "Gescripte video die eruitziet als user-generated content, maar is gefilmd met professionele apparatuur. Zo zien kijkers precies wat de Smaakverkenners-tour inhoudt en wat ze kunnen verwachten. Ik was producer, in samenwerking met Frameworks."
         }
+      ],
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer"
+        }
       ]
     },
     {
@@ -395,7 +426,17 @@
       "video": "https://youtu.be/FdNlF1ovD70",
       "preview": "",
       "thumbnail": "",
-      "via": "Frameworks Productions"
+      "via": "Frameworks Productions",
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer"
+        }
+      ]
     },
     {
       "title": "Wattkraft",
@@ -408,7 +449,17 @@
       "video": "",
       "preview": "",
       "thumbnail": "",
-      "via": "Frameworks Productions"
+      "via": "Frameworks Productions",
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer"
+        }
+      ]
     },
     {
       "title": "Brandeniers",
@@ -429,6 +480,16 @@
           "thumbnail": "",
           "functie": "Productie",
           "description": "Salesvideo voor Brandeniers, in samenwerking met Frameworks. Bestaande klanten komen aan het woord en vertellen over hun ervaring, zodat Brandeniers de video kan doorsturen naar klanten en kan inzetten om nieuwe klanten te werven."
+        }
+      ],
+      "credits": [
+        {
+          "name": "Martijn Scheffers",
+          "role": "Executive producer"
+        },
+        {
+          "name": "Max Score",
+          "role": "Producer"
         }
       ]
     },

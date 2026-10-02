@@ -19,6 +19,10 @@ export type Project = {
   vertical?: boolean;
   /** Behind-the-scenes photos shown in the project modal. */
   photos?: string[];
+  /** Team credits shown instead of the single "functie" line. */
+  credits?: { name: string; role: string }[];
+  /** Logo override when the brand name doesn't match a client in the logo list. */
+  logo?: string;
   /** Production company the work was made through. */
   via?: string;
   /** Extra videos for the same client; the tile lets visitors swipe between them. */
@@ -41,6 +45,24 @@ export const siteUrl = (
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "http://localhost:3000")
 ).replace(/\/$/, "");
+
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/** Logo from the client list whose name matches (or starts with) the given brand/company name. */
+export function clientLogo(name?: string) {
+  if (!name) return undefined;
+  const n = norm(name);
+  const c = site.clients.items.find((c) => c.logo && (norm(c.name) === n || norm(c.name).startsWith(n) || n.startsWith(norm(c.name))));
+  return c?.logo || undefined;
+}
+
+/** Brand and production-company logos to show on a project. */
+export function projectLogos(p: Pick<Project, "brand" | "via" | "logo">) {
+  return [
+    { name: p.brand, logo: p.logo ?? clientLogo(p.brand) },
+    { name: p.via ?? "", logo: clientLogo(p.via) },
+  ].filter((l): l is { name: string; logo: string } => !!l.name && !!l.logo);
+}
 
 /** URL-friendly id for a project, used for /projecten/[slug]. */
 export function slugify(title: string) {

@@ -10,6 +10,8 @@ export type ModalContent = {
   title: string;
   video: string;
   meta?: ReactNode;
+  /** Brand / production-company logos shown above the title. */
+  logos?: { name: string; logo: string }[];
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
@@ -110,6 +112,14 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                   <span className="text-sm font-medium text-muted">
                     Video {nav.index + 1} van {nav.count}
                   </span>
+                </div>
+              )}
+              {!!content.logos?.length && (
+                <div className="mb-5 flex flex-wrap items-center gap-x-5 gap-y-3 pr-12">
+                  {content.logos.map((l) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={l.logo} src={l.logo} alt={l.name} className="h-8 w-auto max-w-[120px] object-contain md:h-10" />
+                  ))}
                 </div>
               )}
               <h3 className="text-3xl font-semibold tracking-tight md:text-5xl">{content.title}</h3>
