@@ -1,0 +1,163 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { embedUrl, isVertical, site, siteUrl, slugify, youtubeThumb } from "@/lib/site";
+
+const find = (slug: string) => site.projects.find((p) => slugify(p.title) === slug);
+
+export function generateStaticParams() {
+  return site.projects.map((p) => ({ slug: slugify(p.title) }));
+}
+
+export async function generateMetadata(props: PageProps<"/projecten/[slug]">): Promise<Metadata> {
+  const p = find((await props.params).slug);
+  if (!p) return {};
+  const thumb = p.thumbnail || youtubeThumb(p.video);
+  const description = `${p.title} (${p.brand}) — ${p.functie}. ${p.description}`.slice(0, 300);
+  return {
+    title: `${p.title} — ${p.functie}`,
+    description,
+    alternates: { canonical: `/projecten/${slugify(p.title)}` },
+    openGraph: { type: "article", url: `/projecten/${slugify(p.title)}`, title: `${p.title} — ${site.brand}`, description, images: thumb ? [thumb] : undefined },
+  };
+}
+
+function Player({ video, title, vertical }: { video: string; title: string; vertical: boolean }) {
+  const src = embedUrl(video, false);
+  if (!src) return null;
+  return (
+    <div className={`relative overflow-hidden rounded-3xl bg-black ${vertical ? "mx-auto aspect-[9/16] w-full max-w-sm" : "aspect-video w-full"}`}>
+      <iframe src={src} title={title} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
+    </div>
+  );
+}
+
+export default async function ProjectPage(props: PageProps<"/projecten/[slug]">) {
+  const p = find((await props.params).slug);
+  if (!p) notFound();
+  const i = site.projects.indexOf(p);
+  const next = site.projects[(i + 1) % site.projects.length];
+  const videos: { title?: string; video: string; vertical: boolean }[] = p.items?.length
+    ? p.items.filter((it) => it.video).map((it) => ({ title: it.title, video: it.video!, vertical: isVertical({ video: it.video!, vertical: it.vertical }) }))
+    : p.video
+      ? [{ video: p.video, vertical: isVertical(p) }]
+      : [];
+  const thumb = p.thumbnail || youtubeThumb(p.video);
+  const url = `${siteUrl}/projecten/${slugify(p.title)}`;
+
+  const rows: [string, string][] = [
+    [p.tv ? "Zender" : "Opdrachtgever", p.brand],
+    ["Mijn rol", p.functie],
+    ...(p.via ? ([["Via", `${p.via} (productiehuis)`]] as [string, string][]) : []),
+    ...(p.jaar ? ([[p.tv ? "Gewerkt aan" : "Jaar", p.jaar]] as [string, string][]) : []),
+  ];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${url}#work`,
+        name: p.title,
+        url,
+        description: p.description,
+        image: thumb ?? undefined,
+        genre: p.tv ? "Televisie" : "Video",
+        dateCreated: p.jaar?.match(/\d{4}/)?.[0],
+        sourceOrganization: { "@type": "Organization", name: p.brand },
+        contributor: { "@type": "Person", name: site.name, url: siteUrl, jobTitle: p.functie },
+        video: videos.map((v) => ({ "@type": "VideoObject", name: v.title ? `${p.title} — ${v.title}` : p.title, embedUrl: embedUrl(v.video, false), description: p.description, thumbnailUrl: youtubeThumb(v.video) ?? thumb ?? undefined })),
+      },
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+          { "@type": "ListItem", position: 2, name: "Projecten", item: `${siteUrl}/projecten` },
+          { "@type": "ListItem", position: 3, name: p.title, item: url },
+        ],
+      },
+    ],
+  };
+
+  return (
+    <article className="mx-auto max-w-[1200px] px-5 pb-28 pt-32 md:px-10 md:pt-40">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <nav aria-label="Kruimelpad" className="text-sm text-muted">
+        <Link href="/" className="hover:text-accent">Home</Link> <span aria-hidden>/</span>{" "}
+        <Link href="/projecten" className="hover:text-accent">Projecten</Link> <span aria-hidden>/</span> <span className="text-fg">{p.title}</span>
+      </nav>
+
+      <header className="mt-8">
+        <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">{p.brand}</span>
+        <h1 className="font-display mt-4 text-7xl leading-[0.9] md:text-[9rem]">{p.title}</h1>
+        <p className="mt-4 text-xl text-muted md:text-2xl">{p.functie}{p.jaar ? ` · ${p.jaar}` : ""}</p>
+      </header>
+
+      <div className="mt-12 space-y-10">
+        {videos.length ? (
+          videos.map((v) => (
+            <figure key={v.video}>
+              <Player video={v.video} title={v.title ? `${p.title} — ${v.title}` : p.title} vertical={v.vertical} />
+              {v.title && videos.length > 1 && <figcaption className="mt-3 text-sm text-muted">{v.title}</figcaption>}
+            </figure>
+          ))
+        ) : thumb ? (
+          <div className="relative aspect-video overflow-hidden rounded-3xl"><Image src={thumb} alt={p.title} fill sizes="100vw" className="object-cover" /></div>
+        ) : null}
+      </div>
+
+      <div className="mt-14 grid gap-12 md:grid-cols-[1.5fr_1fr]">
+        <section>
+          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Over dit project</h2>
+          <p className="mt-4 text-xl leading-relaxed text-fg/80">{p.description}</p>
+          {p.kijk && (
+            <p className="mt-6">
+              <a href={p.kijk.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent underline-offset-4 hover:underline">Te zien op {p.kijk.label} ↗</a>
+            </p>
+          )}
+        </section>
+        <dl className="space-y-5">
+          {rows.map(([k, v]) => (
+            <div key={k} className="border-b border-line pb-4">
+              <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">{k}</dt>
+              <dd className="mt-1 text-lg">{v}</dd>
+            </div>
+          ))}
+          {!!p.timeline?.length && (
+            <div>
+              <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Mijn seizoenen</dt>
+              <dd>
+                <ul className="mt-3 space-y-2">
+                  {p.timeline.map((t) => (
+                    <li key={t.label}><span className="font-semibold">{t.label}</span> <span className="text-muted">— {t.date}</span></li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          )}
+        </dl>
+      </div>
+
+      {!!p.photos?.length && (
+        <section className="mt-16">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Behind the scenes</h2>
+          <div className="mt-6 grid grid-cols-2 items-start gap-4 md:grid-cols-3">
+            {p.photos.map((src) => (
+              <div key={src} className="overflow-hidden rounded-2xl"><Image src={src} alt={`${p.title} — behind the scenes`} width={800} height={800} sizes="(min-width: 768px) 33vw, 50vw" className="h-auto w-full" /></div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <footer className="mt-20 flex flex-col gap-6 border-t border-line pt-10 md:flex-row md:items-center md:justify-between">
+        <Link href="/projecten" className="text-muted hover:text-accent">← Alle projecten</Link>
+        <Link href={`/projecten/${slugify(next.title)}`} className="group text-right">
+          <span className="block text-xs font-medium uppercase tracking-[0.2em] text-muted">Volgend project</span>
+          <span className="font-display text-5xl leading-none transition-colors group-hover:text-accent md:text-6xl">{next.title} →</span>
+        </Link>
+      </footer>
+    </article>
+  );
+}
+

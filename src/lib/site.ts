@@ -42,13 +42,24 @@ export const siteUrl = (
     : "http://localhost:3000")
 ).replace(/\/$/, "");
 
+/** URL-friendly id for a project, used for /projecten/[slug]. */
+export function slugify(title: string) {
+  return title
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, "en")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
 /** Turns a YouTube/Vimeo link into an embeddable URL; returns null for direct video files. */
-export function embedUrl(url: string) {
+export function embedUrl(url: string, autoplay = true) {
   const yt = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/);
-  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=1&rel=0&modestbranding=1`;
+  if (yt) return `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=${autoplay ? 1 : 0}&rel=0&modestbranding=1`;
   const vimeo = url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([\da-f]+))?/);
   const hash = vimeo?.[2] ?? url.match(/[?&]h=([\da-f]+)/)?.[1];
-  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=1&title=0&byline=0${hash ? `&h=${hash}` : ""}`;
+  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}?autoplay=${autoplay ? 1 : 0}&title=0&byline=0${hash ? `&h=${hash}` : ""}`;
   return null;
 }
 

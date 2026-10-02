@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Bebas_Neue, Fraunces, Geist, Geist_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
@@ -9,7 +9,7 @@ import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const serif = Instrument_Serif({ variable: "--font-serif", subsets: ["latin"], weight: "400", style: "italic" });
+const serif = Fraunces({ variable: "--font-serif", subsets: ["latin"], style: "italic", axes: ["SOFT", "WONK"] });
 const display = Bebas_Neue({ variable: "--font-display", subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   applicationName: site.name,
   authors: [{ name: site.name }],
   creator: site.name,
-  keywords: [site.name, site.brand, "producer", "cameraman", "videograaf", "editor", "fotograaf", "videoproductie", "portfolio"],
+  keywords: [site.name, site.brand, "producer", "cameraman", "videograaf", "editor", "fotograaf", "videoproductie", "bedrijfsfilm", "Enschede", "Twente", "Hunted", "tv-producer"],
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -42,17 +42,45 @@ export const viewport: Viewport = {
   colorScheme: "light",
 };
 
+// One linked graph so search engines and AI assistants can tie the person, the business and the site together.
+const tvCredits = site.projects.filter((p) => p.tv).map((p) => p.title);
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: site.name,
-  jobTitle: site.role,
-  url: siteUrl,
-  email: site.contact.email,
-  telephone: site.contact.phone,
-  description: site.description,
-  worksFor: { "@type": "Organization", name: site.brand, address: { "@type": "PostalAddress", streetAddress: "Molenstraat 5-24", addressLocality: "Enschede", addressCountry: "NL" } },
-  sameAs: [site.contact.instagram, site.contact.linkedin],
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}/#person`,
+      name: site.name,
+      jobTitle: "Producer, cameraman en editor",
+      description: site.description,
+      url: siteUrl,
+      image: site.about.photo ? `${siteUrl}${site.about.photo}` : undefined,
+      email: `mailto:${site.contact.email}`,
+      telephone: site.contact.phone,
+      homeLocation: { "@type": "Place", name: "Twente, Nederland" },
+      worksFor: { "@id": `${siteUrl}/#business` },
+      knowsAbout: ["Videoproductie", "Televisieproductie", "Producer", "Camerawerk", "Videomontage", "Fotografie", "Bedrijfsfilm", "Social media content", "Concept en regie"],
+      hasOccupation: { "@type": "Occupation", name: "Producer / videograaf", occupationLocation: { "@type": "City", name: "Enschede" } },
+      sameAs: [site.contact.instagram, site.contact.linkedin],
+      subjectOf: tvCredits.map((t) => ({ "@type": "TVSeries", name: t })),
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}/#business`,
+      name: site.brand,
+      url: siteUrl,
+      description: site.description,
+      founder: { "@id": `${siteUrl}/#person` },
+      email: site.contact.email,
+      telephone: site.contact.phone,
+      address: { "@type": "PostalAddress", streetAddress: "Molenstraat 5-24", addressLocality: "Enschede", addressRegion: "Overijssel", addressCountry: "NL" },
+      areaServed: [{ "@type": "AdministrativeArea", name: "Twente" }, { "@type": "Country", name: "Nederland" }],
+      identifier: { "@type": "PropertyValue", propertyID: "KvK", value: site.contact.kvk },
+      knowsAbout: ["Videoproductie", "Bedrijfsfilm", "Campagnevideo", "Social content", "Fotografie", "Post-productie"],
+      sameAs: [site.contact.instagram, site.contact.linkedin],
+    },
+    { "@type": "WebSite", "@id": `${siteUrl}/#website`, url: siteUrl, name: site.brand, inLanguage: "nl-NL", publisher: { "@id": `${siteUrl}/#business` } },
+  ],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

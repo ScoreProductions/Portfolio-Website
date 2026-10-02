@@ -2,8 +2,9 @@
 
 import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import { isVertical, projectVariant, site, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
+import { isVertical, projectVariant, site, slugify, youtubePreviewUrl, youtubeThumb, type Project } from "@/lib/site";
 import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import PhotoGallery from "./PhotoGallery";
@@ -187,7 +188,14 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
     video: v.video,
     vertical: isVertical(v),
-    meta: projectMeta(v),
+    meta: (
+      <>
+        {projectMeta(v)}
+        <Link href={`/projecten/${slugify(p.title)}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent underline-offset-4 hover:underline">
+          Bekijk projectpagina →
+        </Link>
+      </>
+    ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
   };
 }
@@ -244,7 +252,8 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
   );
 }
 
-export default function Portfolio() {
+/** Homepage teaser (first tiles + link to /projecten) or, with `full`, the complete filterable grid. */
+export default function Portfolio({ full = false }: { full?: boolean }) {
   const [filter, setFilter] = useState("Alles");
   const [open, setOpen] = useState<Project | null>(null);
   const [variants, setVariants] = useState<Record<string, number>>({});
@@ -252,18 +261,12 @@ export default function Portfolio() {
   const variantOf = (p: Project) => variants[p.title] ?? 0;
   const setVariant = (p: Project, n: number) => setVariants((v) => ({ ...v, [p.title]: n }));
   const modal: ModalContent | null = open ? modalContent(open, variantOf(open), (n) => setVariant(open, n)) : null;
-  const [expanded, setExpanded] = useState(false);
   const shown =
     filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
-  // Only "Alles" is collapsed; a role filter shows every matching project at once.
-  const limit = filter === "Alles" ? VISIBLE : shown.length;
+  // On the homepage "Alles" shows a teaser; a role filter (or the projects page) shows every match.
+  const limit = full || filter !== "Alles" ? shown.length : VISIBLE;
   const first = shown.slice(0, limit);
-  const rest = shown.slice(limit);
-
-  const toggleMore = () => {
-    if (expanded) document.getElementById("portfolio")?.scrollIntoView({ behavior: "smooth" });
-    setExpanded(!expanded);
-  };
+  const more = site.projects.length - first.length;
 
   const renderGrid = (items: Project[], offset: number) => (
     <motion.div layout className="grid grid-flow-dense grid-cols-2 gap-3 md:auto-rows-[clamp(190px,15.5vw,250px)] md:grid-cols-3 md:gap-5">
@@ -300,9 +303,9 @@ export default function Portfolio() {
   );
 
   return (
-    <section id="portfolio" className="mx-auto max-w-[1500px] px-5 py-28 md:px-10 md:py-36">
+    <section id="portfolio" className={`mx-auto max-w-[1500px] px-5 md:px-10 ${full ? "pb-28 md:pb-36" : "py-28 md:py-36"}`}>
       <div className="mb-12 flex flex-col justify-between gap-8 md:mb-16 md:flex-row md:items-end">
-        <SectionHeader label="Portfolio" title="Geselecteerd" accent="werk" />
+        {full ? <p className="text-sm text-muted">{shown.length} {shown.length === 1 ? "project" : "projecten"}</p> : <SectionHeader label="Portfolio" title="Geselecteerd" accent="werk" />}
         <LayoutGroup>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter projecten">
             {filters.map((f) => (
@@ -310,10 +313,7 @@ export default function Portfolio() {
                 key={f}
                 role="tab"
                 aria-selected={filter === f}
-                onClick={() => {
-                  setFilter(f);
-                  setExpanded(false);
-                }}
+                onClick={() => setFilter(f)}
                 className={`relative rounded-full border px-5 py-2.5 text-sm font-medium transition-colors duration-300 ${
                   filter === f ? "border-accent text-white" : "border-line hover:border-fg"
                 }`}
@@ -330,37 +330,21 @@ export default function Portfolio() {
 
       {renderGrid(first, 0)}
 
-      <AnimatePresence initial={false}>
-        {expanded && rest.length > 0 && (
-          <motion.div
-            key="more"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
-            className="overflow-hidden"
-          >
-            <div className="pt-3 md:pt-5">{renderGrid(rest, VISIBLE)}</div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {rest.length > 0 && (
+      {!full && more > 0 && filter === "Alles" && (
         <div className="mt-12 flex justify-center md:mt-16">
-          <button
-            onClick={toggleMore}
-            aria-expanded={expanded}
+          <Link
+            href="/projecten"
             className="group relative flex items-center gap-4 overflow-hidden rounded-full border border-fg/15 py-3 pl-7 pr-3 font-semibold transition-colors duration-500 hover:border-accent hover:text-white"
           >
             <span className="absolute inset-0 translate-y-full rounded-full bg-accent transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-            <span className="relative">{expanded ? "Toon minder" : "Bekijk meer projecten"}</span>
+            <span className="relative">Bekijk alle projecten</span>
             <span className="relative flex h-10 w-10 items-center justify-center rounded-full bg-accent text-white transition-colors duration-500 group-hover:bg-white group-hover:text-accent">
-              <motion.svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5" animate={{ rotate: expanded ? 180 : 0 }} transition={{ duration: 0.5 }}>
-                <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-              </motion.svg>
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M5 12h14M13 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </span>
-            {!expanded && <span className="relative -ml-1 mr-1 text-sm font-medium text-muted transition-colors group-hover:text-white/80">+{rest.length}</span>}
-          </button>
+            <span className="relative -ml-1 mr-1 text-sm font-medium text-muted transition-colors group-hover:text-white/80">+{more}</span>
+          </Link>
         </div>
       )}
 

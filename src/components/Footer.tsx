@@ -5,9 +5,9 @@ import { site } from "@/lib/site";
 import { socials } from "./Contact";
 
 const links = [
-  { href: "#portfolio", label: "Portfolio" },
-  { href: "#over-mij", label: "Over mij" },
-  { href: "#contact", label: "Contact" },
+  { href: "/projecten", label: "Projecten" },
+  { href: "/#over-mij", label: "Over mij" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Footer() {
@@ -71,7 +71,7 @@ export default function Footer() {
             Privacyverklaring
           </Link>
         </span>
-        <a href="#home" className="transition-colors hover:text-accent">
+        <a href="#" className="transition-colors hover:text-accent">
           Terug naar boven ↑
         </a>
       </div>

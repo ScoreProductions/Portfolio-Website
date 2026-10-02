@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 import { lockScroll } from "./SmoothScroll";
@@ -14,15 +15,26 @@ const links = [
 
 const ease = [0.76, 0, 0.24, 1] as const;
 
+// Remount per route so the light/dark state and active link start fresh on every page.
 export default function Nav() {
+  const pathname = usePathname();
+  return <NavBar key={pathname} pathname={pathname} />;
+}
+
+function NavBar({ pathname }: { pathname: string }) {
+  const home = pathname === "/";
+  // Subpages link back to the homepage sections; only pages with a red header start in the "light" nav style.
+  const prefix = home ? "" : "/";
+  const heroUntil = (h: number) => (home ? h - 90 : pathname === "/projecten" ? 320 : -1);
   const [open, setOpen] = useState(false);
-  const [onHero, setOnHero] = useState(true);
-  const [active, setActive] = useState("home");
+  const [onHero, setOnHero] = useState(home || pathname === "/projecten");
+  const [active, setActive] = useState(home ? "home" : pathname.startsWith("/projecten") ? "portfolio" : "");
   const { scrollY } = useScroll();
 
-  useMotionValueEvent(scrollY, "change", (v) => setOnHero(v < window.innerHeight - 90));
+  useMotionValueEvent(scrollY, "change", (v) => setOnHero(v < heroUntil(window.innerHeight)));
 
   useEffect(() => {
+    if (!home) return;
     const els = links.map((l) => document.getElementById(l.id)).filter(Boolean) as HTMLElement[];
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
@@ -30,7 +42,7 @@ export default function Nav() {
     );
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
-  }, []);
+  }, [home]);
 
   const toggle = (next: boolean) => {
     setOpen(next);
@@ -45,7 +57,7 @@ export default function Nav() {
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-10 md:pt-6">
         <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4">
           <a
-            href="#home"
+            href={home ? "#home" : "/"}
             onClick={() => toggle(false)}
             className={`font-display relative z-50 rounded-full px-4 py-2 text-2xl tracking-wide backdrop-blur-xl transition-all duration-500 md:text-3xl ${
               light ? "-ml-4 text-white" : "border border-fg/10 bg-white/70 text-fg shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
@@ -62,7 +74,7 @@ export default function Nav() {
             {links.map((l) => (
               <a
                 key={l.id}
-                href={`#${l.id}`}
+                href={`${prefix}#${l.id}`}
                 className={`relative rounded-full px-5 py-2 text-sm font-medium transition-colors duration-300 ${
                   active === l.id ? (light ? "text-accent" : "text-white") : light ? "text-white/85 hover:text-white" : "text-fg/70 hover:text-fg"
                 }`}
@@ -80,7 +92,7 @@ export default function Nav() {
           </nav>
 
           <a
-            href="#contact"
+            href={`${prefix}#contact`}
             className={`group relative hidden overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 md:block ${
               light || onRed ? "bg-white text-accent" : "bg-accent text-white"
             }`}
@@ -121,7 +133,7 @@ export default function Nav() {
               {links.map((l, i) => (
                 <li key={l.id} className="overflow-hidden border-b border-white/20">
                   <motion.a
-                    href={`#${l.id}`}
+                    href={`${prefix}#${l.id}`}
                     onClick={() => toggle(false)}
                     className="font-display flex items-baseline justify-between py-3 text-7xl leading-none"
                     initial={{ y: "100%" }}
