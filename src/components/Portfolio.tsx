@@ -190,13 +190,20 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     vertical: isVertical(v),
     meta: (
       <>
-        {projectMeta(v)}
+        {projectMeta({ ...v, photos: undefined })}
         <Link href={`/projecten/${slugify(p.title)}`} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent underline-offset-4 hover:underline">
           Bekijk projectpagina →
         </Link>
       </>
     ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
+    // Behind-the-scenes photos run full width under the video and info, so the video stays put at the top.
+    below: v.photos?.length ? (
+      <div className="border-t border-line p-6 md:p-10">
+        <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
+        <PhotoGallery photos={v.photos} alt="Behind the scenes" wide />
+      </div>
+    ) : undefined,
   };
 }
 
@@ -245,14 +252,6 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
             <a href={p.kijk.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent underline-offset-4 hover:underline">
               {p.kijk.label} ↗
             </a>
-          </dd>
-        </div>
-      )}
-      {!!p.photos?.length && (
-        <div>
-          <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</dt>
-          <dd>
-            <PhotoGallery photos={p.photos} alt="Behind the scenes" />
           </dd>
         </div>
       )}

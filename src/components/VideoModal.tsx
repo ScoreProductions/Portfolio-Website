@@ -10,6 +10,8 @@ export type ModalContent = {
   title: string;
   video: string;
   meta?: ReactNode;
+  /** Full-width section under video + info (e.g. photo gallery). */
+  below?: ReactNode;
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
@@ -81,7 +83,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
           >
             {/* Only this inner panel scrolls, so the close button below stays in place. */}
             <div className={`grid max-h-full w-full gap-0 overflow-y-auto rounded-3xl bg-white ${content.vertical ? "md:grid-cols-[auto_1fr]" : "md:grid-cols-[1.6fr_1fr]"}`}>
-            <div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
+            <div className={`relative bg-fg ${content.vertical ? "mx-auto aspect-[9/16] h-[70vh] md:h-[85vh] md:max-h-[860px]" : content.below ? "aspect-video md:self-start" : "aspect-video md:aspect-auto md:min-h-[420px]"}`}>
               {embed ? (
                 <iframe key={embed} src={embed} title={content.title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
               ) : content.video ? (
@@ -122,6 +124,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               </h3>
               <div className="mt-6 flex-1">{content.meta}</div>
             </div>
+            {content.below && <div className="md:col-span-2">{content.below}</div>}
             </div>
             {projectNav &&
               [-1, 1].map((d) => (
