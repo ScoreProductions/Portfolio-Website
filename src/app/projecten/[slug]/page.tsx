@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import VideoSwitcher from "@/components/VideoSwitcher";
 import { embedUrl, isVertical, site, siteUrl, slugify, youtubeThumb } from "@/lib/site";
 
 const find = (slug: string) => site.projects.find((p) => slugify(p.title) === slug);
@@ -21,16 +22,6 @@ export async function generateMetadata(props: PageProps<"/projecten/[slug]">): P
     alternates: { canonical: `/projecten/${slugify(p.title)}` },
     openGraph: { type: "article", url: `/projecten/${slugify(p.title)}`, title: `${p.title} — ${site.brand}`, description, images: thumb ? [thumb] : undefined },
   };
-}
-
-function Player({ video, title, vertical }: { video: string; title: string; vertical: boolean }) {
-  const src = embedUrl(video, false);
-  if (!src) return null;
-  return (
-    <div className={`relative overflow-hidden rounded-3xl bg-black ${vertical ? "mx-auto aspect-[9/16] w-full max-w-sm" : "aspect-video w-full"}`}>
-      <iframe src={src} title={title} loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />
-    </div>
-  );
 }
 
 export default async function ProjectPage(props: PageProps<"/projecten/[slug]">) {
@@ -94,15 +85,9 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
         <p className="mt-4 text-xl text-muted md:text-2xl">{p.functie}{p.jaar ? ` · ${p.jaar}` : ""}</p>
       </header>
 
-      <div className="mt-12 space-y-10">
+      <div className="mt-12">
         {videos.length ? (
-          videos.map((v) => (
-            <figure key={v.video}>
-              <Player video={v.video} title={v.title ? `${p.title} — ${v.title}` : p.title} vertical={v.vertical} />
-              {v.title && videos.length > 1 && <figcaption className="mt-3 text-sm text-muted">{v.title}</figcaption>}
-            </figure>
-          ))
-        ) : thumb ? (
+          <VideoSwitcher videos={videos} title={p.title} />        ) : thumb ? (
           <div className="relative aspect-video overflow-hidden rounded-3xl"><Image src={thumb} alt={p.title} fill sizes="100vw" className="object-cover" /></div>
         ) : null}
       </div>

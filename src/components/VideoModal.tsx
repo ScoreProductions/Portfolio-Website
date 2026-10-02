@@ -13,16 +13,21 @@ export type ModalContent = {
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
+  /** Present when the modal can step to the previous/next project in the grid. */
+  projectNav?: { prev: string; next: string; go: (d: number) => void };
 };
 
 export default function VideoModal({ content, onClose }: { content: ModalContent | null; onClose: () => void }) {
   const isOpen = !!content;
   const nav = content?.nav;
-  const navRef = useRef(nav);
+  const projectNav = content?.projectNav;
+  // Arrow keys and swipes step through a project's videos when it has several, otherwise through projects.
+  const step = (d: number) => (nav ?? projectNav)?.go(d);
+  const navRef = useRef(step);
   const swipeStart = useRef<number | null>(null);
 
   useEffect(() => {
-    navRef.current = nav;
+    navRef.current = step;
   });
 
   useEffect(() => {
@@ -30,8 +35,8 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
     lockScroll(true);
     const key = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") navRef.current?.go(-1);
-      if (e.key === "ArrowRight") navRef.current?.go(1);
+      if (e.key === "ArrowLeft") navRef.current(-1);
+      if (e.key === "ArrowRight") navRef.current(1);
     };
     window.addEventListener("keydown", key);
     return () => {
@@ -68,10 +73,10 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
             onClick={(e) => e.stopPropagation()}
             onPointerDown={(e) => (swipeStart.current = e.clientX)}
             onPointerUp={(e) => {
-              if (swipeStart.current === null || !nav) return;
+              if (swipeStart.current === null) return;
               const dx = e.clientX - swipeStart.current;
               swipeStart.current = null;
-              if (Math.abs(dx) > 50) nav.go(dx < 0 ? 1 : -1);
+              if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
             }}
           >
             {/* Only this inner panel scrolls, so the close button below stays in place. */}
@@ -109,8 +114,35 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               )}
               <h3 className="text-3xl font-semibold tracking-tight md:text-5xl">{content.title}</h3>
               <div className="mt-6 flex-1">{content.meta}</div>
+              {projectNav && (
+                <div className="mt-10 grid grid-cols-2 gap-3 border-t border-line pt-6">
+                  {[-1, 1].map((d) => (
+                    <button
+                      key={d}
+                      onClick={() => projectNav.go(d)}
+                      className={`group flex flex-col gap-1 rounded-2xl border border-line p-4 transition-colors duration-300 hover:border-accent ${d > 0 ? "items-end text-right" : "items-start text-left"}`}
+                    >
+                      <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-muted">{d < 0 ? "← Vorig project" : "Volgend project →"}</span>
+                      <span className="line-clamp-1 font-semibold transition-colors group-hover:text-accent">{d < 0 ? projectNav.prev : projectNav.next}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
             </div>
+            {projectNav &&
+              [-1, 1].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => projectNav.go(d)}
+                  aria-label={d < 0 ? `Vorig project: ${projectNav.prev}` : `Volgend project: ${projectNav.next}`}
+                  className={`absolute top-1/2 hidden h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white text-fg shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white xl:flex ${d < 0 ? "-left-20" : "-right-20"}`}
+                >
+                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              ))}
             <button
               onClick={onClose}
               aria-label="Sluiten"

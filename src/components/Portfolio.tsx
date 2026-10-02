@@ -260,9 +260,19 @@ export default function Portfolio({ full = false }: { full?: boolean }) {
   const close = useCallback(() => setOpen(null), []);
   const variantOf = (p: Project) => variants[p.title] ?? 0;
   const setVariant = (p: Project, n: number) => setVariants((v) => ({ ...v, [p.title]: n }));
-  const modal: ModalContent | null = open ? modalContent(open, variantOf(open), (n) => setVariant(open, n)) : null;
   const shown =
     filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
+  // Prev/next in the modal walks through the projects currently visible under the active filter.
+  const modal: ModalContent | null = open
+    ? (() => {
+        const i = shown.indexOf(open);
+        const at = (d: number) => shown[(i + d + shown.length) % shown.length];
+        return {
+          ...modalContent(open, variantOf(open), (n) => setVariant(open, n)),
+          projectNav: i >= 0 && shown.length > 1 ? { prev: at(-1).title, next: at(1).title, go: (d: number) => setOpen(at(d)) } : undefined,
+        };
+      })()
+    : null;
   // On the homepage "Alles" shows a teaser; a role filter (or the projects page) shows every match.
   const limit = full || filter !== "Alles" ? shown.length : VISIBLE;
   const first = shown.slice(0, limit);
