@@ -347,26 +347,26 @@
       "roles": [
         "Producer"
       ],
-      "functie": "Productie",
-      "description": "Moederdagcampagne waarin de box van Smaakverkenners centraal staat, als manier om (weer) in contact te komen met je moeder en je waardering te laten zien. Ik pakte de productie op, regelde de locaties en ondersteunde op de set als producer.",
-      "video": "",
+      "functie": "Producer",
+      "description": "Aankondiging van Smaakverkenners op Vlieland: de eerste keer dat de tour naar een eiland ging. De video moest die grote stap en het enthousiasme eromheen voelbaar maken. Ik was producer, in samenwerking met Frameworks.",
+      "video": "https://youtube.com/shorts/imj4M-c2jQQ",
       "preview": "",
       "thumbnail": "",
       "via": "Frameworks",
       "items": [
         {
-          "title": "Moederdag",
-          "functie": "Productie",
-          "description": "Moederdagcampagne waarin de box van Smaakverkenners centraal staat, als manier om (weer) in contact te komen met je moeder en je waardering te laten zien. Ik pakte de productie op, regelde de locaties en ondersteunde op de set als producer.",
-          "video": "",
-          "thumbnail": ""
+          "title": "Lancering Vlieland",
+          "video": "https://youtube.com/shorts/imj4M-c2jQQ",
+          "thumbnail": "",
+          "functie": "Producer",
+          "description": "Aankondiging van Smaakverkenners op Vlieland: de eerste keer dat de tour naar een eiland ging. De video moest die grote stap en het enthousiasme eromheen voelbaar maken. Ik was producer, in samenwerking met Frameworks."
         },
         {
           "title": "UGC op Vlieland",
-          "functie": "Productie",
+          "functie": "Producer",
           "video": "",
           "thumbnail": "",
-          "description": "UGC-content voor Smaakverkenners, gefilmd op Vlieland. Ik regelde de locaties, alle props en de cast, en zorgde dat de draaidag goed verliep."
+          "description": "Gescripte video die eruitziet als user-generated content, maar is gefilmd met professionele apparatuur. Zo zien kijkers precies wat de Smaakverkenners-tour inhoudt en wat ze kunnen verwachten. Ik was producer, in samenwerking met Frameworks."
         }
       ]
     },
