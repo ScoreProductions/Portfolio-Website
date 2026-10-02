@@ -97,6 +97,14 @@ export function youtubePreviewUrl(url: string, start: number) {
   return `https://www.youtube-nocookie.com/embed/${id}?${q}`;
 }
 
+/** Muted, chromeless, endlessly looping YouTube embed for use as a background video. */
+export function youtubeBackgroundUrl(url: string) {
+  const id = youtubeId(url);
+  if (!id) return null;
+  const q = new URLSearchParams({ autoplay: "1", mute: "1", controls: "0", loop: "1", playlist: id, playsinline: "1", rel: "0", modestbranding: "1", disablekb: "1", iv_load_policy: "3" });
+  return `https://www.youtube-nocookie.com/embed/${id}?${q}`;
+}
+
 export function isVertical(p: Pick<Project, "video" | "vertical">) {
   return p.vertical ?? /youtube\.com\/shorts\//.test(p.video);
 }

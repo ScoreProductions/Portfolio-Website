@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { embedUrl, site } from "@/lib/site";
+import { embedUrl, site, youtubeBackgroundUrl } from "@/lib/site";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -89,12 +89,31 @@ export default function Hero() {
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const isFile = site.showreel && !embedUrl(site.showreel);
+  const ytBg = site.showreel ? youtubeBackgroundUrl(site.showreel) : null;
 
   return (
     <section id="home" ref={ref} className="relative h-[100svh] min-h-[560px] overflow-hidden bg-accent text-white">
       <motion.div style={{ scale: bgScale }} className="absolute inset-0">
-        {isFile ? (
-          <video src={site.showreel} poster={site.showreelPoster || undefined} autoPlay muted loop playsInline className="h-full w-full object-cover" />
+        {ytBg ? (
+          // YouTube showreel as background: scaled to cover, slightly blurred and darkened so the text stays readable.
+          <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black [container-type:size]">
+            <iframe
+              src={ytBg}
+              title=""
+              tabIndex={-1}
+              aria-hidden
+              allow="autoplay; encrypted-media"
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 scale-110 border-0 blur-[2px]"
+              style={{ width: "max(100cqw, 177.78cqh)", height: "max(100cqh, 56.25cqw)" }}
+            />
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-accent/20 mix-blend-multiply" />
+          </div>
+        ) : isFile ? (
+          <>
+            <video src={site.showreel} poster={site.showreelPoster || undefined} autoPlay muted loop playsInline className="h-full w-full object-cover blur-[2px]" />
+            <div className="absolute inset-0 bg-black/45" />
+          </>
         ) : (
           <div className="h-full w-full" style={{ background: "radial-gradient(70% 60% at 50% 45%, #ff2a36 0%, transparent 70%), radial-gradient(60% 60% at 100% 100%, #6e0008 0%, transparent 70%), radial-gradient(50% 50% at 0% 0%, #8a000b 0%, transparent 70%), #d10714" }}>
             <motion.div
