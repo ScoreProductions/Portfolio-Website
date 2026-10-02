@@ -5,8 +5,25 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+/**
+ * Tile classes for a gap-free grid: the first photo is a wide hero, the rest fill equal tiles,
+ * and any leftover tiles in the last row stretch so every row is complete.
+ * `wide` = 3 columns from md up (project page); otherwise always 2 columns (modal).
+ */
+export function galleryTile(i: number, n: number, wide = false) {
+  if (i === 0) return `${wide ? "col-span-2 md:col-span-6" : "col-span-2"} aspect-[16/10]`;
+  const k = i - 1;
+  const rest = n - 1;
+  const mob = rest % 2 === 1 && k === rest - 1 ? "col-span-2 aspect-[16/9]" : "col-span-1 aspect-[4/5]";
+  if (!wide) return mob;
+  const r3 = rest % 3;
+  const lastRow = k >= rest - r3;
+  const md = r3 === 1 && lastRow ? "md:col-span-6 md:aspect-[21/9]" : r3 === 2 && lastRow ? "md:col-span-3 md:aspect-[4/3]" : "md:col-span-2 md:aspect-[4/5]";
+  return `${mob} ${md}`;
+}
+
 /** Thumbnail grid that opens photos in an in-page lightbox (arrows, swipe, Esc). */
-export default function PhotoGallery({ photos, alt }: { photos: string[]; alt: string }) {
+export default function PhotoGallery({ photos, alt, wide = false }: { photos: string[]; alt: string; wide?: boolean }) {
   const [open, setOpen] = useState<number | null>(null);
   const [start, setStart] = useState<number | null>(null);
   const go = (d: number) => setOpen((i) => (i === null ? i : (i + d + photos.length) % photos.length));
@@ -27,10 +44,16 @@ export default function PhotoGallery({ photos, alt }: { photos: string[]; alt: s
 
   return (
     <>
-      <div className="mt-4 grid grid-cols-2 items-start gap-3">
+      <div className={`mt-4 grid grid-flow-row-dense gap-3 ${wide ? "grid-cols-2 md:grid-cols-6 md:gap-4" : "grid-cols-2"}`}>
         {photos.map((src, i) => (
-          <button key={src} onClick={() => setOpen(i)} aria-label={`Foto ${i + 1} groot bekijken`} className="group block overflow-hidden rounded-xl" data-cursor="Bekijk">
-            <Image src={src} alt={alt} width={600} height={600} sizes="(min-width: 768px) 20vw, 45vw" className="h-auto w-full transition-transform duration-700 group-hover:scale-105" />
+          <button
+            key={src}
+            onClick={() => setOpen(i)}
+            aria-label={`Foto ${i + 1} groot bekijken`}
+            className={`group relative block overflow-hidden rounded-xl bg-line ${galleryTile(i, photos.length, wide)}`}
+            data-cursor="Bekijk"
+          >
+            <Image src={src} alt={alt} fill sizes={wide ? "(min-width: 768px) 40vw, 50vw" : "(min-width: 768px) 25vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-105" />
           </button>
         ))}
       </div>

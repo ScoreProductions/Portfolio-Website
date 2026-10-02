@@ -112,7 +112,14 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                   </span>
                 </div>
               )}
-              <h3 className="text-3xl font-semibold tracking-tight md:text-5xl">{content.title}</h3>
+              <h3 className="pr-12 text-2xl font-semibold leading-tight tracking-tight md:text-[2rem]">
+                {content.title.split(/:\s+/).map((part, i, all) => (
+                  <span key={i} className={i ? "block text-[0.7em] font-medium text-muted" : "block"}>
+                    {part}
+                    {i < all.length - 1 ? ":" : ""}
+                  </span>
+                ))}
+              </h3>
               <div className="mt-6 flex-1">{content.meta}</div>
             </div>
             </div>

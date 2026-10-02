@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import PhotoGallery from "@/components/PhotoGallery";
 import VideoSwitcher from "@/components/VideoSwitcher";
 import { LogoOrName } from "@/components/Portfolio";
 import { brandLogo, clientLogo, embedUrl, isVertical, site, siteUrl, slugify, youtubeThumb } from "@/lib/site";
@@ -95,7 +96,14 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
 
       <header className="mt-8">
         <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-white">{p.brand}</span>
-        <h1 className="font-display mt-4 text-7xl leading-[0.9] md:text-[9rem]">{p.title}</h1>
+        <h1 className="font-display mt-4 text-6xl leading-[0.9] md:text-8xl">
+          {p.title.split(/:\s+/).map((part, i, all) => (
+            <span key={i} className={i ? "block text-[0.55em] text-muted" : "block"}>
+              {part}
+              {i < all.length - 1 ? ":" : ""}
+            </span>
+          ))}
+        </h1>
         <p className="mt-4 text-xl text-muted md:text-2xl">{p.functie}{p.jaar ? ` · ${p.jaar}` : ""}</p>
       </header>
 
@@ -141,11 +149,7 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
       {!!p.photos?.length && (
         <section className="mt-16">
           <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Behind the scenes</h2>
-          <div className="mt-6 grid grid-cols-2 items-start gap-4 md:grid-cols-3">
-            {p.photos.map((src) => (
-              <div key={src} className="overflow-hidden rounded-2xl"><Image src={src} alt={`${p.title} — behind the scenes`} width={800} height={800} sizes="(min-width: 768px) 33vw, 50vw" className="h-auto w-full" /></div>
-            ))}
-          </div>
+          <PhotoGallery photos={p.photos} alt={`${p.title} — behind the scenes`} wide />
         </section>
       )}
 
