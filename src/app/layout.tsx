@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Bebas_Neue, Fraunces, Geist, Geist_Mono } from "next/font/google";
 import Cursor from "@/components/Cursor";
 import Footer from "@/components/Footer";
@@ -94,6 +95,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main>{children}</main>
         <Footer />
         <div aria-hidden className="grain" />
+        <Analytics />
       </body>
     </html>
   );
