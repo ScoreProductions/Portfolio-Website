@@ -15,6 +15,10 @@ export type ModalContent = {
   photos?: string[];
   /** Photography-only project: placeholder says photos instead of video. */
   photoProject?: boolean;
+  /** Current photo of a photography project, shown in the main panel. */
+  gallery?: string;
+  /** Word used in the "x van y" counter. */
+  navLabel?: string;
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
@@ -94,9 +98,9 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               ) : content.video ? (
                 <video key={content.video} src={content.video} controls autoPlay playsInline className="absolute inset-0 h-full w-full object-contain" />
               ) : (
-                content.photos?.length ? (
+                content.gallery ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={content.photos[0]} alt={content.title} className="absolute inset-0 h-full w-full object-cover" />
+                  <img key={content.gallery} src={content.gallery} alt={content.title} className="absolute inset-0 h-full w-full bg-black object-contain" />
                 ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-accent text-white">
                   <span className="text-sm font-medium uppercase tracking-[0.25em]">{content.photoProject ? "Foto's volgen" : "Video volgt"}</span>
@@ -112,7 +116,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                     <button
                       key={d}
                       onClick={() => nav.go(d)}
-                      aria-label={d < 0 ? "Vorige video" : "Volgende video"}
+                      aria-label={d < 0 ? `Vorige ${(content.navLabel ?? "video").toLowerCase()}` : `Volgende ${(content.navLabel ?? "video").toLowerCase()}`}
                       className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white"
                     >
                       <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -121,7 +125,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                     </button>
                   ))}
                   <span className="text-sm font-medium text-muted">
-                    Video {nav.index + 1} van {nav.count}
+                    {content.navLabel ?? "Video"} {nav.index + 1} van {nav.count}
                   </span>
                 </div>
               )}

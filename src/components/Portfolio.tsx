@@ -185,7 +185,10 @@ function ProjectTile({
 
 function modalContent(p: Project, n: number, setN: (n: number) => void): ModalContent {
   const v = projectVariant(p, n);
-  const count = p.items?.length ?? 0;
+  // Photography-only projects show their photos in the main panel and step through them like videos.
+  const photoProject = !v.video && v.roles.includes("Fotografie");
+  const gallery = photoProject ? (v.photos ?? []) : [];
+  const count = gallery.length || (p.items?.length ?? 0);
   return {
     title: v.subtitle ? `${v.title} · ${v.subtitle}` : v.title,
     video: v.video,
@@ -199,8 +202,10 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
       </>
     ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
-    photos: v.photos,
-    photoProject: !v.video && v.roles.includes("Fotografie"),
+    photos: photoProject ? undefined : v.photos,
+    gallery: gallery.length ? gallery[n % gallery.length] : undefined,
+    navLabel: gallery.length ? "Foto" : "Video",
+    photoProject,
   };
 }
 
