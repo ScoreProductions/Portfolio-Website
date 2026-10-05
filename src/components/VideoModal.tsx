@@ -107,28 +107,36 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                 </div>
                 )
               )}
-            </div>
-            </div>
-            <div className="flex flex-col p-6 md:p-10">
               {nav && (
-                <div className="mb-6 flex items-center gap-3 pr-12">
+                <>
+                  {/* Prev/next on the media itself, so it's clear there's more than one video or photo. */}
                   {[-1, 1].map((d) => (
                     <button
                       key={d}
                       onClick={() => nav.go(d)}
                       aria-label={d < 0 ? `Vorige ${(content.navLabel ?? "video").toLowerCase()}` : `Volgende ${(content.navLabel ?? "video").toLowerCase()}`}
-                      className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-fg transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-white"
+                      className={`absolute top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-fg shadow-lg transition-colors duration-300 hover:bg-accent hover:text-white md:h-12 md:w-12 ${d < 0 ? "left-3" : "right-3"}`}
                     >
-                      <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <path d={d < 0 ? "M15 6l-6 6 6 6" : "M9 6l6 6-6 6"} strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </button>
                   ))}
-                  <span className="text-sm font-medium text-muted">
-                    {content.navLabel ?? "Video"} {nav.index + 1} van {nav.count}
-                  </span>
-                </div>
+                  <div className="pointer-events-none absolute inset-x-0 bottom-3 z-10 flex justify-center">
+                    <span className="flex items-center gap-2 rounded-full bg-black/60 px-3 py-1.5 text-xs font-medium text-white backdrop-blur">
+                      {Array.from({ length: nav.count }, (_, k) => (
+                        <span key={k} className={`h-1.5 rounded-full transition-all ${k === nav.index ? "w-4 bg-white" : "w-1.5 bg-white/50"}`} />
+                      ))}
+                      <span className="ml-1 tabular-nums">
+                        {nav.index + 1}/{nav.count}
+                      </span>
+                    </span>
+                  </div>
+                </>
               )}
+            </div>
+            </div>
+            <div className="flex flex-col p-6 md:p-10">
               <h3 className="pr-12 text-2xl font-semibold leading-tight tracking-tight md:text-[2rem]">
                 {content.title.split(/:\s+/).map((part, i, all) => (
                   <span key={i} className={i ? "block text-[0.7em] font-medium text-muted" : "block"}>
