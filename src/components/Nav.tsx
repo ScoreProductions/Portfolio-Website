@@ -49,6 +49,9 @@ function NavBar({ pathname }: { pathname: string }) {
     lockScroll(next);
   };
 
+  // Never leave the page locked if the menu unmounts while open (e.g. route change).
+  useEffect(() => () => lockScroll(false), []);
+
   const light = onHero || open;
   const onRed = !onHero && !open && active === "contact";
 
@@ -126,7 +129,8 @@ function NavBar({ pathname }: { pathname: string }) {
             className="fixed inset-0 z-40 flex flex-col justify-between bg-accent px-6 pb-10 pt-28 text-white md:hidden"
             initial={{ clipPath: "circle(0% at 92% 6%)" }}
             animate={{ clipPath: "circle(150% at 92% 6%)" }}
-            exit={{ clipPath: "circle(0% at 92% 6%)" }}
+            // The closing overlay must not swallow touches, so the page scrolls again right away.
+            exit={{ clipPath: "circle(0% at 92% 6%)", pointerEvents: "none", transition: { duration: 0.5, ease } }}
             transition={{ duration: 0.8, ease }}
           >
             <ul>
@@ -138,7 +142,7 @@ function NavBar({ pathname }: { pathname: string }) {
                     className="font-display flex items-baseline justify-between py-3 text-7xl leading-none"
                     initial={{ y: "100%" }}
                     animate={{ y: "0%" }}
-                    exit={{ y: "100%" }}
+                    exit={{ y: "100%", transition: { duration: 0.3, ease } }}
                     transition={{ duration: 0.7, delay: 0.15 + i * 0.07, ease }}
                   >
                     {l.label}
