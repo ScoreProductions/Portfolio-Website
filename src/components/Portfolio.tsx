@@ -9,7 +9,10 @@ import { Corners, PlayButton } from "./Frame";
 import SectionHeader from "./SectionHeader";
 import VideoModal, { type ModalContent } from "./VideoModal";
 
-const filters = ["Alles", "TV", ...site.roles];
+const filters = ["Alles", "TV", ...site.roles, "Fotografie"];
+const sorts = ["Aanbevolen", "Meest recent"] as const;
+// Position of each project in the "most recent first" order (unknown projects go last).
+const recentRank = new Map(site.recent.map((t, i) => [t, i]));
 const VISIBLE = 6;
 
 /** Bento rhythm per group of 6: big + 2 stacked, then 3 in a row; big flips side every other group. */
@@ -53,7 +56,7 @@ export function ProjectCard({
         setHover(false);
         setReady(false);
       }}
-      data-cursor="Play"
+      data-cursor={project.video ? "Play" : "Bekijk"}
       aria-label={`${project.title} bekijken`}
       className={`group relative block h-full w-full overflow-hidden rounded-2xl bg-fg text-left text-white md:rounded-3xl ${className}`}
     >
@@ -83,7 +86,7 @@ export function ProjectCard({
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/5 transition-opacity duration-500 group-hover:opacity-80" />
       <Corners />
-      <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-16 w-16 md:h-28 md:w-28" : "h-10 w-10 md:h-16 md:w-16"}`} />
+      {project.video && <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-16 w-16 md:h-28 md:w-28" : "h-10 w-10 md:h-16 md:w-16"}`} />}
       <div className={`absolute inset-x-0 bottom-0 ${big || wide ? "p-5" : "p-3 sm:p-5"} md:p-7`}>
         <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
         <p className={`mt-2 font-semibold leading-[1.05] sm:mt-3 tracking-tight ${big ? "text-2xl sm:text-3xl md:text-5xl" : "text-base sm:text-xl md:text-2xl"}`}>{project.title}</p>
@@ -197,6 +200,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
     photos: v.photos,
+    photoProject: !v.video && v.roles.includes("Fotografie"),
   };
 }
 
@@ -271,13 +275,16 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
 /** Homepage teaser (first tiles + link to /projecten) or, with `full`, the complete filterable grid. */
 export default function Portfolio({ full = false }: { full?: boolean }) {
   const [filter, setFilter] = useState("Alles");
+  const [sort, setSort] = useState<(typeof sorts)[number]>("Aanbevolen");
+  const [sortOpen, setSortOpen] = useState(false);
   const [open, setOpen] = useState<Project | null>(null);
   const [variants, setVariants] = useState<Record<string, number>>({});
   const close = useCallback(() => setOpen(null), []);
   const variantOf = (p: Project) => variants[p.title] ?? 0;
   const setVariant = (p: Project, n: number) => setVariants((v) => ({ ...v, [p.title]: n }));
-  const shown =
-    filter === "Alles" ? site.projects : filter === "TV" ? site.projects.filter((p) => p.tv) : site.projects.filter((p) => p.roles.includes(filter));
+  const ordered =
+    sort === "Meest recent" ? [...site.projects].sort((a, b) => (recentRank.get(a.title) ?? 999) - (recentRank.get(b.title) ?? 999)) : site.projects;
+  const shown = filter === "Alles" ? ordered : filter === "TV" ? ordered.filter((p) => p.tv) : ordered.filter((p) => p.roles.includes(filter));
   // Prev/next in the modal walks through the projects currently visible under the active filter.
   const modal: ModalContent | null = open
     ? (() => {
@@ -332,6 +339,48 @@ export default function Portfolio({ full = false }: { full?: boolean }) {
     <section id="portfolio" className={`mx-auto max-w-[1500px] px-5 md:px-10 ${full ? "pb-28 md:pb-36" : "py-28 md:py-36"}`}>
       <div className="mb-12 flex flex-col justify-between gap-8 md:mb-16 md:flex-row md:items-end">
         {full ? <p className="text-sm text-muted">{shown.length} {shown.length === 1 ? "project" : "projecten"}</p> : <SectionHeader label="Portfolio" title="Geselecteerd" accent="werk" />}
+        <div className="flex flex-col items-start gap-3 md:items-end">
+        <div className="relative">
+          <button
+            onClick={() => setSortOpen((o) => !o)}
+            aria-haspopup="listbox"
+            aria-expanded={sortOpen}
+            className="flex items-center gap-2 rounded-full border border-line px-5 py-2.5 text-sm font-medium transition-colors hover:border-fg"
+          >
+            <span className="text-muted">Sorteer:</span> {sort}
+            <svg viewBox="0 0 24 24" className={`h-4 w-4 transition-transform ${sortOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <AnimatePresence>
+            {sortOpen && (
+              <motion.ul
+                role="listbox"
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="absolute left-0 top-full z-20 mt-2 min-w-full overflow-hidden rounded-2xl border border-line bg-white py-1 shadow-xl md:left-auto md:right-0"
+              >
+                {sorts.map((s) => (
+                  <li key={s}>
+                    <button
+                      role="option"
+                      aria-selected={sort === s}
+                      onClick={() => {
+                        setSort(s);
+                        setSortOpen(false);
+                      }}
+                      className={`block w-full whitespace-nowrap px-5 py-2.5 text-left text-sm transition-colors hover:bg-accent hover:text-white ${sort === s ? "font-semibold text-accent" : ""}`}
+                    >
+                      {s}
+                    </button>
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </div>
         <LayoutGroup>
           <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter projecten">
             {filters.map((f) => (
@@ -352,6 +401,7 @@ export default function Portfolio({ full = false }: { full?: boolean }) {
             ))}
           </div>
         </LayoutGroup>
+        </div>
       </div>
 
       {renderGrid(first, 0)}

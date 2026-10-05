@@ -71,6 +71,19 @@
   },
   "projects": [
     {
+      "title": "Victoria 28",
+      "brand": "Victoria 28",
+      "roles": [
+        "Fotografie"
+      ],
+      "functie": "Fotografie",
+      "description": "Fotografie voor Victoria 28. Foto's volgen binnenkort.",
+      "video": "",
+      "preview": "",
+      "thumbnail": "",
+      "photos": []
+    },
+    {
       "title": "Hunted",
       "brand": "AVROTROS · NPO 1",
       "roles": [
@@ -208,7 +221,8 @@
       "brand": "Hout in de Tuin",
       "roles": [
         "Producer",
-        "Creative"
+        "Creative",
+        "Fotografie"
       ],
       "functie": "Productie & BTS-fotografie",
       "description": "Bedrijfsfilmcampagne voor Hout in de Tuin, een bedrijf uit het noorden van Nederland. Ik had de lead in de productie: alles vooraf regelen en de organisatie op de set. Daarnaast maakte ik de behind-the-scenes-fotografie.",
@@ -434,29 +448,6 @@
       "functie": "Producer",
       "description": "Kerstactie van Kookgigant: wie een box bestelde, maakte kans op een van de tien gouden tickets en meerdere andere prijzen. Deze video kondigde de actie aan en is geïnspireerd op de sfeer van Willy Wonka en de chocoladefabriek. Ik was producer en regelde onder meer alle props, de locaties en de figuratie, en stond mee op de set.",
       "video": "https://youtu.be/FdNlF1ovD70",
-      "preview": "",
-      "thumbnail": "",
-      "via": "Frameworks Productions",
-      "credits": [
-        {
-          "name": "Martijn Scheffers",
-          "role": "Executive producer"
-        },
-        {
-          "name": "Max Score",
-          "role": "Producer"
-        }
-      ]
-    },
-    {
-      "title": "Wattkraft",
-      "brand": "Wattkraft",
-      "roles": [
-        "Producer"
-      ],
-      "functie": "Productie, script & edit",
-      "description": "Voor Wattkraft, de zusteronderneming van Huawei, maakte ik een reeks video's die als campagnemiddel zijn ingezet. Ik deed de productie en de planning, schreef de scripts en monteerde de video's.",
-      "video": "",
       "preview": "",
       "thumbnail": "",
       "via": "Frameworks Productions",
@@ -715,5 +706,24 @@
     "video": "https://youtu.be/z8SIYwubQMA",
     "thumbnail": ""
   },
-  "heroSubAccent": "sterk in beeld."
+  "heroSubAccent": "sterk in beeld.",
+  "recent": [
+    "Victoria 28",
+    "Vibe Sound & Vision",
+    "Wilminktheater",
+    "Tastory",
+    "Het Jachtseizoen: Most Wanted",
+    "Hunted",
+    "Kookgigant",
+    "Smaakverkenners",
+    "Renee Rose",
+    "Go Ahead Eagles",
+    "Brandeniers",
+    "Hout in de Tuin",
+    "Het Kippenhok",
+    "Dames in de Dop",
+    "Te Land, ter Zee en in de Lucht",
+    "Dubbelleven",
+    "One Week Film"
+  ]
 }

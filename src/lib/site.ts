@@ -37,7 +37,7 @@ export function projectVariant(p: Project, n: number): Project & { subtitle?: st
   return item ? { ...p, ...item, title: p.title, subtitle: item.title } : p;
 }
 
-export const site = content as Omit<typeof content, "projects"> & { projects: Project[] };
+export const site = content as Omit<typeof content, "projects" | "recent"> & { projects: Project[]; recent: string[] };
 
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL ??

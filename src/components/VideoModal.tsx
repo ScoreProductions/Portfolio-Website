@@ -13,6 +13,8 @@ export type ModalContent = {
   meta?: ReactNode;
   /** Behind-the-scenes photos, shown as a small strip under the video and info. */
   photos?: string[];
+  /** Photography-only project: placeholder says photos instead of video. */
+  photoProject?: boolean;
   vertical?: boolean;
   /** Present when the project has several videos to step through. */
   nav?: { index: number; count: number; go: (d: number) => void };
@@ -92,9 +94,14 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
               ) : content.video ? (
                 <video key={content.video} src={content.video} controls autoPlay playsInline className="absolute inset-0 h-full w-full object-contain" />
               ) : (
+                content.photos?.length ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={content.photos[0]} alt={content.title} className="absolute inset-0 h-full w-full object-cover" />
+                ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-accent text-white">
-                  <span className="text-sm font-medium uppercase tracking-[0.25em]">Video volgt</span>
+                  <span className="text-sm font-medium uppercase tracking-[0.25em]">{content.photoProject ? "Foto's volgen" : "Video volgt"}</span>
                 </div>
+                )
               )}
             </div>
             </div>
