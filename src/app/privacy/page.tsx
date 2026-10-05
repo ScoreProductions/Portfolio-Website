@@ -14,7 +14,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
     title: "Wie zijn wij",
     body: (
       <p>
-        {site.brand} is de onderneming van {site.name}, gevestigd aan {c.address} en ingeschreven bij de Kamer van Koophandel onder nummer {c.kvk}. Wij zijn verantwoordelijk voor de verwerking van
+        {site.brand} is de onderneming van {site.name}, gevestigd aan {c.address} en ingeschreven bij de Kamer van Koophandel onder nummer {c.kvk} (btw-id {c.btw}). Wij zijn verantwoordelijk voor de verwerking van
         persoonsgegevens zoals beschreven in deze verklaring. Vragen? Mail naar <a href={`mailto:${c.email}`} className="text-accent underline-offset-4 hover:underline">{c.email}</a>.
       </p>
     ),

@@ -67,6 +67,7 @@ export default function Footer() {
             {site.contact.address}
           </a>
           <span>KvK {site.contact.kvk}</span>
+          <span>Btw {site.contact.btw}</span>
           <Link href="/privacy" className="transition-colors hover:text-accent">
             Privacyverklaring
           </Link>
