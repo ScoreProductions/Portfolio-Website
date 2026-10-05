@@ -89,7 +89,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative overflow-hidden bg-accent px-5 py-28 text-white md:px-10 md:py-40">
+    <section id="contact" className="relative overflow-hidden bg-accent px-5 py-20 text-white md:px-10 md:py-40">
       <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[120vw] w-[120vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.12),transparent_60%)] md:h-[70vw] md:w-[70vw]"

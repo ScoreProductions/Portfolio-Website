@@ -10,6 +10,8 @@ export type Project = {
   preview: string;
   thumbnail: string;
   tv?: boolean;
+  /** Small line under the title on the tile (items override it). */
+  subtitle?: string;
   jaar?: string;
   timeline?: { label: string; date: string }[];
   kijk?: { label: string; url: string };

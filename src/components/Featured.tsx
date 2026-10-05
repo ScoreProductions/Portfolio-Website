@@ -19,7 +19,7 @@ export default function Featured() {
   if (!f?.title) return null;
 
   return (
-    <section className="mx-auto max-w-[1500px] px-5 pb-28 md:px-10 md:pb-36">
+    <section className="mx-auto max-w-[1500px] px-5 pb-16 md:px-10 md:pb-36">
       <SectionHeader label={f.label} title={f.title}>
         <p className="mt-4 max-w-2xl text-lg text-muted">{f.text}</p>
       </SectionHeader>

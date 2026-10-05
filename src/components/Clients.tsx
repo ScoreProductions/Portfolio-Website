@@ -63,7 +63,7 @@ export default function Clients() {
   const items = site.clients.items as Client[];
   const half = Math.ceil(items.length / 2);
   return (
-    <section aria-label={site.clients.title} className="border-y border-line py-20 md:py-28">
+    <section aria-label={site.clients.title} className="border-y border-line py-14 md:py-28">
       <SectionHeader center label={site.clients.title} title="" />
       <div className="mt-10 space-y-2 md:mt-14">
         <Row items={items.slice(0, half)} baseVelocity={-2} />

@@ -437,7 +437,7 @@
       ]
     },
     {
-      "title": "One Week Film",
+      "title": "Zweren Zweten Zwoegen",
       "brand": "Eigen werk",
       "roles": [
         "Producer",
@@ -449,7 +449,8 @@
       "description": "Een korte film die in één week van idee tot eindresultaat kwam, als opdracht vanuit Saxion.\n\nIk bedacht de film en regisseerde hem, en deed daarnaast de productie en de camera.",
       "video": "https://youtu.be/iA3SGJ-37Z4",
       "preview": "",
-      "thumbnail": ""
+      "thumbnail": "",
+      "subtitle": "One Week Film Project"
     },
     {
       "title": "KookGigant",
@@ -736,6 +737,6 @@
     "Dames in de Dop",
     "Te Land, ter Zee en in de Lucht",
     "Dubbel Leven",
-    "One Week Film"
+    "Zweren Zweten Zwoegen"
   ]
 }

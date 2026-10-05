@@ -15,7 +15,7 @@ export default function About() {
   const y = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
 
   return (
-    <section id="over-mij" className="mx-auto grid max-w-[1500px] items-start gap-12 px-5 py-28 md:grid-cols-2 md:gap-20 md:px-10 md:py-40">
+    <section id="over-mij" className="mx-auto grid max-w-[1500px] items-start gap-10 px-5 py-16 md:grid-cols-2 md:gap-20 md:px-10 md:py-40">
       <motion.div ref={ref} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-10%" }} className="md:sticky md:top-28">
         <motion.div
           variants={{ hidden: { clipPath: "inset(100% 0% 0% 0% round 24px)" }, show: { clipPath: "inset(0% 0% 0% 0% round 24px)" } }}

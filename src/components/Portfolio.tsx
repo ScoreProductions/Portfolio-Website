@@ -30,7 +30,7 @@ export function ProjectCard({
   onOpen,
   className = "",
 }: {
-  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar" | "vertical" | "previewStart"> & { functie?: string; subtitle?: string };
+  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar" | "vertical" | "previewStart" | "subtitle"> & { functie?: string };
   big?: boolean;
   wide?: boolean;
   onOpen: () => void;
@@ -345,7 +345,7 @@ export default function Portfolio({ full = false }: { full?: boolean }) {
   );
 
   return (
-    <section id="portfolio" className={`mx-auto max-w-[1500px] px-5 md:px-10 ${full ? "pb-28 md:pb-36" : "py-28 md:py-36"}`}>
+    <section id="portfolio" className={`mx-auto max-w-[1500px] px-5 md:px-10 ${full ? "pb-20 md:pb-36" : "py-16 md:py-36"}`}>
       <div className="mb-12 flex flex-col justify-between gap-8 md:mb-16 md:flex-row md:items-end">
         {full ? <p className="text-sm text-muted">{shown.length} {shown.length === 1 ? "project" : "projecten"}</p> : <SectionHeader label="Portfolio" title="Geselecteerd" accent="werk" />}
         <div className="flex flex-col items-start gap-3 md:items-end">
