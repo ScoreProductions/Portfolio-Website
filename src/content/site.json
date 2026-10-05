@@ -71,25 +71,6 @@
   },
   "projects": [
     {
-      "title": "Victoria '28",
-      "brand": "Victoria '28",
-      "roles": [
-        "Fotografie"
-      ],
-      "functie": "Fotografie",
-      "description": "Fotografie voor mijn eigen voetbalclub Victoria '28: profielfoto's van de spelers en teamfoto's.",
-      "video": "",
-      "preview": "",
-      "thumbnail": "/images/victoria-28/1.jpg",
-      "photos": [
-        "/images/victoria-28/1.jpg",
-        "/images/victoria-28/2.jpg",
-        "/images/victoria-28/3.jpg",
-        "/images/victoria-28/4.jpg",
-        "/images/victoria-28/5.jpg"
-      ]
-    },
-    {
       "title": "Hunted",
       "brand": "AVROTROS · NPO 1",
       "roles": [
@@ -325,6 +306,26 @@
           "thumbnail": ""
         }
       ]
+    },
+    {
+      "title": "Victoria '28",
+      "brand": "Victoria '28",
+      "roles": [
+        "Fotografie"
+      ],
+      "functie": "Fotografie",
+      "description": "Fotografie voor mijn eigen voetbalclub Victoria '28: profielfoto's van de spelers en teamfoto's.",
+      "video": "",
+      "preview": "",
+      "thumbnail": "/images/victoria-28/1.jpg",
+      "photos": [
+        "/images/victoria-28/1.jpg",
+        "/images/victoria-28/2.jpg",
+        "/images/victoria-28/3.jpg",
+        "/images/victoria-28/4.jpg",
+        "/images/victoria-28/5.jpg"
+      ],
+      "vertical": true
     },
     {
       "title": "Vibe Sound & Vision",
