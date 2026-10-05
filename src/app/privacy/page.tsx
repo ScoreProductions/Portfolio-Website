@@ -44,7 +44,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
   },
   {
     title: "Cookies",
-    body: <p>Deze website plaatst zelf geen tracking- of advertentiecookies en gebruikt geen analysetools. Alleen de ingesloten video&apos;s van YouTube kunnen cookies plaatsen, zoals hierboven beschreven.</p>,
+    body: <p>Deze website plaatst zelf geen tracking- of advertentiecookies. Voor anonieme bezoekersstatistieken gebruiken we Vercel Web Analytics: dit werkt zonder cookies en slaat geen persoonsgegevens op. Alleen de ingesloten video&apos;s van YouTube kunnen cookies plaatsen, zoals hierboven beschreven.</p>,
   },
   {
     title: "Hoe lang we ze bewaren",
