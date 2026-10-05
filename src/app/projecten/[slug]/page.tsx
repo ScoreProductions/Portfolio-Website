@@ -17,7 +17,7 @@ export async function generateMetadata(props: PageProps<"/projecten/[slug]">): P
   const p = find((await props.params).slug);
   if (!p) return {};
   const thumb = p.thumbnail || youtubeThumb(p.video);
-  const description = `${p.title} (${p.brand}) — ${p.functie}. ${p.description}`.slice(0, 300);
+  const description = `${p.title} (${p.brand}) — ${p.functie}. ${p.description.replace(/\s+/g, " ")}`.slice(0, 300);
   return {
     title: `${p.title} — ${p.functie}`,
     description,
@@ -117,7 +117,11 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
       <div className="mt-14 grid gap-12 md:grid-cols-[1.5fr_1fr]">
         <section>
           <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">Over dit project</h2>
-          <p className="mt-4 text-xl leading-relaxed text-fg/80">{p.description}</p>
+          <div className="mt-4 space-y-5 text-xl leading-relaxed text-fg/80">
+            {p.description.split(/\n\n+/).map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
+          </div>
           {p.kijk && (
             <p className="mt-6">
               <a href={p.kijk.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent underline-offset-4 hover:underline">Te zien op {p.kijk.label} ↗</a>

@@ -245,7 +245,11 @@ export function projectMeta(p: Pick<Project, "brand" | "functie" | "description"
       ))}
       <div>
         <dt className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Beschrijving</dt>
-        <dd className="mt-2 leading-relaxed">{p.description}</dd>
+        <dd className="mt-2 space-y-4 leading-relaxed">
+          {p.description.split(/\n\n+/).map((para, i) => (
+            <p key={i}>{para}</p>
+          ))}
+        </dd>
       </div>
       {p.kijk && (
         <div className="border-b border-line pb-4">
