@@ -142,7 +142,8 @@
       "title": "Dames in de Dop",
       "brand": "Prime Video",
       "roles": [
-        "Producer"
+        "Producer",
+        "Camera"
       ],
       "functie": "Producer",
       "description": "Seizoen 1. Negen eigenzinnige vrouwen krijgen een stoomcursus etiquette, stijl en omgangsvormen. Met vaste experts en gastdocenten werken ze aan hun presentatie en aan zichzelf. Gepresenteerd door Robbert Rodenburg.",
@@ -208,7 +209,6 @@
       "brand": "Hout in de Tuin",
       "roles": [
         "Producer",
-        "Creative",
         "Fotografie"
       ],
       "functie": "Productie & BTS-fotografie",
@@ -331,6 +331,7 @@
       "title": "Vibe Sound & Vision",
       "brand": "Vibe Sound & Vision",
       "roles": [
+        "Producer",
         "Camera",
         "Editor"
       ],
@@ -438,6 +439,7 @@
       "roles": [
         "Producer",
         "Camera",
+        "Editor",
         "Creative"
       ],
       "functie": "Concept, regie, productie & camera",
