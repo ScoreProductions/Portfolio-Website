@@ -80,8 +80,14 @@
       "description": "Fotografie voor mijn eigen voetbalclub Victoria '28: profielfoto's van de spelers en teamfoto's.",
       "video": "",
       "preview": "",
-      "thumbnail": "",
-      "photos": []
+      "thumbnail": "/images/victoria-28/1.jpg",
+      "photos": [
+        "/images/victoria-28/1.jpg",
+        "/images/victoria-28/2.jpg",
+        "/images/victoria-28/3.jpg",
+        "/images/victoria-28/4.jpg",
+        "/images/victoria-28/5.jpg"
+      ]
     },
     {
       "title": "Hunted",
