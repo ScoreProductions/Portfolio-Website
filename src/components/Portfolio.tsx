@@ -88,7 +88,7 @@ export function ProjectCard({
       <Corners />
       {project.video && <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-16 w-16 md:h-28 md:w-28" : "h-10 w-10 md:h-16 md:w-16"}`} />}
       <div className={`absolute inset-x-0 bottom-0 ${big || wide ? "p-5" : "p-3 sm:p-5"} md:p-7`}>
-        <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[9px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
+        <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[10px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
         <p className={`mt-2 font-semibold leading-[1.05] sm:mt-3 tracking-tight ${big ? "text-2xl sm:text-3xl md:text-5xl" : "text-base sm:text-xl md:text-2xl"}`}>{project.title}</p>
         {project.subtitle && <p className="mt-1 text-sm font-medium text-white/85">{project.subtitle}</p>}
         {project.functie && (

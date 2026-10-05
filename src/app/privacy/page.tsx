@@ -68,7 +68,7 @@ export default function Privacy() {
       <Link href="/" className="text-sm text-muted transition-colors hover:text-accent">
         ← Terug naar de site
       </Link>
-      <h1 className="font-display mt-6 text-6xl leading-none md:text-8xl">Privacyverklaring</h1>
+      <h1 className="font-display mt-6 break-words text-5xl leading-none sm:text-6xl md:text-8xl">Privacyverklaring</h1>
       <p className="mt-4 text-sm text-muted">Laatst bijgewerkt: oktober 2026</p>
       <div className="mt-12 space-y-10 text-lg leading-relaxed text-fg/80">
         {sections.map((s) => (
