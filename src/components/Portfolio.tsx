@@ -212,7 +212,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
 /** Logo image when available, otherwise the plain name. */
 export function LogoOrName({ name, logo }: { name: string; logo?: string }) {
   // eslint-disable-next-line @next/next/no-img-element
-  return logo ? <img src={logo} alt={name} title={name} className="mt-1 h-9 w-auto max-w-[180px] object-contain md:h-11" /> : <>{name}</>;
+  return logo ? <img src={logo} alt={name} title={name} loading="lazy" decoding="async" className="mt-1 h-9 w-auto max-w-[180px] object-contain md:h-11" /> : <>{name}</>;
 }
 
 export function projectMeta(p: Pick<Project, "brand" | "functie" | "description" | "tv" | "jaar" | "timeline" | "kijk" | "via" | "photos" | "credits" | "logo">) {

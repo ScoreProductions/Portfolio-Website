@@ -9,15 +9,26 @@ type Video = { title?: string; video: string; vertical: boolean };
 /** One player with a thumbnail strip to click through a project's videos (instead of stacking them). */
 export default function VideoSwitcher({ videos, title }: { videos: Video[]; title: string }) {
   const [i, setI] = useState(0);
+  const [play, setPlay] = useState(false);
   const v = videos[i];
-  const src = embedUrl(v.video, false);
+  const src = embedUrl(v.video, true);
+  const poster = youtubeThumb(v.video);
   const go = (d: number) => setI((i + d + videos.length) % videos.length);
 
   return (
     <div>
       <div className="relative">
         <div className={`relative overflow-hidden rounded-3xl bg-black ${v.vertical ? "mx-auto aspect-[9/16] w-full max-w-sm" : "aspect-video w-full"}`}>
-          {src && <iframe key={src} src={src} title={v.title ? `${title} — ${v.title}` : title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />}
+          {src && !play && (
+            <button onClick={() => setPlay(true)} aria-label={`Speel ${v.title ?? title} af`} className="group absolute inset-0 h-full w-full">
+              {poster && <Image src={poster} alt={v.title ?? title} fill priority sizes="(min-width: 768px) 80vw, 100vw" className="object-cover" />}
+              <span className="absolute inset-0 bg-black/20 transition-colors duration-300 group-hover:bg-black/10" />
+              <span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-fg shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:bg-accent group-hover:text-white md:h-20 md:w-20">
+                <svg viewBox="0 0 24 24" className="ml-1 h-6 w-6 md:h-7 md:w-7" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+              </span>
+            </button>
+          )}
+          {src && play && <iframe key={src} src={src} title={v.title ? `${title} — ${v.title}` : title} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen className="absolute inset-0 h-full w-full" />}
         </div>
         {videos.length > 1 &&
           [-1, 1].map((d) => (
