@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 import { calProps } from "./CalEmbed";
 import { lockScroll } from "./SmoothScroll";
@@ -16,7 +16,7 @@ const links = [
 
 const ease = [0.76, 0, 0.24, 1] as const;
 // The call-to-action books the short videocall when a booking link is set, otherwise it jumps to the contact section.
-const callLink = site.contact.afspraken.find((a) => a.link)?.link;
+const afspraken = site.contact.afspraken.filter((a) => a.link);
 
 // Remount per route so the light/dark state and active link start fresh on every page.
 export default function Nav() {
@@ -30,6 +30,8 @@ function NavBar({ pathname }: { pathname: string }) {
   const prefix = home ? "" : "/";
   const heroUntil = (h: number) => (home ? h - 90 : pathname === "/projecten" ? 320 : -1);
   const [open, setOpen] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
+  const planRef = useRef<HTMLDivElement>(null);
   const [onHero, setOnHero] = useState(home || pathname === "/projecten");
   const [active, setActive] = useState(home ? "home" : pathname.startsWith("/projecten") ? "portfolio" : "");
   const { scrollY } = useScroll();
@@ -46,6 +48,19 @@ function NavBar({ pathname }: { pathname: string }) {
     els.forEach((el) => io.observe(el));
     return () => io.disconnect();
   }, [home]);
+
+  // Close the booking dropdown on outside click or Escape.
+  useEffect(() => {
+    if (!planOpen) return;
+    const onDown = (e: PointerEvent) => !planRef.current?.contains(e.target as Node) && setPlanOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setPlanOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [planOpen]);
 
   const toggle = (next: boolean) => {
     setOpen(next);
@@ -97,15 +112,60 @@ function NavBar({ pathname }: { pathname: string }) {
             ))}
           </nav>
 
-          <a
-            {...(callLink ? calProps(callLink) : { href: `${prefix}#contact` })}
-            className={`group relative hidden overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 md:block ${
-              light || onRed ? "bg-white text-accent" : "bg-accent text-white"
-            }`}
-          >
-            <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-            <span className="relative transition-colors duration-300 group-hover:text-white">{callLink ? "Plan een call" : "Neem contact op"}</span>
-          </a>
+          {afspraken.length ? (
+            <div ref={planRef} className="relative hidden md:block">
+              <button
+                type="button"
+                onClick={() => setPlanOpen((o) => !o)}
+                aria-expanded={planOpen}
+                className={`group relative overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 ${
+                  light || onRed ? "bg-white text-accent" : "bg-accent text-white"
+                }`}
+              >
+                <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+                <span className="relative flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
+                  Plan een call
+                  <span className={`text-xs transition-transform duration-300 ${planOpen ? "rotate-180" : ""}`}>▾</span>
+                </span>
+              </button>
+              <AnimatePresence>
+                {planOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                    className="absolute right-0 top-full mt-3 w-72 origin-top-right overflow-hidden rounded-2xl border border-fg/10 bg-white p-2 text-fg shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
+                  >
+                    {afspraken.map((a) => (
+                      <a
+                        key={a.link}
+                        {...calProps(a.link)}
+                        onClickCapture={() => setPlanOpen(false)}
+                        className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-accent/[0.07]"
+                      >
+                        <span>
+                          <span className="block font-semibold">{a.label}</span>
+                          <span className="block text-sm text-muted">{a.duur}</span>
+                        </span>
+                        <span className="text-accent">→</span>
+                      </a>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          ) : (
+            <a
+              href={`${prefix}#contact`}
+              className={`group relative hidden overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 md:block ${
+                light || onRed ? "bg-white text-accent" : "bg-accent text-white"
+              }`}
+            >
+              <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+              <span className="relative transition-colors duration-300 group-hover:text-white">Neem contact op</span>
+            </a>
+          )}
 
           <button
             aria-label={open ? "Sluit menu" : "Open menu"}
@@ -129,7 +189,7 @@ function NavBar({ pathname }: { pathname: string }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col bg-accent px-6 pb-10 pt-28 text-white md:hidden"
+            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-accent px-6 pb-8 pt-24 text-white md:hidden"
             initial={{ clipPath: "circle(0% at 92% 6%)" }}
             animate={{ clipPath: "circle(150% at 92% 6%)" }}
             // The closing overlay must not swallow touches, so the page scrolls again right away.
@@ -142,7 +202,7 @@ function NavBar({ pathname }: { pathname: string }) {
                   <motion.a
                     href={`${prefix}#${l.id}`}
                     onClick={() => toggle(false)}
-                    className="font-display flex items-baseline justify-between py-3 text-7xl leading-none"
+                    className="font-display flex items-baseline justify-between py-2 text-6xl leading-none"
                     initial={{ y: "100%" }}
                     animate={{ y: "0%" }}
                     exit={{ y: "100%", transition: { duration: 0.3, ease } }}
@@ -154,18 +214,28 @@ function NavBar({ pathname }: { pathname: string }) {
                 </li>
               ))}
             </ul>
-            {callLink && (
-              <motion.a
-                {...calProps(callLink)}
-                onClickCapture={() => toggle(false)}
-                className="mt-8 flex items-center justify-between rounded-full bg-white py-4 pl-7 pr-4 text-lg font-semibold text-accent"
+            {afspraken.length > 0 && (
+              <motion.div
+                className="mt-8 grid gap-3"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0, transition: { delay: 0.5, duration: 0.6, ease } }}
                 exit={{ opacity: 0, transition: { duration: 0.2 } }}
               >
-                Plan een call
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white">→</span>
-              </motion.a>
+                <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">Plan een call</p>
+                {afspraken.map((a) => (
+                  <a
+                    key={a.link}
+                    {...calProps(a.link)}
+                    onClickCapture={() => toggle(false)}
+                    className="flex items-center justify-between rounded-full bg-white py-3 pl-6 pr-3 font-semibold text-accent"
+                  >
+                    <span>
+                      {a.label} <span className="font-normal text-accent/70">· {a.duur}</span>
+                    </span>
+                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white">→</span>
+                  </a>
+                ))}
+              </motion.div>
             )}
             <motion.div
               className="mt-auto flex flex-wrap gap-5 pt-8 text-sm font-medium"
