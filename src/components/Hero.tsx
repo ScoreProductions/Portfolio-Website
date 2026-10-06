@@ -94,7 +94,7 @@ export default function Hero() {
 
   return (
     <section id="home" ref={ref} className="relative h-[100svh] min-h-[560px] overflow-hidden bg-accent text-white">
-      <motion.div style={{ scale: bgScale }} className="absolute inset-0">
+      <motion.div style={{ scale: bgScale }} className="absolute inset-0 will-change-transform">
         {ytBg ? (
           // YouTube showreel as background: scaled to cover, slightly blurred and darkened so the text stays readable.
           <div className="pointer-events-none absolute inset-0 overflow-hidden bg-black [container-type:size]">
@@ -112,7 +112,7 @@ export default function Hero() {
           </div>
         ) : isFile ? (
           <>
-            <BackgroundVideo src={site.showreel} poster={site.showreelPoster || undefined} className="h-full w-full object-cover blur-[2px]" />
+            <BackgroundVideo src={site.showreel} poster={site.showreelPoster || undefined} className="h-full w-full object-cover" />
             <div className="absolute inset-0 bg-black/45" />
           </>
         ) : (
