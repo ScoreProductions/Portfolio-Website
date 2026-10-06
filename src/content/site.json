@@ -359,7 +359,14 @@
           "thumbnail": ""
         }
       ],
-      "photosLabel": "Fotografie"
+      "photosLabel": "Fotografie",
+      "photos": [
+        "/images/vibe/1.jpg",
+        "/images/vibe/2.jpg",
+        "/images/vibe/3.jpg",
+        "/images/vibe/4.jpg",
+        "/images/vibe/5.jpg"
+      ]
     },
     {
       "title": "Go Ahead Eagles",
