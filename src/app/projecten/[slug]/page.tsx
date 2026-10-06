@@ -38,6 +38,7 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
       ? [{ video: p.video, vertical: isVertical(p) }]
       : [];
   const thumb = p.thumbnail || youtubeThumb(p.video);
+  const cover = thumb?.startsWith("/") ? (await photoSizes([thumb]))[0] : null;
   const url = `${siteUrl}/projecten/${slugify(p.title)}`;
 
   const rows: [string, React.ReactNode][] = [
@@ -111,7 +112,13 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
       <div className="mt-12">
         {videos.length ? (
           <VideoSwitcher videos={videos} title={p.title} />        ) : thumb ? (
-          <div className="relative aspect-video overflow-hidden rounded-3xl"><Image src={thumb} alt={p.title} fill sizes="100vw" className="object-cover" /></div>
+          // Local cover photos keep their own shape, so a portrait shot is shown upright instead of cropped to 16:9.
+          <div
+            className={`relative overflow-hidden rounded-3xl ${cover && cover.h > cover.w ? "mx-auto w-full max-w-md" : ""}`}
+            style={{ aspectRatio: cover ? `${cover.w} / ${cover.h}` : "16 / 9" }}
+          >
+            <Image src={thumb} alt={p.title} fill priority sizes={cover && cover.h > cover.w ? "448px" : "100vw"} className="object-cover" />
+          </div>
         ) : null}
       </div>
 
