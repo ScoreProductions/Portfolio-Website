@@ -715,12 +715,12 @@
       {
         "label": "Videocall",
         "duur": "15 min",
-        "link": ""
+        "link": "max-score/15min"
       },
       {
         "label": "Kennismaken op locatie",
-        "duur": "45 min",
-        "link": ""
+        "duur": "30 min",
+        "link": "max-score/30min"
       }
     ]
   },
