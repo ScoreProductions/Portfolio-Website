@@ -5,31 +5,17 @@ import Image from "next/image";
 import { useEffect, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-/**
- * Tile classes for a gap-free grid: the first photo is a wide hero, the rest fill equal tiles,
- * and any leftover tiles in the last row stretch so every row is complete.
- * `wide` = 3 columns from md up (project page); otherwise always 2 columns (modal).
- */
-export function galleryTile(i: number, n: number, wide = false) {
-  if (i === 0) return `${wide ? "col-span-2 md:col-span-6" : "col-span-2"} aspect-[16/10]`;
-  const k = i - 1;
-  const rest = n - 1;
-  const mob = rest % 2 === 1 && k === rest - 1 ? "col-span-2 aspect-[16/9]" : "col-span-1 aspect-[4/5]";
-  if (!wide) return mob;
-  const r3 = rest % 3;
-  const lastRow = k >= rest - r3;
-  const md = r3 === 1 && lastRow ? "md:col-span-6 md:aspect-[21/9]" : r3 === 2 && lastRow ? "md:col-span-3 md:aspect-[4/3]" : "md:col-span-2 md:aspect-[4/5]";
-  return `${mob} ${md}`;
-}
-
 /** Thumbnail grid that opens photos in an in-page lightbox (arrows, swipe, Esc). */
 export default function PhotoGallery({
   photos,
   alt,
+  sizes,
   wide = false,
   renderGrid,
 }: {
   photos: string[];
+  /** Real pixel size per photo, so every photo keeps the orientation and crop it was delivered in. */
+  sizes?: { w: number; h: number }[];
   alt: string;
   wide?: boolean;
   /** Custom thumbnail layout; receives a callback that opens the lightbox at a photo index. */
@@ -56,16 +42,18 @@ export default function PhotoGallery({
   return (
     <>
       {renderGrid ? renderGrid(setOpen) : (
-      <div className={`mt-4 grid grid-flow-row-dense gap-3 ${wide ? "grid-cols-2 md:grid-cols-6 md:gap-4" : "grid-cols-2"}`}>
+      // Masonry columns: each photo keeps its own aspect ratio (portrait stays portrait, landscape stays landscape).
+      <div className={`mt-4 gap-3 ${wide ? "columns-2 md:columns-3 md:gap-4" : "columns-2"}`}>
         {photos.map((src, i) => (
           <button
             key={src}
             onClick={() => setOpen(i)}
             aria-label={`Foto ${i + 1} groot bekijken`}
-            className={`group relative block overflow-hidden rounded-xl bg-line ${galleryTile(i, photos.length, wide)}`}
+            className="group relative mb-3 block w-full break-inside-avoid overflow-hidden rounded-xl bg-line md:mb-4"
+            style={{ aspectRatio: sizes?.[i] ? `${sizes[i].w} / ${sizes[i].h}` : "4 / 3" }}
             data-cursor="Bekijk"
           >
-            <Image src={src} alt={alt} fill sizes={wide ? "(min-width: 768px) 40vw, 50vw" : "(min-width: 768px) 25vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            <Image src={src} alt={alt} fill sizes={wide ? "(min-width: 768px) 33vw, 50vw" : "(min-width: 768px) 25vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-105" />
           </button>
         ))}
       </div>
