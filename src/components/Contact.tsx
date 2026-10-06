@@ -1,13 +1,39 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { site } from "@/lib/site";
 import Magnetic from "./Magnetic";
 import { Reveal } from "./Reveal";
 import SectionHeader from "./SectionHeader";
 
 const c = site.contact;
+// Booking links are Cal.com paths like "max-score/15min"; empty ones are hidden.
+const afspraken = c.afspraken.filter((a) => a.link);
+
+/** Loads the Cal.com embed so buttons with data-cal-link open the booking popup on the page. */
+function useCalEmbed(enabled: boolean) {
+  useEffect(() => {
+    if (!enabled) return;
+    type CalFn = ((...args: unknown[]) => void) & { q?: unknown[]; ns?: Record<string, unknown>; loaded?: boolean };
+    const w = window as unknown as { Cal?: CalFn };
+    if (!w.Cal) {
+      const cal: CalFn = (...args) => {
+        cal.q!.push(args);
+      };
+      cal.q = [];
+      cal.ns = {};
+      w.Cal = cal;
+      const script = document.createElement("script");
+      script.src = "https://app.cal.com/embed/embed.js";
+      script.async = true;
+      document.head.appendChild(script);
+      cal.loaded = true;
+      cal("init", { origin: "https://cal.com" });
+      cal("ui", { theme: "light", cssVarsPerTheme: { light: { "cal-brand": "#e10a17" } }, hideEventTypeDetails: false });
+    }
+  }, [enabled]);
+}
 
 export const socials = [
   { label: "Instagram", href: c.instagram },
@@ -88,6 +114,8 @@ export default function Contact() {
     }
   };
 
+  useCalEmbed(afspraken.length > 0);
+
   return (
     <section id="contact" className="relative overflow-hidden bg-accent px-5 py-20 text-white md:px-10 md:py-40">
       <motion.div
@@ -127,6 +155,28 @@ export default function Contact() {
             </a>
           ))}
         </Reveal>
+
+        {afspraken.length > 0 && (
+          <Reveal delay={0.05} className="mt-14 text-center">
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/70">Of plan direct een afspraak</p>
+            <div className="mt-5 flex flex-wrap justify-center gap-3">
+              {afspraken.map((a) => (
+                <a
+                  key={a.link}
+                  href={`https://cal.com/${a.link}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-cal-link={a.link}
+                  data-cal-config='{"layout":"month_view"}'
+                  className="group flex items-center gap-3 rounded-full border border-white/30 py-3 pl-6 pr-3 font-semibold transition-colors duration-300 hover:bg-white hover:text-accent"
+                >
+                  {a.label}
+                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium transition-colors duration-300 group-hover:bg-accent/10">{a.duur}</span>
+                </a>
+              ))}
+            </div>
+          </Reveal>
+        )}
 
         <Reveal delay={0.1}>
           <form onSubmit={submit} className="mx-auto mt-16 max-w-2xl space-y-6 rounded-3xl border border-white/20 bg-white/[0.06] p-6 backdrop-blur-sm md:p-10">

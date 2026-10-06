@@ -37,6 +37,7 @@ const sections: { title: string; body: React.ReactNode }[] = [
     body: (
       <ul className="list-disc space-y-2 pl-5">
         <li>Het contactformulier wordt verstuurd via Web3Forms, dat het bericht doorstuurt naar onze mailbox.</li>
+        <li>Afspraken inplannen gaat via Cal.com. Als je een afspraak maakt, verwerkt Cal.com je naam, e-mailadres en het gekozen tijdstip.</li>
         <li>De website wordt gehost door Vercel. Zoals elke webserver verwerkt die technische gegevens zoals je IP-adres om de site te kunnen tonen.</li>
         <li>Video&apos;s worden afgespeeld via YouTube (in de privacyvriendelijke modus). Pas als je een video afspeelt of er met je muis overheen gaat, kan YouTube gegevens of cookies opslaan.</li>
       </ul>

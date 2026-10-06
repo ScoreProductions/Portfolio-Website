@@ -710,7 +710,19 @@
     "formKey": "ef189240-a773-44e9-97c8-a54b2ac090c2",
     "kvk": "99974304",
     "address": "Molenstraat 5-24, Enschede",
-    "btw": "NL005422576B14"
+    "btw": "NL005422576B14",
+    "afspraken": [
+      {
+        "label": "Videocall",
+        "duur": "15 min",
+        "link": ""
+      },
+      {
+        "label": "Kennismaken op locatie",
+        "duur": "45 min",
+        "link": ""
+      }
+    ]
   },
   "heroEyebrow": "Score Productions",
   "heroSub": "Nuchter in aanpak,",
