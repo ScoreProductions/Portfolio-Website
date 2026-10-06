@@ -168,6 +168,10 @@ export default function Contact() {
                   rel="noreferrer"
                   data-cal-link={a.link}
                   data-cal-config='{"layout":"month_view"}'
+                  // Once the embed is ready it opens a popup; only fall back to the new tab when it isn't.
+                  onClick={(e) => {
+                    if ((window as unknown as { Cal?: { instance?: unknown } }).Cal?.instance) e.preventDefault();
+                  }}
                   className="group flex items-center gap-3 rounded-full border border-white/30 py-3 pl-6 pr-3 font-semibold transition-colors duration-300 hover:bg-white hover:text-accent"
                 >
                   {a.label}
