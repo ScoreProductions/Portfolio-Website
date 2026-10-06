@@ -21,6 +21,8 @@ export type Project = {
   vertical?: boolean;
   /** Behind-the-scenes photos shown in the project modal. */
   photos?: string[];
+  /** Heading above the photos (defaults to "Behind the scenes"). */
+  photosLabel?: string;
   /** Team credits shown instead of the single "functie" line. */
   credits?: { name: string; role: string }[];
   /** Logo override when the brand name doesn't match a client in the logo list. */

@@ -339,10 +339,11 @@
       "roles": [
         "Producer",
         "Camera",
-        "Editor"
+        "Editor",
+        "Fotografie"
       ],
-      "functie": "Camera & edit",
-      "description": "Promotiemateriaal voor DJ-bedrijf Vibe Sound & Vision.\n\nEen DJ-set op een bruiloft gefilmd, met daaruit meerdere stukken social content.",
+      "functie": "Camera, edit & fotografie",
+      "description": "Presskit voor DJ-bedrijf Vibe Sound & Vision: beeldmateriaal waarmee de DJ zichzelf kan promoten bij nieuwe klanten.\n\nTijdens een DJ-set op een bruiloft zijn zowel video als fotografie gemaakt: actiefoto's, profielfoto's en meerdere stukken promotie- en social content.",
       "video": "https://youtu.be/VwZ4FfWWucI",
       "preview": "",
       "thumbnail": "",
@@ -357,7 +358,8 @@
           "video": "https://youtu.be/r-sUs3s2z5o",
           "thumbnail": ""
         }
-      ]
+      ],
+      "photosLabel": "Fotografie"
     },
     {
       "title": "Go Ahead Eagles",

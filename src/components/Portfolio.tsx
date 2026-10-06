@@ -206,6 +206,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     ),
     nav: count > 1 ? { index: n, count, go: (d) => setN((n + d + count) % count) } : undefined,
     photos: photoProject ? undefined : v.photos,
+    photosLabel: v.photosLabel,
     gallery: gallery.length ? gallery[n % gallery.length] : undefined,
     navLabel: gallery.length ? "Foto" : "Video",
     photoProject,

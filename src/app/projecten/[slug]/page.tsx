@@ -152,8 +152,8 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
 
       {!!p.photos?.length && (
         <section className="mt-16">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{!p.video && p.roles.includes("Fotografie") ? "Foto's" : "Behind the scenes"}</h2>
-          <PhotoGallery photos={p.photos} alt={`${p.title} — behind the scenes`} wide />
+          <h2 className="text-xs font-semibold uppercase tracking-[0.3em] text-accent">{p.photosLabel ?? (!p.video && p.roles.includes("Fotografie") ? "Foto's" : "Behind the scenes")}</h2>
+          <PhotoGallery photos={p.photos} alt={`${p.title} — ${(p.photosLabel ?? "behind the scenes").toLowerCase()}`} wide />
         </section>
       )}
 

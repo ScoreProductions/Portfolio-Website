@@ -13,6 +13,7 @@ export type ModalContent = {
   meta?: ReactNode;
   /** Behind-the-scenes photos, shown as a small strip under the video and info. */
   photos?: string[];
+  photosLabel?: string;
   /** Photography-only project: placeholder says photos instead of video. */
   photoProject?: boolean;
   /** Video isn't public yet. */
@@ -152,11 +153,11 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
             {photos && (
               <PhotoGallery
                 photos={photos}
-                alt="Behind the scenes"
+                alt={content.photosLabel ?? "Behind the scenes"}
                 renderGrid={(open) => (
                   // Small thumbnail strip under the normal video + info layout.
                   <div className="border-t border-line px-6 py-5 md:col-span-2 md:px-10">
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">Behind the scenes</p>
+                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted">{content.photosLabel ?? "Behind the scenes"}</p>
                     <div className="mt-3 flex flex-wrap gap-3">
                       {photos.map((src, i) => (
                         <button
@@ -167,7 +168,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                         >
                           {/* Fixed height, natural width: portrait stays portrait, landscape stays landscape. */}
                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={src} alt="Behind the scenes" loading="lazy" className="block h-24 w-auto transition-transform duration-500 group-hover:scale-105 md:h-32" />
+                          <img src={src} alt={content.photosLabel ?? "Behind the scenes"} loading="lazy" className="block h-24 w-auto transition-transform duration-500 group-hover:scale-105 md:h-32" />
                         </button>
                       ))}
                     </div>
