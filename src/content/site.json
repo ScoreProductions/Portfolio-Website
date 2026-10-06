@@ -715,12 +715,14 @@
       {
         "label": "Videocall",
         "duur": "15 min",
-        "link": "max-score/15min"
+        "link": "max-score/15min",
+        "tekst": "Even kort bijpraten over je idee of project. Online, vrijblijvend."
       },
       {
         "label": "Kennismaken op locatie",
         "duur": "30 min",
-        "link": "max-score/30min"
+        "link": "max-score/30min",
+        "tekst": "Liever face-to-face? Dan kom ik gewoon langs."
       }
     ]
   },

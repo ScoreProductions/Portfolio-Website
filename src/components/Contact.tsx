@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useEffect, useState, type FormEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState, type FormEvent } from "react";
 import { site } from "@/lib/site";
+import { calProps } from "./CalEmbed";
 import Magnetic from "./Magnetic";
 import { Reveal } from "./Reveal";
 import SectionHeader from "./SectionHeader";
@@ -10,30 +11,6 @@ import SectionHeader from "./SectionHeader";
 const c = site.contact;
 // Booking links are Cal.com paths like "max-score/15min"; empty ones are hidden.
 const afspraken = c.afspraken.filter((a) => a.link);
-
-/** Loads the Cal.com embed so buttons with data-cal-link open the booking popup on the page. */
-function useCalEmbed(enabled: boolean) {
-  useEffect(() => {
-    if (!enabled) return;
-    type CalFn = ((...args: unknown[]) => void) & { q?: unknown[]; ns?: Record<string, unknown>; loaded?: boolean };
-    const w = window as unknown as { Cal?: CalFn };
-    if (!w.Cal) {
-      const cal: CalFn = (...args) => {
-        cal.q!.push(args);
-      };
-      cal.q = [];
-      cal.ns = {};
-      w.Cal = cal;
-      const script = document.createElement("script");
-      script.src = "https://app.cal.com/embed/embed.js";
-      script.async = true;
-      document.head.appendChild(script);
-      cal.loaded = true;
-      cal("init", { origin: "https://cal.com" });
-      cal("ui", { theme: "light", cssVarsPerTheme: { light: { "cal-brand": "#e10a17" } }, hideEventTypeDetails: false });
-    }
-  }, [enabled]);
-}
 
 export const socials = [
   { label: "Instagram", href: c.instagram },
@@ -84,6 +61,8 @@ function Field({ label, name, type = "text", textarea, optional }: { label: stri
 
 export default function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  // The form is secondary: booking a call comes first, the message form opens on request.
+  const [formOpen, setFormOpen] = useState(afspraken.length === 0);
 
   // Sends the form straight to the inbox via Web3Forms (access key in site.json → contact.formKey).
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -114,8 +93,6 @@ export default function Contact() {
     }
   };
 
-  useCalEmbed(afspraken.length > 0);
-
   return (
     <section id="contact" className="relative overflow-hidden bg-accent px-5 py-20 text-white md:px-10 md:py-40">
       <motion.div
@@ -129,18 +106,56 @@ export default function Contact() {
           <p className="mt-3 text-xl text-white/80">{c.text}</p>
         </SectionHeader>
 
-        <Reveal className="mt-10 flex flex-col items-center gap-2">
-          <a href={`mailto:${c.email}`} className="group relative text-2xl font-medium tracking-tight md:text-4xl">
+        {afspraken.length > 0 && (
+          <Reveal delay={0.05} className="mt-12">
+            <div className="grid gap-4 md:grid-cols-2">
+              {afspraken.map((a, i) => (
+                <a
+                  key={a.link}
+                  {...calProps(a.link)}
+                  className="group relative flex flex-col overflow-hidden rounded-3xl bg-white p-6 text-left text-fg shadow-[0_20px_60px_rgba(0,0,0,0.18)] transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] hover:-translate-y-1 md:p-8"
+                >
+                  <span className="flex items-center justify-between">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-white">
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        {i === 0 ? (
+                          <>
+                            <rect x="3" y="6" width="13" height="12" rx="2" />
+                            <path d="M16 10l5-3v10l-5-3z" />
+                          </>
+                        ) : (
+                          <>
+                            <path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" />
+                            <circle cx="12" cy="9.5" r="2.5" />
+                          </>
+                        )}
+                      </svg>
+                    </span>
+                    <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">{a.duur}</span>
+                  </span>
+                  <span className="mt-6 text-2xl font-semibold tracking-tight md:text-3xl">{a.label}</span>
+                  <span className="mt-2 text-muted">{a.tekst}</span>
+                  <span className="mt-6 inline-flex items-center gap-2 font-semibold text-accent">
+                    Plan in
+                    <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
+        <Reveal delay={0.1} className="mt-12 flex flex-col items-center gap-2 text-center">
+          <p className="text-sm text-white/70">Liever mailen of bellen?</p>
+          <a href={`mailto:${c.email}`} className="text-lg font-medium underline decoration-white/40 underline-offset-4 transition-colors hover:decoration-white md:text-xl">
             {c.email}
-            <span className="absolute -bottom-2 left-0 h-px w-full origin-left bg-white/40 transition-transform duration-500 group-hover:scale-x-0" />
-            <span className="absolute -bottom-2 left-0 h-px w-full origin-right scale-x-0 bg-white transition-transform delay-200 duration-500 group-hover:origin-left group-hover:scale-x-100" />
           </a>
-          <a href={`tel:${c.phone.replace(/\s/g, "")}`} className="mt-3 text-lg text-white/80 transition-colors hover:text-white">
+          <a href={`tel:${c.phone.replace(/\s/g, "")}`} className="text-white/80 transition-colors hover:text-white">
             {c.phone}
           </a>
         </Reveal>
 
-        <Reveal className="mt-10 flex items-center justify-center gap-4">
+        <Reveal className="mt-8 flex items-center justify-center gap-4">
           {socials.map((s) => (
             <a
               key={s.label}
@@ -157,52 +172,50 @@ export default function Contact() {
         </Reveal>
 
         {afspraken.length > 0 && (
-          <Reveal delay={0.05} className="mt-14 text-center">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-white/70">Of plan direct een afspraak</p>
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              {afspraken.map((a) => (
-                <a
-                  key={a.link}
-                  href={`https://cal.com/${a.link}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  data-cal-link={a.link}
-                  data-cal-config='{"layout":"month_view"}'
-                  // Once the embed is ready it opens a popup; only fall back to the new tab when it isn't.
-                  onClick={(e) => {
-                    if ((window as unknown as { Cal?: { instance?: unknown } }).Cal?.instance) e.preventDefault();
-                  }}
-                  className="group flex items-center gap-3 rounded-full border border-white/30 py-3 pl-6 pr-3 font-semibold transition-colors duration-300 hover:bg-white hover:text-accent"
-                >
-                  {a.label}
-                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-medium transition-colors duration-300 group-hover:bg-accent/10">{a.duur}</span>
-                </a>
-              ))}
-            </div>
-          </Reveal>
+          <div className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={() => setFormOpen((o) => !o)}
+              aria-expanded={formOpen}
+              className="inline-flex items-center gap-2 text-sm font-medium text-white/80 underline-offset-4 transition-colors hover:text-white hover:underline"
+            >
+              Of stuur een bericht
+              <span className={`transition-transform duration-300 ${formOpen ? "rotate-180" : ""}`}>↓</span>
+            </button>
+          </div>
         )}
 
-        <Reveal delay={0.1}>
-          <form onSubmit={submit} className="mx-auto mt-16 max-w-2xl space-y-6 rounded-3xl border border-white/20 bg-white/[0.06] p-6 backdrop-blur-sm md:p-10">
-            <div className="grid gap-6 md:grid-cols-2">
-              <Field label="Naam" name="naam" />
-              <Field label="E-mail" name="email" type="email" />
-            </div>
-            <Field label="Telefoonnummer (optioneel)" name="telefoon" type="tel" optional />
-            <Field label="Bericht" name="bericht" textarea />
-            <div className="flex items-center justify-between gap-4 pt-2">
-              <span className="text-sm text-white/80" aria-live="polite">
-                {{ idle: "", sending: "Versturen…", sent: "Bedankt! We nemen snel contact met je op ✓", error: `Versturen lukte niet. Mail gerust direct naar ${c.email}` }[status]}
-              </span>
-              <Magnetic>
-                <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
-                  <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-                  <span className="relative transition-colors duration-300 group-hover:text-white">Verstuur →</span>
-                </button>
-              </Magnetic>
-            </div>
-          </form>
-        </Reveal>
+        <AnimatePresence initial={false}>
+          {formOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden"
+            >
+              <form onSubmit={submit} className="mx-auto mt-6 max-w-2xl space-y-6 rounded-3xl border border-white/20 bg-white/[0.06] p-6 backdrop-blur-sm md:p-10">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <Field label="Naam" name="naam" />
+                  <Field label="E-mail" name="email" type="email" />
+                </div>
+                <Field label="Telefoonnummer (optioneel)" name="telefoon" type="tel" optional />
+                <Field label="Bericht" name="bericht" textarea />
+                <div className="flex items-center justify-between gap-4 pt-2">
+                  <span className="text-sm text-white/80" aria-live="polite">
+                    {{ idle: "", sending: "Versturen…", sent: "Bedankt! We nemen snel contact met je op ✓", error: `Versturen lukte niet. Mail gerust direct naar ${c.email}` }[status]}
+                  </span>
+                  <Magnetic>
+                    <button type="submit" disabled={status === "sending"} className="group relative overflow-hidden rounded-full bg-white px-8 py-4 font-semibold text-accent">
+                      <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
+                      <span className="relative transition-colors duration-300 group-hover:text-white">Verstuur →</span>
+                    </button>
+                  </Magnetic>
+                </div>
+              </form>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

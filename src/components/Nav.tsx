@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
+import { calProps } from "./CalEmbed";
 import { lockScroll } from "./SmoothScroll";
 
 const links = [
@@ -14,6 +15,8 @@ const links = [
 ];
 
 const ease = [0.76, 0, 0.24, 1] as const;
+// The call-to-action books the short videocall when a booking link is set, otherwise it jumps to the contact section.
+const callLink = site.contact.afspraken.find((a) => a.link)?.link;
 
 // Remount per route so the light/dark state and active link start fresh on every page.
 export default function Nav() {
@@ -95,13 +98,13 @@ function NavBar({ pathname }: { pathname: string }) {
           </nav>
 
           <a
-            href={`${prefix}#contact`}
+            {...(callLink ? calProps(callLink) : { href: `${prefix}#contact` })}
             className={`group relative hidden overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 md:block ${
               light || onRed ? "bg-white text-accent" : "bg-accent text-white"
             }`}
           >
             <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-            <span className="relative transition-colors duration-300 group-hover:text-white">Neem contact op</span>
+            <span className="relative transition-colors duration-300 group-hover:text-white">{callLink ? "Plan een call" : "Neem contact op"}</span>
           </a>
 
           <button
@@ -126,7 +129,7 @@ function NavBar({ pathname }: { pathname: string }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-between bg-accent px-6 pb-10 pt-28 text-white md:hidden"
+            className="fixed inset-0 z-40 flex flex-col bg-accent px-6 pb-10 pt-28 text-white md:hidden"
             initial={{ clipPath: "circle(0% at 92% 6%)" }}
             animate={{ clipPath: "circle(150% at 92% 6%)" }}
             // The closing overlay must not swallow touches, so the page scrolls again right away.
@@ -151,8 +154,21 @@ function NavBar({ pathname }: { pathname: string }) {
                 </li>
               ))}
             </ul>
+            {callLink && (
+              <motion.a
+                {...calProps(callLink)}
+                onClickCapture={() => toggle(false)}
+                className="mt-8 flex items-center justify-between rounded-full bg-white py-4 pl-7 pr-4 text-lg font-semibold text-accent"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0, transition: { delay: 0.5, duration: 0.6, ease } }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              >
+                Plan een call
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white">→</span>
+              </motion.a>
+            )}
             <motion.div
-              className="flex flex-wrap gap-5 text-sm font-medium"
+              className="mt-auto flex flex-wrap gap-5 pt-8 text-sm font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.6 } }}
               exit={{ opacity: 0 }}

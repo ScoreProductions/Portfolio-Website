@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Bebas_Neue, Fraunces, Geist, Geist_Mono } from "next/font/google";
+import CalEmbed from "@/components/CalEmbed";
 import Cursor from "@/components/Cursor";
 import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
@@ -96,6 +97,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Footer />
         <div aria-hidden className="grain" />
         <Analytics />
+        <CalEmbed />
       </body>
     </html>
   );
