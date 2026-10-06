@@ -1,0 +1,30 @@
+name: Release scheduled videos
+
+on:
+  schedule:
+    # Shortly after midnight Amsterdam time (covers both summer and winter time).
+    - cron: "5 22 * * *"
+    - cron: "5 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/release-videos.mjs
+      - name: Commit and push
+        run: |
+          git diff --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Release scheduled videos"
+          git push

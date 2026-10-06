@@ -29,14 +29,19 @@ export type Project = {
   via?: string;
   /** Extra videos for the same client; the tile lets visitors swipe between them. */
   items?: ProjectItem[];
+  /** Release date (YYYY-MM-DD) of a video that isn't public yet; the tile shows "Binnenkort online" until then. */
+  binnenkort?: string;
 };
 
-export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical" | "previewStart">> & { title: string };
+export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical" | "previewStart" | "binnenkort">> & { title: string };
 
 /** Project merged with its n-th item (item 0 is the project itself). */
 export function projectVariant(p: Project, n: number): Project & { subtitle?: string } {
   const item = p.items?.[n];
-  return item ? { ...p, ...item, title: p.title, subtitle: item.title } : p;
+  if (!item) return p;
+  const v = { ...p, ...item, title: p.title, subtitle: item.title };
+  // Unreleased videos stay hidden: no player, thumbnail or hover preview until the release script publishes them.
+  return item.binnenkort ? { ...v, video: "", preview: "", thumbnail: "" } : v;
 }
 
 export const site = content as Omit<typeof content, "projects" | "recent"> & { projects: Project[]; recent: string[] };

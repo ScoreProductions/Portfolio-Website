@@ -32,7 +32,7 @@ export default async function ProjectPage(props: PageProps<"/projecten/[slug]">)
   const i = site.projects.indexOf(p);
   const next = site.projects[(i + 1) % site.projects.length];
   const videos: { title?: string; video: string; vertical: boolean }[] = p.items?.length
-    ? p.items.filter((it) => it.video).map((it) => ({ title: it.title, video: it.video!, vertical: isVertical({ video: it.video!, vertical: it.vertical }) }))
+    ? p.items.filter((it) => it.video && !it.binnenkort).map((it) => ({ title: it.title, video: it.video!, vertical: isVertical({ video: it.video!, vertical: it.vertical }) }))
     : p.video
       ? [{ video: p.video, vertical: isVertical(p) }]
       : [];

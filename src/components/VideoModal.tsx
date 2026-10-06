@@ -15,6 +15,8 @@ export type ModalContent = {
   photos?: string[];
   /** Photography-only project: placeholder says photos instead of video. */
   photoProject?: boolean;
+  /** Video isn't public yet. */
+  soon?: boolean;
   /** Current photo of a photography project, shown in the main panel. */
   gallery?: string;
   /** Word used in the "x van y" counter. */
@@ -103,7 +105,7 @@ export default function VideoModal({ content, onClose }: { content: ModalContent
                   <img key={content.gallery} src={content.gallery} alt={content.title} className="absolute inset-0 h-full w-full bg-black object-contain" />
                 ) : (
                 <div className="absolute inset-0 flex items-center justify-center bg-accent text-white">
-                  <span className="text-sm font-medium uppercase tracking-[0.25em]">{content.photoProject ? "Foto's volgen" : "Video volgt"}</span>
+                  <span className="text-sm font-medium uppercase tracking-[0.25em]">{content.soon ? "Binnenkort online" : content.photoProject ? "Foto's volgen" : "Video volgt"}</span>
                 </div>
                 )
               )}

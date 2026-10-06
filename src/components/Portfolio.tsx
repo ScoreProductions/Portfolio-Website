@@ -30,7 +30,7 @@ export function ProjectCard({
   onOpen,
   className = "",
 }: {
-  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar" | "vertical" | "previewStart" | "subtitle"> & { functie?: string };
+  project: Pick<Project, "title" | "brand" | "video" | "preview" | "thumbnail" | "jaar" | "vertical" | "previewStart" | "subtitle" | "binnenkort"> & { functie?: string };
   big?: boolean;
   wide?: boolean;
   onOpen: () => void;
@@ -86,6 +86,9 @@ export function ProjectCard({
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/5 transition-opacity duration-500 group-hover:opacity-80" />
       <Corners />
+      {project.binnenkort && (
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap rounded-full border border-white/40 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2em] backdrop-blur-md md:text-xs">Binnenkort online</span>
+      )}
       {project.video && <PlayButton className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${big ? "h-16 w-16 md:h-28 md:w-28" : "h-10 w-10 md:h-16 md:w-16"}`} />}
       <div className={`absolute inset-x-0 bottom-0 ${big || wide ? "p-5" : "p-3 sm:p-5"} md:p-7`}>
         <span className="inline-block max-w-full truncate rounded-full bg-accent px-2.5 py-1 align-bottom text-[10px] font-semibold uppercase tracking-[0.12em] sm:px-3 sm:text-[10px] md:text-[11px]">{project.brand}</span>
@@ -206,6 +209,7 @@ function modalContent(p: Project, n: number, setN: (n: number) => void): ModalCo
     gallery: gallery.length ? gallery[n % gallery.length] : undefined,
     navLabel: gallery.length ? "Foto" : "Video",
     photoProject,
+    soon: !!v.binnenkort,
   };
 }
 
