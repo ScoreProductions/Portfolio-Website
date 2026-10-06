@@ -76,11 +76,11 @@ function NavBar({ pathname }: { pathname: string }) {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-10 md:pt-6">
-        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-4">
+        <div className="mx-auto flex max-w-[1500px] items-center justify-between gap-2 md:gap-4">
           <a
             href={home ? "#home" : "/"}
             onClick={() => toggle(false)}
-            className={`font-display relative z-50 rounded-full px-4 py-2 text-2xl tracking-wide backdrop-blur-xl transition-all duration-500 md:text-3xl ${
+            className={`font-display relative z-50 whitespace-nowrap rounded-full px-4 py-2 text-xl tracking-wide min-[375px]:text-2xl backdrop-blur-xl transition-all duration-500 md:text-3xl ${
               light ? "-ml-4 text-white" : "border border-fg/10 bg-white/70 text-fg shadow-[0_10px_40px_rgba(0,0,0,0.08)]"
             }`}
           >
@@ -113,17 +113,17 @@ function NavBar({ pathname }: { pathname: string }) {
           </nav>
 
           {afspraken.length ? (
-            <div ref={planRef} className="relative hidden md:block">
+            <div ref={planRef} className="relative ml-auto md:ml-0">
               <button
                 type="button"
                 onClick={() => setPlanOpen((o) => !o)}
                 aria-expanded={planOpen}
-                className={`group relative overflow-hidden rounded-full px-6 py-3 text-sm font-semibold transition-colors duration-500 ${
+                className={`group relative overflow-hidden rounded-full px-3.5 py-3 text-[13px] min-[375px]:px-4 font-semibold transition-colors duration-500 md:px-6 md:text-sm ${
                   light || onRed ? "bg-white text-accent" : "bg-accent text-white"
                 }`}
               >
-                <span className="absolute inset-0 translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0" />
-                <span className="relative flex items-center gap-2 transition-colors duration-300 group-hover:text-white">
+                <span className="absolute inset-0 hidden translate-y-full rounded-full bg-fg transition-transform duration-500 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-y-0 md:block" />
+                <span className="relative flex items-center gap-2 whitespace-nowrap transition-colors duration-300 group-hover:text-white">
                   Plan een call
                   <span className={`text-xs transition-transform duration-300 ${planOpen ? "rotate-180" : ""}`}>▾</span>
                 </span>
@@ -135,13 +135,16 @@ function NavBar({ pathname }: { pathname: string }) {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -8, scale: 0.97 }}
                     transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                    className="absolute right-0 top-full mt-3 w-72 origin-top-right overflow-hidden rounded-2xl border border-fg/10 bg-white p-2 text-fg shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
+                    className="absolute -right-14 top-full mt-3 w-72 max-w-[calc(100vw-2rem)] origin-top-right md:right-0 overflow-hidden rounded-2xl border border-fg/10 bg-white p-2 text-fg shadow-[0_20px_60px_rgba(0,0,0,0.18)]"
                   >
                     {afspraken.map((a) => (
                       <a
                         key={a.link}
                         {...calProps(a.link)}
-                        onClickCapture={() => setPlanOpen(false)}
+                        onClickCapture={() => {
+                          setPlanOpen(false);
+                          if (open) toggle(false);
+                        }}
                         className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 transition-colors hover:bg-accent/[0.07]"
                       >
                         <span>
@@ -189,7 +192,7 @@ function NavBar({ pathname }: { pathname: string }) {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-accent px-6 pb-8 pt-24 text-white md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-between bg-accent px-6 pb-10 pt-28 text-white md:hidden"
             initial={{ clipPath: "circle(0% at 92% 6%)" }}
             animate={{ clipPath: "circle(150% at 92% 6%)" }}
             // The closing overlay must not swallow touches, so the page scrolls again right away.
@@ -202,7 +205,7 @@ function NavBar({ pathname }: { pathname: string }) {
                   <motion.a
                     href={`${prefix}#${l.id}`}
                     onClick={() => toggle(false)}
-                    className="font-display flex items-baseline justify-between py-2 text-6xl leading-none"
+                    className="font-display flex items-baseline justify-between py-3 text-7xl leading-none"
                     initial={{ y: "100%" }}
                     animate={{ y: "0%" }}
                     exit={{ y: "100%", transition: { duration: 0.3, ease } }}
@@ -214,31 +217,8 @@ function NavBar({ pathname }: { pathname: string }) {
                 </li>
               ))}
             </ul>
-            {afspraken.length > 0 && (
-              <motion.div
-                className="mt-8 grid gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0, transition: { delay: 0.5, duration: 0.6, ease } }}
-                exit={{ opacity: 0, transition: { duration: 0.2 } }}
-              >
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/70">Plan een call</p>
-                {afspraken.map((a) => (
-                  <a
-                    key={a.link}
-                    {...calProps(a.link)}
-                    onClickCapture={() => toggle(false)}
-                    className="flex items-center justify-between rounded-full bg-white py-3 pl-6 pr-3 font-semibold text-accent"
-                  >
-                    <span>
-                      {a.label} <span className="font-normal text-accent/70">· {a.duur}</span>
-                    </span>
-                    <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white">→</span>
-                  </a>
-                ))}
-              </motion.div>
-            )}
             <motion.div
-              className="mt-auto flex flex-wrap gap-5 pt-8 text-sm font-medium"
+              className="flex flex-wrap gap-5 text-sm font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1, transition: { delay: 0.6 } }}
               exit={{ opacity: 0 }}
