@@ -71,6 +71,47 @@
   },
   "projects": [
     {
+      "title": "Channely",
+      "brand": "Channely",
+      "roles": [
+        "Camera",
+        "Editor"
+      ],
+      "functie": "Camera & edit",
+      "description": "Een reeks advertenties voor Channely, een marketplace agency die e-commercemerken laat groeien op platforms als Bol en Amazon. De video's zijn bedoeld voor verschillende stappen in hun marketingfunnel.\n\nWe filmden alles in Valencia. Ik stond achter de camera en verzorgde daarna de montage van alle advertenties.",
+      "video": "https://youtube.com/shorts/N7vDNIDXVVQ",
+      "preview": "",
+      "thumbnail": "",
+      "jaar": "2026",
+      "items": [
+        {
+          "title": "Advertentie 1",
+          "video": "https://youtube.com/shorts/N7vDNIDXVVQ",
+          "thumbnail": ""
+        },
+        {
+          "title": "Advertentie 2",
+          "video": "https://youtube.com/shorts/8mvw4fnUXWo",
+          "thumbnail": ""
+        },
+        {
+          "title": "Advertentie 3",
+          "video": "https://youtube.com/shorts/z9uANQ0DBFk",
+          "thumbnail": ""
+        },
+        {
+          "title": "Advertentie 4",
+          "video": "https://youtube.com/shorts/-8jpsB4BdZQ",
+          "thumbnail": ""
+        },
+        {
+          "title": "Advertentie 5",
+          "video": "https://youtube.com/shorts/frb6c-4Kjpc",
+          "thumbnail": ""
+        }
+      ]
+    },
+    {
       "title": "Hunted (+ VIPS)",
       "brand": "AVROTROS · NPO 1",
       "roles": [
@@ -568,6 +609,10 @@
     "title": "Gewerkt met / voor",
     "items": [
       {
+        "name": "Channely",
+        "logo": "/logos/channely.svg"
+      },
+      {
         "name": "Tastory",
         "logo": "/logos/tastory.png"
       },
@@ -752,6 +797,7 @@
   },
   "heroSubAccent": "sterk in beeld.",
   "recent": [
+    "Channely",
     "Victoria '28",
     "Vibe Sound & Vision",
     "Wilminktheater",
