@@ -298,7 +298,14 @@ export default function Portfolio({ full = false }: { full?: boolean }) {
   const setVariant = (p: Project, n: number) => setVariants((v) => ({ ...v, [p.title]: n }));
   const ordered =
     sort === "Meest recent" ? [...site.projects].sort((a, b) => (recentRank.get(a.title) ?? 999) - (recentRank.get(b.title) ?? 999)) : site.projects;
-  const shown = filter === "Alles" ? ordered : filter === "TV" ? ordered.filter((p) => p.tv) : ordered.filter((p) => p.roles.includes(filter));
+  const shown =
+    filter === "Alles"
+      ? full
+        ? ordered
+        : ordered.filter((p) => !p.nietOpHome)
+      : filter === "TV"
+        ? ordered.filter((p) => p.tv)
+        : ordered.filter((p) => p.roles.includes(filter));
   // Prev/next in the modal walks through the projects currently visible under the active filter.
   const modal: ModalContent | null = open
     ? (() => {

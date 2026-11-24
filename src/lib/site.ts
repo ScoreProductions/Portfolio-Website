@@ -33,6 +33,8 @@ export type Project = {
   items?: ProjectItem[];
   /** Release date (YYYY-MM-DD) of a video that isn't public yet; the tile shows "Binnenkort online" until then. */
   binnenkort?: string;
+  /** Leave out of the homepage teaser ("Geselecteerd werk"); still shown on /projecten, in filters and in "Meest recent". */
+  nietOpHome?: boolean;
 };
 
 export type ProjectItem = Partial<Pick<Project, "video" | "preview" | "thumbnail" | "functie" | "description" | "jaar" | "vertical" | "previewStart" | "binnenkort">> & { title: string };

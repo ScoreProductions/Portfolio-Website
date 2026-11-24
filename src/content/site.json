@@ -79,11 +79,16 @@
       ],
       "functie": "Camera & edit",
       "description": "Een reeks advertenties voor Channely, een marketplace agency die e-commercemerken laat groeien op platforms als Bol en Amazon. De video's zijn bedoeld voor verschillende stappen in hun marketingfunnel.\n\nWe filmden alles in Valencia. Ik stond achter de camera en verzorgde daarna de montage van alle advertenties.",
-      "video": "https://youtube.com/shorts/N7vDNIDXVVQ",
+      "video": "https://youtube.com/shorts/frb6c-4Kjpc",
       "preview": "",
       "thumbnail": "",
       "jaar": "2026",
       "items": [
+        {
+          "title": "Advertentie 5",
+          "video": "https://youtube.com/shorts/frb6c-4Kjpc",
+          "thumbnail": ""
+        },
         {
           "title": "Advertentie 1",
           "video": "https://youtube.com/shorts/N7vDNIDXVVQ",
@@ -103,13 +108,9 @@
           "title": "Advertentie 4",
           "video": "https://youtube.com/shorts/-8jpsB4BdZQ",
           "thumbnail": ""
-        },
-        {
-          "title": "Advertentie 5",
-          "video": "https://youtube.com/shorts/frb6c-4Kjpc",
-          "thumbnail": ""
         }
-      ]
+      ],
+      "nietOpHome": true
     },
     {
       "title": "Hunted (+ VIPS)",
